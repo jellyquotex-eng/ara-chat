@@ -1688,7 +1688,7 @@ async function showProfilePage(u) {
   
   if (isOwn) {
     $("pp-edit-btn").hidden = false;
-    $("pp-edit-btn").onclick = () => openPm();
+    $("pp-edit-btn").onclick = () => window.openPm();
   } else {
     $("pp-follow-btn").hidden = false;
     $("pp-msg-btn").hidden = false;
