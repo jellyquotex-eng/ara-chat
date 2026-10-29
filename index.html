@@ -2029,7 +2029,7 @@ async function loadFeedPage() {
         const p = d.data();
         // Client-side visibility filter (rules enforce the real gate)
         if (!(await canSeePost(p))) continue;
-        feed.append(renderPost(d));
+        feed.append(await renderPost(d));
         recordView(d.id);
       }
       if (snap.docs.length < 10) feedState.exhausted = true;
