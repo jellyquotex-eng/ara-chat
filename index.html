@@ -598,6 +598,42 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
       <div class="two"><button>Save</button><button type="button" id="pf-x" class="ghost">Cancel</button></div>
     </form>
   </div>
+
+  <section id="v-profile-page" class="page" hidden>
+    <div style="max-width:600px;margin:0 auto;padding:1rem;">
+      <div style="text-align:center; margin-bottom: 1rem;">
+        <img id="pp-av" src="" style="width:96px;height:96px;border-radius:50%;object-fit:cover;margin:0 auto;background:#ddd;cursor:pointer;" onclick="openLightbox(this.src)">
+        <h2 id="pp-name" style="margin:0.5rem 0 0.2rem;display:flex;align-items:center;justify-content:center;gap:0.4rem;"></h2>
+        <div id="pp-user" style="color:var(--mut);font-size:0.9rem;"></div>
+        <p id="pp-bio" style="margin:0.5rem 0;font-size:0.95rem;"></p>
+      </div>
+      
+      <div class="profile-stats">
+        <div style="text-align:center;">
+          <b id="pp-posts">0</b><span>Posts</span>
+        </div>
+        <div style="text-align:center;" id="pp-followers-btn">
+          <b id="pp-followers">0</b><span>Followers</span>
+        </div>
+        <div style="text-align:center;" id="pp-following-btn">
+          <b id="pp-following">0</b><span>Following</span>
+        </div>
+      </div>
+      
+      <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1rem;">
+        <button id="pp-follow-btn" style="flex:1;max-width:200px;background:var(--pri);color:#fff;" hidden>Follow</button>
+        <button id="pp-msg-btn" style="flex:1;max-width:200px;" hidden>Message</button>
+        <button id="pp-edit-btn" style="flex:1;max-width:200px;" hidden>Edit Profile</button>
+      </div>
+      
+      <div id="pp-meta" class="profile-meta" hidden></div>
+      
+      <div style="margin-top:1.5rem;">
+        <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">Posts</h3>
+        <div id="pp-posts-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.3rem;"></div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <div id="fol-modal" hidden>
@@ -1430,7 +1466,7 @@ async function openFollowersModal(uid, type) {
       row.onclick = () => {
         modal.hidden = true;
         if (u.uid !== me.uid) {
-          openChat(u);
+          showProfilePage(u);
         } else {
           $("nav-profile").click();
         }
@@ -1634,93 +1670,56 @@ async function showProfilePage(u) {
   const snap = await getDoc(doc(db, "users", u.uid));
   const fresh = snap.exists() ? snap.data() : u;
   
-  const container = document.createElement("div");
-  container.style = "max-width:600px;margin:0 auto;padding:1rem;";
-  container.innerHTML = `
-    <div style="text-align:center; margin-bottom: 1rem;">
-      <img src="${fresh.photoURL}" style="width:96px;height:96px;border-radius:50%;object-fit:cover;margin:0 auto;background:#ddd;cursor:pointer;" onclick="openLightbox(this.src)">
-      <h2 style="margin:0.5rem 0 0.2rem;display:flex;align-items:center;justify-content:center;gap:0.4rem;">
-        ${fresh.nickname}${fresh.verified ? `<span class="verified" title="Verified">${ico("check")}</span>` : ""}
-      </h2>
-      <div style="color:var(--mut);font-size:0.9rem;">@${fresh.username}</div>
-      ${fresh.bio ? `<p style="margin:0.5rem 0;font-size:0.95rem;">${fresh.bio}</p>` : ""}
-    </div>
-    
-    <div class="profile-stats">
-      <div style="text-align:center;">
-        <b>${fresh.postsCount || 0}</b><span>Posts</span>
-      </div>
-      <div style="text-align:center;" onclick="openFollowersModal('${u.uid}', 'followers')">
-        <b>${fresh.followersCount || 0}</b><span>Followers</span>
-      </div>
-      <div style="text-align:center;" onclick="openFollowersModal('${u.uid}', 'following')">
-        <b>${fresh.followingCount || 0}</b><span>Following</span>
-      </div>
-    </div>
-    
-    <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1rem;">
-      ${!isOwn ? `
-        <button id="prof-follow-btn" style="flex:1;max-width:200px;background:var(--pri);color:#fff;">Follow</button>
-        <button id="prof-msg-btn" style="flex:1;max-width:200px;">Message</button>
-      ` : `
-        <button id="prof-edit-btn" style="flex:1;max-width:200px;">Edit Profile</button>
-      `}
-    </div>
-    
-    ${fresh.profession || fresh.gender || fresh.location ? `
-    <div class="profile-meta">
-      ${fresh.profession ? `<span>${ico("briefcase")} ${fresh.profession}</span>` : ""}
-      ${fresh.gender && fresh.gender !== "Prefer not to say" ? `<span>👤 ${fresh.gender}</span>` : ""}
-      ${fresh.location ? `<span>${ico("mapPin")} ${fresh.location}</span>` : ""}
-    </div>
-    ` : ""}
-    
-    <div style="margin-top:1.5rem;">
-      <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">Posts</h3>
-      <div id="prof-posts" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.3rem;"></div>
-    </div>
-  `;
+  $("pp-av").src = fresh.photoURL;
+  $("pp-name").innerHTML = `${fresh.nickname}${fresh.verified ? `<span class="verified" title="Verified">${ico("check")}</span>` : ""}`;
+  $("pp-user").textContent = "@" + fresh.username;
+  $("pp-bio").textContent = fresh.bio || "No bio yet.";
   
-  const page = document.querySelector("#v-settings").cloneNode(false);
-  page.id = "v-profile-page";
-  page.hidden = false;
-  page.innerHTML = "";
-  page.appendChild(container);
+  $("pp-posts").textContent = fresh.postsCount || 0;
+  $("pp-followers").textContent = fresh.followersCount || 0;
+  $("pp-following").textContent = fresh.followingCount || 0;
   
-  const existing = document.querySelector("#v-profile-page");
-  if (existing) existing.remove();
-  document.querySelector("#app").appendChild(page);
+  $("pp-followers-btn").onclick = () => openFollowersModal(u.uid, "followers");
+  $("pp-following-btn").onclick = () => openFollowersModal(u.uid, "following");
   
-  ["home","chats","contacts","calls","settings"].forEach(k => {
-    const v = $("v-" + k);
-    if (v) v.hidden = true;
-  });
-  $("cols").hidden = true;
-  $("pm").hidden = true;
+  $("pp-follow-btn").hidden = true;
+  $("pp-msg-btn").hidden = true;
+  $("pp-edit-btn").hidden = true;
   
-  if (!isOwn) {
-    const followBtn = $("prof-follow-btn");
+  if (isOwn) {
+    $("pp-edit-btn").hidden = false;
+    $("pp-edit-btn").onclick = () => openPm();
+  } else {
+    $("pp-follow-btn").hidden = false;
+    $("pp-msg-btn").hidden = false;
+    $("pp-msg-btn").onclick = () => openChat(fresh);
+    
     const isFollowing = await checkFollowing(u.uid);
-    followBtn.textContent = isFollowing ? "Following" : "Follow";
-    followBtn.style.background = isFollowing ? "var(--hov)" : "var(--pri)";
-    followBtn.style.color = isFollowing ? "var(--tx)" : "#fff";
+    const fBtn = $("pp-follow-btn");
+    fBtn.textContent = isFollowing ? "Following" : "Follow";
+    fBtn.style.background = isFollowing ? "var(--hov)" : "var(--pri)";
+    fBtn.style.color = isFollowing ? "var(--tx)" : "#fff";
     
-    followBtn.onclick = async () => {
+    fBtn.onclick = async () => {
       await toggleFollow(fresh);
       const updated = await checkFollowing(u.uid);
-      followBtn.textContent = updated ? "Following" : "Follow";
-      followBtn.style.background = updated ? "var(--hov)" : "var(--pri)";
-      followBtn.style.color = updated ? "var(--tx)" : "#fff";
+      fBtn.textContent = updated ? "Following" : "Follow";
+      fBtn.style.background = updated ? "var(--hov)" : "var(--pri)";
+      fBtn.style.color = updated ? "var(--tx)" : "#fff";
       const uSnap = await getDoc(doc(db, "users", u.uid));
-      $("stat-followers").textContent = uSnap.data().followersCount || 0;
+      $("pp-followers").textContent = uSnap.data().followersCount || 0;
       const meSnap = await getDoc(doc(db, "users", me.uid));
-      $("stat-following").textContent = meSnap.data().followingCount || 0;
+      $("pp-following").textContent = meSnap.data().followingCount || 0;
     };
-    
-    $("prof-msg-btn").onclick = () => openChat(fresh);
-  } else {
-    $("prof-edit-btn").onclick = () => openPm();
   }
+  
+  const meta = $("pp-meta");
+  meta.innerHTML = "";
+  let hasMeta = false;
+  if (fresh.profession) { meta.innerHTML += `<span>${ico("briefcase")} ${fresh.profession}</span>`; hasMeta = true; }
+  if (fresh.gender && fresh.gender !== "Prefer not to say") { meta.innerHTML += `<span>👤 ${fresh.gender}</span>`; hasMeta = true; }
+  if (fresh.location) { meta.innerHTML += `<span>${ico("mapPin")} ${fresh.location}</span>`; hasMeta = true; }
+  meta.hidden = !hasMeta;
   
   const postsSnap = await getDocs(query(
     collection(db, "posts"),
@@ -1729,7 +1728,8 @@ async function showProfilePage(u) {
     limit(12)
   ));
   
-  const postsGrid = $("prof-posts");
+  const postsGrid = $("pp-posts-grid");
+  postsGrid.innerHTML = "";
   if (postsSnap.empty) {
     postsGrid.innerHTML = '<p class="soon" style="grid-column:1/-1;text-align:center;">No posts yet.</p>';
   } else {
@@ -2135,7 +2135,7 @@ $("rec-ok").onclick = () => stopRec(true);
 
 const VIEWS = {
   home: "v-home", chats: "cols", contacts: "v-contacts",
-  calls: "v-calls", profile: "pm", settings: "v-settings"
+  calls: "v-calls", profile: "v-profile-page", settings: "v-settings"
 };
 function showView(v) {
   curView = v;
@@ -2143,12 +2143,12 @@ function showView(v) {
     $(id).hidden = k !== v;
     const n = $("nav-" + k); if (n) n.classList.toggle("act", k === v);
   });
-  document.querySelector("#v-profile-page")?.remove();
   if (v === "home") renderHome();
   if (v === "contacts") loadContacts();
   if (v === "calls") loadCalls();
   if (v === "settings") renderSettings();
 }
+$("nav-profile").onclick = () => showProfilePage(me);
 ["home","chats","contacts","calls","settings"].forEach(k => $("nav-" + k).onclick = () => showView(k));
 document.querySelectorAll("nav a").forEach(a => a.addEventListener("keydown", e => {
   if (e.key === "Enter" || e.key === " ") { e.preventDefault(); a.click(); }
