@@ -787,30 +787,37 @@ function startApp() {
   });
 
   let convVer = 0;
-  onSnapshot(query(collection(db, "conversations"), where("participants", "array-contains", me.uid)), async snap => {
-    const v = ++convVer;
-    const cl = x => (x.clearedAt?.[me.uid]?.seconds) || 0;
-    const list = snap.docs.map(d => ({ id: d.id, ...d.data() }))
-      .filter(c => !cl(c) || (c.updatedAt?.seconds || 0) > cl(c))
-      .sort((a, b) => (b.updatedAt?.seconds || 0) - (a.updatedAt?.seconds || 0));
-    const frag = document.createDocumentFragment(), data = [], cdata = [];
-    for (const c of list) {
-      const o = c.participants.find(x => x !== me.uid);
-      const u = await getUser(o);
-      if (!u) continue;
-      const r = row(u);
-      data.push(u); cdata.push({ c, u });
-      r.querySelector("small").textContent = c.lastMessage || "@" + u.username;
-      decorate(r, c);
-      frag.append(r);
+  onSnapshot(
+    query(collection(db, "conversations"), where("participants", "array-contains", me.uid)), 
+    async snap => {
+      const v = ++convVer;
+      const cl = x => (x.clearedAt?.[me.uid]?.seconds) || 0;
+      const list = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+        .filter(c => !cl(c) || (c.updatedAt?.seconds || 0) > cl(c))
+        .sort((a, b) => (b.updatedAt?.seconds || 0) - (a.updatedAt?.seconds || 0));
+      const frag = document.createDocumentFragment(), data = [], cdata = [];
+      for (const c of list) {
+        const o = c.participants.find(x => x !== me.uid);
+        const u = await getUser(o);
+        if (!u) continue;
+        const r = row(u);
+        data.push(u); cdata.push({ c, u });
+        r.querySelector("small").textContent = c.lastMessage || "@" + u.username;
+        decorate(r, c);
+        frag.append(r);
+      }
+      if (v !== convVer) return;
+      const box = $("convs");
+      convsData = data; convList = cdata;
+      box.innerHTML = list.length ? "" : '<i class="soon">No conversations yet</i>';
+      box.append(frag);
+      onConvs();
+    }, 
+    e => {
+      toast("Error loading conversations: " + e.message);
+      $("convs").innerHTML = '<i class="err">Failed to load chats. Check rules/permissions.</i>';
     }
-    if (v !== convVer) return;
-    const box = $("convs");
-    convsData = data; convList = cdata;
-    box.innerHTML = list.length ? "" : '<i class="soon">No conversations yet</i>';
-    box.append(frag);
-    onConvs();
-  }, e => toast("Cannot load conversations: " + e.code));
+  );
 
   startFeed();
 }
@@ -958,7 +965,11 @@ async function openChat(u) {
   };
   unsub.push(onSnapshot(query(collection(db, "conversations", cid, "messages"), orderBy("createdAt", "desc"), limit(50)),
     sn => { lastSnap = sn; renderMsgs(sn); },
-    e => toast("Cannot load messages: " + e.code)));
+    e => {
+      toast("Cannot load messages: " + e.code);
+      $("msgs").innerHTML = '<div class="empty" style="font-size:1rem;color:var(--bad)">Failed to load messages. Check console.</div>';
+    }
+  ));
 }
 
 let tt;
