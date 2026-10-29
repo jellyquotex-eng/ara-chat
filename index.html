@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ARA – A New Way to Connect.</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&display=swap" rel="stylesheet">
+<!-- Leaflet Map CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <style>
 :root{--bg:#eceee6;--card:#f7f8f3;--bg2:#f7f8f3;--pri:#4f6b43;--pri2:#3f5835;--tx:#26352a;--mut:#7a8878;--ok:#3d8b37;--line:#e1e5d8;--bad:#c0392b;--blue:#1d9bf0}
 *{box-sizing:border-box}[hidden]{display:none!important}
@@ -89,13 +91,13 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 #gctl{position:absolute;bottom:1.5rem;left:0;right:0;display:flex;gap:1rem;justify-content:center}
 
 /* ===== Modals ===== */
-#sm,#rm,#fm,#pm{position:fixed;inset:0;background:#0006;display:grid;place-items:center;z-index:11}
+#sm,#rm,#fm,#pm,#fol-modal{position:fixed;inset:0;background:#0006;display:grid;place-items:center;z-index:11}
 .mod{background:var(--card);padding:1.4rem;border-radius:18px;width:min(92vw,420px);max-height:90vh;overflow:auto;display:grid;gap:.7rem}
 .mod label{display:grid;gap:.25rem;font-weight:600;font-size:.85rem}.mod h3,.mod h4{margin:0}.mod h4{color:var(--pri);margin-top:.5rem}
 .sw-row{display:flex!important;justify-content:space-between;align-items:center;gap:.6rem}
 .sw{appearance:none;-webkit-appearance:none;width:46px;height:26px;border-radius:99px;background:#b5bcae;position:relative;cursor:pointer;padding:0;border:0;flex:none}
 .sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}.sw:checked{background:var(--ok)}.sw:checked::after{left:23px}
-#pf{background:var(--card);padding:1.4rem;border-radius:18px;width:min(92vw,400px);display:grid;gap:.7rem}#pf-prev{width:84px;height:84px;border-radius:50%;object-fit:cover;justify-self:center;background:#ddd}
+#pf{background:var(--card);padding:1.4rem;border-radius:18px;width:min(92vw,500px);display:grid;gap:.7rem}#pf-prev{width:84px;height:84px;border-radius:50%;object-fit:cover;justify-self:center;background:#ddd}
 #toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--bad);color:#fff;padding:.7rem 1rem;border-radius:12px;z-index:40;max-width:90vw;text-align:center}
 .err{color:var(--bad)}.soon{color:var(--mut)}
 #mm{position:fixed;background:var(--card);border-radius:12px;box-shadow:0 6px 20px #0003;padding:.3rem;z-index:12;display:grid;min-width:180px}
@@ -286,8 +288,19 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .composer-tools button { padding: .4rem .6rem; font-size: 0.8rem; }
 .composer-tools button svg { width: 16px; height: 16px; }
 .composer-tools select { padding: .4rem; font-size: 0.8rem; }
+
+/* Profile Specific */
+.profile-stats { display: flex; gap: 1.5rem; margin: 1rem 0; font-size: 0.95rem; }
+.profile-stats b { font-size: 1.1rem; color: var(--pri); }
+.profile-stats span { cursor: pointer; }
+.profile-stats span:hover { color: var(--pri); text-decoration: underline; }
+.profile-meta { color: var(--mut); font-size: 0.85rem; display: grid; gap: 0.25rem; margin-bottom: 1rem; }
+.profile-meta span { display: flex; align-items: center; gap: 0.4rem; }
+.profile-meta svg { width: 14px; height: 14px; }
+.map-container { height: 200px; border-radius: 12px; margin-top: 0.5rem; z-index: 1; }
 </style>
 <script>try{if(localStorage.getItem("ara-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -489,16 +502,105 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
     </div>
   </section>
 
+  <!-- Profile View / Edit -->
   <div id="pm" hidden>
-    <form id="pf">
-      <h3>Edit profile</h3>
+    <form id="pf" style="max-height: 90vh; overflow-y: auto;">
+      <h3>Edit Profile</h3>
+      
       <label>Nickname<input id="pf-nick" maxlength="30"></label>
       <label>Username (unique)<input id="pf-user" maxlength="20"></label>
       <label>Bio<input id="pf-bio" maxlength="140"></label>
-      <label>Profile photo<img id="pf-prev" alt=""><input id="pf-file" type="file" accept="image/*"></label>
+      
+      <label>Profession<input id="pf-prof" placeholder="Software Engineer, Student, etc."></label>
+      
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;">
+        <label>Gender
+          <select id="pf-gender">
+            <option value="">Prefer not to say</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Non-binary">Non-binary</option>
+            <option value="Custom">Custom</option>
+          </select>
+        </label>
+        <label>Date of Birth<input type="date" id="pf-dob"></label>
+      </div>
+      <label id="pf-custom-gender-wrap" hidden>Custom Gender<input id="pf-custom-gender" maxlength="30"></label>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;">
+        <label>Relationship Status
+          <select id="pf-rel">
+            <option value="">Prefer not to say</option>
+            <option value="Single">Single</option>
+            <option value="In a relationship">In a relationship</option>
+            <option value="Engaged">Engaged</option>
+            <option value="Married">Married</option>
+            <option value="Separated">Separated</option>
+          </select>
+        </label>
+        <label>Sexual Orientation
+          <select id="pf-orient">
+            <option value="">Prefer not to say</option>
+            <option value="Straight">Straight</option>
+            <option value="Gay">Gay</option>
+            <option value="Lesbian">Lesbian</option>
+            <option value="Bisexual">Bisexual</option>
+            <option value="Pansexual">Pansexual</option>
+            <option value="Asexual">Asexual</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+      </div>
+
+      <label>Economic Category
+        <select id="pf-econ">
+          <option value="">Prefer not to say</option>
+          <option value="Lower Income">Lower Income</option>
+          <option value="Middle Income">Middle Income</option>
+          <option value="Upper Middle Income">Upper Middle Income</option>
+          <option value="High Income">High Income</option>
+          <option value="Ultra High Income">Ultra High Income</option>
+        </select>
+      </label>
+
+      <label>Location (City/Area)</label>
+      <input id="pf-loc-search" placeholder="Search for a city...">
+      <div id="pf-map" class="map-container"></div>
+      <small id="pf-loc-label" class="soon">No location selected</small>
+      <input type="hidden" id="pf-loc-lat">
+      <input type="hidden" id="pf-loc-lng">
+
+      <label>Profile photo<img id="pf-prev" style="width:84px;height:84px;border-radius:50%;object-fit:cover;justify-self:center;background:#ddd;"><input id="pf-file" type="file" accept="image/*"></label>
+      
+      <h4>Profile Privacy</h4>
+      <p class="soon" style="font-size:0.8rem">Control who can see your sensitive information.</p>
+      <div style="display:grid;gap:0.5rem;margin-bottom:1rem;">
+        <label style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;">
+          Date of Birth <select id="pf-priv-dob" style="width:auto;padding:0.3rem;"><option value="public">Public</option><option value="followers">Followers</option><option value="private">Only me</option></select>
+        </label>
+        <label style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;">
+          Relationship Status <select id="pf-priv-rel" style="width:auto;padding:0.3rem;"><option value="public">Public</option><option value="followers">Followers</option><option value="private">Only me</option></select>
+        </label>
+        <label style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;">
+          Sexual Orientation <select id="pf-priv-orient" style="width:auto;padding:0.3rem;"><option value="public">Public</option><option value="followers">Followers</option><option value="private">Only me</option></select>
+        </label>
+        <label style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;">
+          Economic Category <select id="pf-priv-econ" style="width:auto;padding:0.3rem;"><option value="public">Public</option><option value="followers">Followers</option><option value="private">Only me</option></select>
+        </label>
+      </div>
+
       <div id="pf-err" class="err"></div>
       <div class="two"><button>Save</button><button type="button" id="pf-x" class="ghost">Cancel</button></div>
     </form>
+  </div>
+</div>
+
+<!-- Followers/Following Modal -->
+<div id="fol-modal" hidden>
+  <div class="mod" style="width:min(92vw,400px);height:min(80vh,600px);display:flex;flex-direction:column;">
+    <h3 id="fol-title">Followers</h3>
+    <div id="fol-list" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:0.5rem;margin:0.5rem 0;"></div>
+    <button id="fol-x" class="ghost" style="width:100%">Close</button>
   </div>
 </div>
 
@@ -682,7 +784,10 @@ const P = {
   repeat:'<path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/>',
   eye:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
   globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
-  lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>'
+  lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  mapPin: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+  briefcase: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+  heartOutline: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>'
 };
 const ico = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]||""}</svg>`;
 const paint = (r=document) => r.querySelectorAll("[data-i]:not([data-p])").forEach(e => {
@@ -714,6 +819,13 @@ let peer = null, ps = {};
 let priv = { online: "everyone", lastSeen: "everyone", readReceipts: true };
 let blocked = new Map();
 let isAdmin = false;
+
+// Map state
+let mapInstance = null;
+let mapMarker = null;
+let selectedLat = null;
+let selectedLng = null;
+let selectedLocationName = "";
 
 const getUser = async uid => cache[uid] || (cache[uid] = (await getDoc(doc(db,"users",uid))).data());
 
@@ -748,7 +860,8 @@ $("su-go").onclick = async () => {
   const p = {
     uid, username: name, usernameLower: name, nickname: nick, nicknameLower: nick.toLowerCase(),
     photoURL: avatar(name), coverURL: "", bio: "", createdAt: serverTimestamp(),
-    verified: false, suspended: false
+    verified: false, suspended: false,
+    followersCount: 0, followingCount: 0, postsCount: 0
   };
   try {
     await runTransaction(db, async tx => {
@@ -795,6 +908,7 @@ function startApp() {
       const list = snap.docs.map(d => ({ id: d.id, ...d.data() }))
         .filter(c => !cl(c) || (c.updatedAt?.seconds || 0) > cl(c))
         .sort((a, b) => (b.updatedAt?.seconds || 0) - (a.updatedAt?.seconds || 0));
+      
       const frag = document.createDocumentFragment(), data = [], cdata = [];
       for (const c of list) {
         const o = c.participants.find(x => x !== me.uid);
@@ -807,6 +921,7 @@ function startApp() {
         frag.append(r);
       }
       if (v !== convVer) return;
+      
       const box = $("convs");
       convsData = data; convList = cdata;
       box.innerHTML = list.length ? "" : '<i class="soon">No conversations yet</i>';
@@ -815,7 +930,7 @@ function startApp() {
     }, 
     e => {
       toast("Error loading conversations: " + e.message);
-      $("convs").innerHTML = '<i class="err">Failed to load chats. Check rules/permissions.</i>';
+      $("convs").innerHTML = '<i class="err">Failed to load chats.</i>';
     }
   );
 
@@ -1197,36 +1312,424 @@ function fillRp(u) {
   $("rp-user").textContent = "@" + u.username;
   $("rp-bio").textContent = u.bio || "No bio yet.";
   renderFr(u);
+  renderFollowStats(u);
 }
-$("rp-a").onclick = () => startCall(false);
-$("rp-v").onclick = () => startCall(true);
 
-let newPhoto = null;
+// ============ FOLLOW SYSTEM & PROFILE MODALS ============
+
+async function renderFollowStats(u) {
+  const isOwn = u.uid === me.uid;
+  
+  // Update the profile panel (right side) with follow stats
+  const rpUser = $("rp-user");
+  rpUser.innerHTML = `@${u.username}`;
+  
+  // Add follow button to the right panel if not self
+  const followBtnId = "rp-follow-btn";
+  let followBtn = document.getElementById(followBtnId);
+  if (!followBtn && !isOwn) {
+    followBtn = document.createElement("button");
+    followBtn.id = followBtnId;
+    followBtn.className = "ghost";
+    followBtn.style = "width:100%; margin-top: 0.5rem;";
+    followBtn.onclick = () => toggleFollow(u);
+    $("rp-user").after(followBtn);
+  }
+  
+  if (followBtn) {
+    const following = await checkFollowing(u.uid);
+    followBtn.textContent = following ? "Following" : "Follow";
+    followBtn.style.background = following ? "var(--hov)" : "var(--pri)";
+    followBtn.style.color = following ? "var(--tx)" : "#fff";
+  }
+}
+
+async function checkFollowing(targetUid) {
+  const fid = me.uid + "_" + targetUid;
+  const snap = await getDoc(doc(db, "follows", fid));
+  return snap.exists();
+}
+
+async function toggleFollow(u) {
+  const fid = me.uid + "_" + u.uid;
+  const ref = doc(db, "follows", fid);
+  const snap = await getDoc(ref);
+  
+  if (snap.exists()) {
+    // Unfollow
+    await deleteDoc(ref);
+    await updateDoc(doc(db, "users", u.uid), { followersCount: increment(-1) });
+    await updateDoc(doc(db, "users", me.uid), { followingCount: increment(-1) });
+    toast("Unfollowed " + u.nickname);
+  } else {
+    // Follow
+    await setDoc(ref, {
+      followerUid: me.uid,
+      followeeUid: u.uid,
+      createdAt: serverTimestamp()
+    });
+    await updateDoc(doc(db, "users", u.uid), { followersCount: increment(1) });
+    await updateDoc(doc(db, "users", me.uid), { followingCount: increment(1) });
+    toast("Followed " + u.nickname, 1);
+  }
+  
+  // Refresh the right panel
+  const uDoc = await getDoc(doc(db, "users", u.uid));
+  fillRp(uDoc.data());
+}
+
+// ============ PROFILE VIEWING ============
+// We override nav-profile to show current user's profile
+$("nav-profile").onclick = () => {
+  showProfilePage(me);
+};
+
+async function showProfilePage(u) {
+  // Switch to a profile view
+  showView("profile");
+  
+  const isOwn = u.uid === me.uid;
+  
+  // Fetch fresh data
+  const snap = await getDoc(doc(db, "users", u.uid));
+  const fresh = snap.exists() ? snap.data() : u;
+  
+  // Build profile HTML
+  const container = document.createElement("div");
+  container.style = "max-width:600px;margin:0 auto;padding:1rem;";
+  container.innerHTML = `
+    <div style="text-align:center; margin-bottom: 1rem;">
+      <img src="${fresh.photoURL}" style="width:96px;height:96px;border-radius:50%;object-fit:cover;margin:0 auto;background:#ddd;">
+      <h2 style="margin:0.5rem 0 0.2rem;display:flex;align-items:center;justify-content:center;gap:0.4rem;">
+        ${fresh.nickname}${fresh.verified ? `<span class="verified" title="Verified">${ico("check")}</span>` : ""}
+      </h2>
+      <div style="color:var(--mut);font-size:0.9rem;">@${fresh.username}</div>
+      ${fresh.bio ? `<p style="margin:0.5rem 0;font-size:0.95rem;">${fresh.bio}</p>` : ""}
+    </div>
+    
+    <div class="profile-stats" style="justify-content:center;">
+      <div style="text-align:center;">
+        <b>${fresh.postsCount || 0}</b><br><span style="font-size:0.75rem;color:var(--mut);">Posts</span>
+      </div>
+      <div style="text-align:center;">
+        <b id="stat-followers">${fresh.followersCount || 0}</b><br><span style="font-size:0.75rem;color:var(--mut);cursor:pointer;" onclick="openFollowersModal('${u.uid}', 'followers')">Followers</span>
+      </div>
+      <div style="text-align:center;">
+        <b id="stat-following">${fresh.followingCount || 0}</b><br><span style="font-size:0.75rem;color:var(--mut);cursor:pointer;" onclick="openFollowersModal('${u.uid}', 'following')">Following</span>
+      </div>
+    </div>
+    
+    <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1rem;">
+      ${!isOwn ? `
+        <button id="prof-follow-btn" style="flex:1;max-width:200px;background:var(--pri);color:#fff;">Follow</button>
+        <button id="prof-msg-btn" style="flex:1;max-width:200px;">Message</button>
+      ` : `
+        <button id="prof-edit-btn" style="flex:1;max-width:200px;">Edit Profile</button>
+      `}
+    </div>
+    
+    ${fresh.profession || fresh.gender || fresh.location ? `
+    <div class="profile-meta">
+      ${fresh.profession ? `<span>${ico("briefcase")} ${fresh.profession}</span>` : ""}
+      ${fresh.gender && fresh.gender !== "Prefer not to say" ? `<span>👤 ${fresh.gender}</span>` : ""}
+      ${fresh.location ? `<span>${ico("mapPin")} ${fresh.location}</span>` : ""}
+    </div>
+    ` : ""}
+    
+    <div style="margin-top:1.5rem;">
+      <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">Posts</h3>
+      <div id="prof-posts" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.3rem;"></div>
+    </div>
+  `;
+  
+  // Replace the profile view container
+  const vProfile = $("pm");
+  if (!vProfile) return;
+  
+  // We'll use the page container directly
+  const page = document.querySelector("#v-settings").cloneNode(false);
+  page.id = "v-profile-page";
+  page.hidden = false;
+  page.innerHTML = "";
+  page.appendChild(container);
+  
+  // Remove existing and add new
+  const existing = document.querySelector("#v-profile-page");
+  if (existing) existing.remove();
+  document.querySelector("#app").appendChild(page);
+  
+  // Hide other views
+  ["home","chats","contacts","calls","settings"].forEach(k => {
+    const v = $("v-" + k);
+    if (v) v.hidden = true;
+  });
+  $("cols").hidden = true;
+  $("pm").hidden = true;
+  
+  // Wire up buttons
+  if (!isOwn) {
+    const followBtn = $("prof-follow-btn");
+    const isFollowing = await checkFollowing(u.uid);
+    followBtn.textContent = isFollowing ? "Following" : "Follow";
+    followBtn.style.background = isFollowing ? "var(--hov)" : "var(--pri)";
+    followBtn.style.color = isFollowing ? "var(--tx)" : "#fff";
+    
+    followBtn.onclick = async () => {
+      await toggleFollow(fresh);
+      const updated = await checkFollowing(u.uid);
+      followBtn.textContent = updated ? "Following" : "Follow";
+      followBtn.style.background = updated ? "var(--hov)" : "var(--pri)";
+      followBtn.style.color = updated ? "var(--tx)" : "#fff";
+      const uSnap = await getDoc(doc(db, "users", u.uid));
+      $("stat-followers").textContent = uSnap.data().followersCount || 0;
+      const meSnap = await getDoc(doc(db, "users", me.uid));
+      $("stat-following").textContent = meSnap.data().followingCount || 0;
+    };
+    
+    $("prof-msg-btn").onclick = () => openChat(fresh);
+  } else {
+    $("prof-edit-btn").onclick = () => openPm();
+  }
+  
+  // Load posts
+  const postsSnap = await getDocs(query(
+    collection(db, "posts"),
+    where("uid", "==", u.uid),
+    orderBy("createdAt", "desc"),
+    limit(12)
+  ));
+  
+  const postsGrid = $("prof-posts");
+  if (postsSnap.empty) {
+    postsGrid.innerHTML = '<p class="soon" style="grid-column:1/-1;text-align:center;">No posts yet.</p>';
+  } else {
+    postsSnap.docs.forEach(d => {
+      const p = d.data();
+      const imgs = (p.media || []).filter(m => m.type === "image");
+      if (imgs.length > 0) {
+        const img = document.createElement("img");
+        img.src = imgs[0].data;
+        img.style = "width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;cursor:pointer;";
+        img.onclick = () => { $("lb-img").src = imgs[0].data; $("lb").hidden = false; };
+        postsGrid.appendChild(img);
+      } else if (p.content) {
+        const textPost = document.createElement("div");
+        textPost.style = "aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:0.5rem;font-size:0.75rem;overflow:hidden;cursor:pointer;";
+        textPost.textContent = p.content.slice(0, 100);
+        postsGrid.appendChild(textPost);
+      }
+    });
+  }
+  
+  // Restore nav
+  document.querySelectorAll("nav a").forEach(a => a.classList.remove("act"));
+  $("nav-profile").classList.add("act");
+}
+
+// Followers/Following modal
+async function openFollowersModal(uid, type) {
+  const modal = $("fol-modal");
+  const title = $("fol-title");
+  const list = $("fol-list");
+  
+  title.textContent = type === "followers" ? "Followers" : "Following";
+  list.innerHTML = '<p class="soon">Loading…</p>';
+  modal.hidden = false;
+  
+  try {
+    const q = type === "followers"
+      ? query(collection(db, "follows"), where("followeeUid", "==", uid), limit(50))
+      : query(collection(db, "follows"), where("followerUid", "==", uid), limit(50));
+    
+    const snap = await getDocs(q);
+    list.innerHTML = "";
+    
+    if (snap.empty) {
+      list.innerHTML = '<p class="soon" style="text-align:center;">No users yet.</p>';
+      return;
+    }
+    
+    for (const d of snap.docs) {
+      const f = d.data();
+      const otherUid = type === "followers" ? f.followerUid : f.followeeUid;
+      const uSnap = await getDoc(doc(db, "users", otherUid));
+      if (!uSnap.exists()) continue;
+      const u = uSnap.data();
+      
+      const row = document.createElement("div");
+      row.style = "display:flex;gap:0.7rem;align-items:center;padding:0.4rem;border-bottom:1px solid var(--line);";
+      row.innerHTML = `
+        <img src="${u.photoURL}" style="width:38px;height:38px;border-radius:50%;object-fit:cover;">
+        <div style="flex:1;min-width:0;">
+          <b style="display:block;font-size:0.9rem;">${u.nickname}</b>
+          <small style="color:var(--mut);font-size:0.75rem;">@${u.username}</small>
+        </div>
+      `;
+      list.appendChild(row);
+      
+      row.onclick = () => {
+        modal.hidden = true;
+        if (u.uid !== me.uid) {
+          showProfilePage(u);
+        } else {
+          $("nav-profile").click();
+        }
+      };
+    }
+  } catch (e) {
+    list.innerHTML = '<p class="err">Failed to load: ' + e.message + '</p>';
+  }
+}
+
+$("fol-x").onclick = () => { $("fol-modal").hidden = true; };
+
+// ============ EDIT PROFILE ============
+
+// Map logic
+function initMap() {
+  if (mapInstance) return;
+  
+  mapInstance = L.map('pf-map').setView([20, 0], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(mapInstance);
+  
+  mapInstance.on('click', async (e) => {
+    const { lat, lng } = e.latlng;
+    if (mapMarker) mapInstance.removeLayer(mapMarker);
+    mapMarker = L.marker([lat, lng]).addTo(mapInstance);
+    
+    // Reverse geocode with Nominatim
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+      const data = await res.json();
+      const city = data.address?.city || data.address?.town || data.address?.village || data.address?.county || "Unknown";
+      const country = data.address?.country || "";
+      selectedLocationName = `${city}, ${country}`.replace(/, $/, "");
+      $("pf-loc-label").textContent = selectedLocationName;
+      selectedLat = lat;
+      selectedLng = lng;
+    } catch (err) {
+      selectedLocationName = `Lat: ${lat.toFixed(2)}, Lng: ${lng.toFixed(2)}`;
+      $("pf-loc-label").textContent = selectedLocationName;
+      selectedLat = lat;
+      selectedLng = lng;
+    }
+  });
+}
+
+$("pf-loc-search").oninput = async (e) => {
+  const q = e.target.value.trim();
+  if (q.length < 3) return;
+  
+  try {
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=1`);
+    const data = await res.json();
+    if (data.length > 0) {
+      const { lat, lon, display_name } = data[0];
+      if (mapInstance) {
+        mapInstance.setView([parseFloat(lat), parseFloat(lon)], 12);
+        if (mapMarker) mapInstance.removeLayer(mapMarker);
+        mapMarker = L.marker([parseFloat(lat), parseFloat(lon)]).addTo(mapInstance);
+        selectedLocationName = display_name.split(',')[0];
+        $("pf-loc-label").textContent = selectedLocationName;
+        selectedLat = parseFloat(lat);
+        selectedLng = parseFloat(lon);
+      }
+    }
+  } catch (err) {}
+};
+
+$("pf-gender").onchange = (e) => {
+  $("pf-custom-gender-wrap").hidden = e.target.value !== "Custom";
+};
+
 const openPm = () => {
   $("pf-nick").value = me.nickname;
   $("pf-user").value = me.username;
   $("pf-bio").value = me.bio || "";
+  $("pf-prof").value = me.profession || "";
+  $("pf-gender").value = me.gender || "";
+  $("pf-dob").value = me.dob || "";
+  $("pf-custom-gender").value = me.customGender || "";
+  $("pf-rel").value = me.relationshipStatus || "";
+  $("pf-orient").value = me.orientation || "";
+  $("pf-econ").value = me.economicCategory || "";
+  
+  // Load privacy
+  $("pf-priv-dob").value = me.privacy?.dob || "private";
+  $("pf-priv-rel").value = me.privacy?.rel || "private";
+  $("pf-priv-orient").value = me.privacy?.orient || "private";
+  $("pf-priv-econ").value = me.privacy?.econ || "private";
+  
   $("pf-prev").src = me.photoURL;
   newPhoto = null; $("pf-file").value = ""; $("pf-err").textContent = "";
+  
+  // Location
+  if (me.locationLat && me.locationLng) {
+    selectedLat = me.locationLat;
+    selectedLng = me.locationLng;
+    selectedLocationName = me.location || "";
+    $("pf-loc-label").textContent = selectedLocationName;
+    $("pf-loc-search").value = selectedLocationName;
+    
+    setTimeout(() => {
+      initMap();
+      if (mapInstance && selectedLat) {
+        mapInstance.setView([selectedLat, selectedLng], 11);
+        if (mapMarker) mapInstance.removeLayer(mapMarker);
+        mapMarker = L.marker([selectedLat, selectedLng]).addTo(mapInstance);
+      }
+    }, 100);
+  } else {
+    $("pf-loc-label").textContent = "No location selected";
+    $("pf-loc-search").value = "";
+    selectedLat = null; selectedLng = null; selectedLocationName = "";
+  }
+  
   showView("profile");
 };
-$("nav-profile").onclick = openPm;
+
 $("me-av").onclick = () => $("menu").hidden = !$("menu").hidden;
 $("menu-prof").onclick = () => { $("menu").hidden = true; openPm(); };
-$("pf-x").onclick = () => showView("chats");
+$("pf-x").onclick = () => {
+  $("pm").hidden = true;
+  document.querySelector("#v-profile-page")?.remove();
+  showView("home");
+};
 
 $("pf").onsubmit = async e => {
   e.preventDefault();
   const err = $("pf-err"); err.textContent = "";
+  
   const nick = $("pf-nick").value.trim();
   const name = $("pf-user").value.trim().toLowerCase();
   const bio = $("pf-bio").value.trim();
   if (!nick) return err.textContent = "Nickname required.";
   if (!/^[a-z0-9_]{3,20}$/.test(name)) return err.textContent = "Username: 3-20 chars, a-z 0-9 _";
+  
   const upd = {
     username: name, usernameLower: name, nickname: nick,
-    nicknameLower: nick.toLowerCase(), bio, photoURL: newPhoto || me.photoURL
+    nicknameLower: nick.toLowerCase(), bio,
+    photoURL: newPhoto || me.photoURL,
+    profession: $("pf-prof").value.trim(),
+    gender: $("pf-gender").value,
+    dob: $("pf-dob").value,
+    customGender: $("pf-custom-gender").value.trim(),
+    relationshipStatus: $("pf-rel").value,
+    orientation: $("pf-orient").value,
+    economicCategory: $("pf-econ").value,
+    location: selectedLocationName,
+    locationLat: selectedLat,
+    locationLng: selectedLng,
+    privacy: {
+      dob: $("pf-priv-dob").value,
+      rel: $("pf-priv-rel").value,
+      orient: $("pf-priv-orient").value,
+      econ: $("pf-priv-econ").value
+    }
   };
+  
   try {
     await runTransaction(db, async tx => {
       if (name !== me.usernameLower) {
@@ -1242,10 +1745,14 @@ $("pf").onsubmit = async e => {
     $("me-av").src = me.photoURL;
     $("me-name").textContent = me.nickname;
     toast("Profile saved.", 1);
+    $("pm").hidden = true;
+    document.querySelector("#v-profile-page")?.remove();
+    showView("home");
   } catch (x) {
     err.textContent = x.message === "taken" ? "Username already taken." : "Could not save: " + (x.code || x.message);
   }
 };
+
 $("pf-file").onchange = e => {
   const f = e.target.files[0]; if (!f) return;
   if (!f.type.startsWith("image/")) return $("pf-err").textContent = "Please choose an image.";
@@ -1262,6 +1769,8 @@ $("pf-file").onchange = e => {
   img.src = u;
 };
 
+
+// ============ GROUP CALLS ============
 let gr = null;
 const rnd = n => Array.from(crypto.getRandomValues(new Uint8Array(n)),
   b => "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[b % 32]).join("");
@@ -1367,6 +1876,7 @@ $("g-copy").onclick = () => navigator.clipboard?.writeText(gr.code)
   .then(() => toast("Room code copied: " + gr.code), () => toast("Room code: " + gr.code));
 $("g-end").onclick = () => leaveRoom("");
 
+// ============ STATE VIEWS ============
 function renderSeen() {
   $("h-dot").classList.toggle("on", ps.on === true);
   $("h-seen").textContent = ps.on === true ? "Online"
@@ -1387,7 +1897,7 @@ async function initPrivacy() {
     blocked = new Map(snap.docs.map(d => [d.id, d.data()]));
     if (peer) $("send").hidden = blocked.has(peer.uid);
     renderBlocked(); syncBlockBtns();
-  }, e => toast("Cannot load blocked users: " + e.code));
+  }, e => console.warn("Block list failed:", e.message));
 }
 $("menu-priv").onclick = () => {
   $("menu").hidden = true;
@@ -1754,6 +2264,7 @@ function showView(v) {
     $(id).hidden = k !== v;
     const n = $("nav-" + k); if (n) n.classList.toggle("act", k === v);
   });
+  document.querySelector("#v-profile-page")?.remove();
   if (v === "home") renderHome();
   if (v === "contacts") loadContacts();
   if (v === "calls") loadCalls();
@@ -1789,30 +2300,6 @@ function userItem(u, sub, un) {
   return w;
 }
 
-const rel = uid => {
-  const o = reqOut.get(uid), i = reqIn.get(uid);
-  return o?.status === "accepted" || i?.status === "accepted" ? "friends"
-    : o ? "sent" : i ? "received" : "none";
-};
-const sendReq = u => {
-  if (rel(u.uid) !== "none") return;
-  setDoc(doc(db, "friendRequests", me.uid + "_" + u.uid), {
-    from: me.uid, to: u.uid, status: "pending", createdAt: serverTimestamp()
-  }).then(() => toast("Friend request sent.", 1))
-    .catch(e => toast("Could not send request: " + (e.code || e.message)));
-};
-const acceptReq = uid => updateDoc(doc(db, "friendRequests", uid + "_" + me.uid), { status: "accepted" })
-  .then(() => toast("Friend added.", 1))
-  .catch(e => toast("Failed: " + (e.code || e.message)));
-const delRel = uid => deleteDoc(doc(db, "friendRequests", reqOut.has(uid) ? me.uid + "_" + uid : uid + "_" + me.uid))
-  .catch(e => toast("Failed: " + (e.code || e.message)));
-function frBtns(u) {
-  const r = rel(u.uid);
-  if (r === "none") return [btn("Add Friend", "userplus", () => sendReq(u))];
-  if (r === "sent") return [btn("Request sent", "check", null, "ghost sm", 1), btn("Cancel", "x", () => delRel(u.uid))];
-  if (r === "received") return [btn("Accept", "check", () => acceptReq(u.uid), "sm"), btn("Decline", "x", () => delRel(u.uid))];
-  return [btn("Friends", "check", null, "ghost sm", 1)];
-}
 function listenFriends() {
   onSnapshot(query(collection(db, "friendRequests"), where("from", "==", me.uid)),
     s => { reqOut = new Map(s.docs.map(d => [d.data().to, d.data()])); frChanged(); },
@@ -2107,6 +2594,7 @@ $("comp-post").onclick = async () => {
       hiddenBy: []
     };
     const newRef = await addDoc(collection(db, "posts"), postDoc);
+    await updateDoc(doc(db, "users", me.uid), { postsCount: increment(1) });
     $("comp-text").value = "";
     composerMedia = [];
     renderComposerPrev();
@@ -2168,7 +2656,7 @@ async function renderPost(d) {
 
   card.innerHTML = `
     <div class="fp-head">
-      <img src="${p.authorPhoto || avatar(p.authorUsername || p.authorName)}" alt="">
+      <img src="${p.authorPhoto || avatar(p.authorUsername || p.authorName)}" alt="" style="cursor:pointer;" onclick="openUserProfile('${p.uid}')">
       <div class="who">
         <b>${escapeHtml(p.authorName || "User")}${p.authorVerified ? ` <span class="verified" title="Verified">${ico("check")}</span>` : ""}</b>
         <small>@${escapeHtml(p.authorUsername || "")} · ${timeAgo(date)} · <span class="privacy-tag" title="Privacy">${privacyIcon(p.visibility)}</span></small>
@@ -2474,6 +2962,16 @@ function postMenu(btn, p, postId, isMine) {
   mm.style.left = Math.max(8, Math.min(r.right - mm.offsetWidth, innerWidth - mm.offsetWidth - 8)) + "px";
 }
 
+// Helper to open profile from post
+window.openUserProfile = async (uid) => {
+  if (uid === me.uid) {
+    $("nav-profile").click();
+  } else {
+    const u = await getUser(uid);
+    if (u) showProfilePage(u);
+  }
+};
+
 let ctUsers = [], ctUn = [], ctAt = 0;
 async function loadContacts() {
   if (!ctUsers.length || Date.now() - ctAt > 60000) {
@@ -2494,7 +2992,7 @@ function renderContacts() {
   l.forEach(u => {
     const w = userItem(u, "@" + u.username, ctUn);
     const a = mk("div", "acts2");
-    a.append(btn("Message", "chat", () => openChat(u), "sm"), ...frBtns(u));
+    a.append(btn("Message", "chat", () => openChat(u), "sm"));
     w.append(a);
     box.append(w);
   });
