@@ -31,7 +31,6 @@ nav{display:flex;gap:1.2rem;margin:0 auto}nav a{cursor:pointer;padding:.9rem .3r
 #menu button{background:transparent;color:var(--tx);text-align:left;box-shadow:none;border-radius:8px;padding:.5rem .7rem}
 #menu button:hover{background:#e9ecdf}
 
-/* ===== Chat layout ===== */
 #cols{flex:1;min-height:0;display:grid;grid-template-columns:360px 1fr 340px;gap:.9rem;padding:.9rem}
 #cols.norp{grid-template-columns:360px 1fr}#cols.norp #rp{display:none}
 aside,main,#rp{background:var(--card);border-radius:18px;box-shadow:0 2px 10px #0001;overflow:hidden;min-height:0}
@@ -50,7 +49,7 @@ main{display:flex;flex-direction:column}
 .m{max-width:70%;padding:.55rem .8rem;border-radius:16px;background:#fff;word-break:break-word;white-space:pre-wrap;cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
 .m.mine{align-self:flex-end;background:var(--pri);color:#fff}.m small{display:block;opacity:.65;font-size:.7rem;margin-top:.2rem}
 form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send input{border-radius:99px}#typing{padding:0 1rem;height:1.2rem;font-size:.8rem;color:var(--ok)}
-#rp{padding:1.2rem;overflow:auto}#rp-av{width:76px;height:76px;border-radius:50%;object-fit:cover;cursor:pointer;}#rp h3{margin:.4rem 0 0}
+#rp{padding:1.2rem;overflow:auto}#rp-av{width:76px;height:76px;border-radius:50%;object-fit:cover;cursor:zoom-in;}#rp h3{margin:.4rem 0 0}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:.8rem 0}
 .card{background:#fff;border-radius:14px;padding:.9rem;margin-top:.8rem;border:1px solid var(--line)}.card p{margin:.4rem 0 0}
 .mr{display:flex;align-items:flex-start;gap:.2rem;align-self:flex-start;max-width:82%}.mr.mine{align-self:flex-end}.mr .m{max-width:none}
@@ -73,7 +72,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .rdot{width:10px;height:10px;border-radius:50%;background:var(--bad);animation:bl 1s infinite}@keyframes bl{50%{opacity:.25}}
 #rec button{padding:.45rem .9rem}
 
-/* ===== Calls ===== */
 #callui{position:fixed;inset:0;background:#000;z-index:9}#rv{width:100%;height:100%;object-fit:cover}
 #lv{position:absolute;right:1rem;bottom:8.5rem;width:110px;height:150px;object-fit:cover;border:2px solid #fff6;border-radius:16px;background:#222}
 #cinfo{position:absolute;top:1rem;left:1rem;display:grid;gap:0;color:#fff;text-shadow:0 0 6px #000}#cinfo b{font-size:1.2rem}#cinfo small{opacity:.85}
@@ -89,7 +87,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .tile span{position:absolute;left:.6rem;bottom:.5rem;background:#0008;padding:.1rem .5rem;border-radius:8px;font-size:.8rem}
 #gctl{position:absolute;bottom:1.5rem;left:0;right:0;display:flex;gap:1rem;justify-content:center}
 
-/* ===== Modals ===== */
 #sm,#rm,#fm,#pm,#fol-modal,#lightbox{position:fixed;inset:0;background:#000d;display:grid;place-items:center;z-index:11;}
 #lightbox { z-index: 100; cursor: zoom-out; }
 #lightbox img { max-width: 96vw; max-height: 92vh; border-radius: 8px; }
@@ -107,7 +104,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 #rpk{position:fixed;z-index:13;display:flex;gap:.1rem;background:var(--card);padding:.3rem .4rem;border-radius:99px;box-shadow:0 8px 24px #0004;max-width:calc(100vw - 16px)}
 #rpk button{background:none;box-shadow:none;padding:.2rem .3rem;font-size:1.4rem;border-radius:50%}#rpk button:hover{background:#e9ecdf;transform:scale(1.2)}
 
-/* ===== Pages ===== */
 .page{flex:1;min-height:0;overflow:auto;padding:1.2rem;width:100%;max-width:1100px;margin:0 auto}
 .phead{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem}.phead h2,.page h2{margin:0}
 .plist{display:grid;gap:.6rem}
@@ -124,7 +120,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 #np{position:fixed;top:64px;right:1rem;width:min(92vw,380px);max-height:70vh;overflow:auto;background:var(--card);border-radius:16px;box-shadow:0 10px 30px #0004;padding:.8rem;z-index:14;display:grid;gap:.5rem;align-content:start}#np h4{margin:0}
 .mg{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-top:.5rem}.mg img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;cursor:zoom-in}
 
-/* ===== v3: theme ===== */
 :root{--w:#fff;--hov:#e9ecdf;--hov2:#e6eadb}
 [data-theme=dark]{--bg:#151916;--card:#1e241f;--bg2:#1e241f;--pri:#56794c;--pri2:#66905a;--tx:#e8ede5;--mut:#98a595;--ok:#6fbf68;--line:#2f3831;--w:#273029;--hov:#2b352d;color-scheme:dark}
 [data-theme=dark] body{background:var(--bg)}
@@ -138,7 +133,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 [data-i]{display:inline-flex;align-items:center;gap:.45rem}[data-i] svg{width:20px;height:20px;flex:none}
 .cb i svg{width:26px;height:26px}.cb.bad i svg{transform:rotate(135deg)}
 
-/* ===== v4: social feed ===== */
 #top{gap:.8rem}
 #cols.feed-mode{grid-template-columns:1fr}
 #cols.feed-mode aside,#cols.feed-mode #rp{display:none}
@@ -184,7 +178,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .fp-actions button.on{color:var(--pri)}
 .fp-cmts{padding:.4rem 1rem .9rem;display:none;border-top:1px solid var(--line);background:var(--bg2)}
 .fp-cmts.open{display:block}
-.cmt{display:flex;gap:.6rem;padding:.5rem 0}.cmt img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex:none}
+.cmt{display:flex;gap:.6rem;padding:.5rem 0}.cmt img{width:34px;height:34px;border-radius:50%;object-fit:cover;flex:none;cursor:pointer}
 .cmt .cx{flex:1;min-width:0;background:var(--card);padding:.5rem .7rem;border-radius:12px;border:1px solid var(--line)}
 .cmt .cx b{font-size:.85rem;display:flex;gap:.3rem;align-items:center}.cmt .cx p{margin:.2rem 0 0;font-size:.9rem;white-space:pre-wrap;word-break:break-word}
 .cmt .acts{display:flex;gap:.5rem;margin-top:.2rem}.cmt .acts a{color:var(--mut);font-size:.75rem;cursor:pointer}.cmt .acts a:hover{color:var(--pri)}
@@ -207,7 +201,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 @keyframes sk{0%{background-position:100% 0}100%{background-position:-100% 0}}
 .skeleton-post{height:180px;margin-bottom:1rem}
 
-/* ===== Admin panel ===== */
+/* Admin */
 #admin{position:fixed;inset:0;background:#0007;z-index:20;display:grid;place-items:center;animation:fadeIn .2s}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 #admin .panel{background:var(--card);border-radius:18px;width:min(96vw,720px);max-height:92vh;overflow:auto;padding:1.2rem;display:grid;gap:1rem;box-shadow:0 20px 60px #0005}
@@ -229,13 +223,16 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 #admin input{padding:.5rem .7rem;font-size:.9rem}
 #admin .notice{font-size:.8rem;color:var(--mut);border-left:3px solid var(--pri);padding:.4rem .7rem;background:var(--bg2);border-radius:6px}
 
-/* ===== Mobile ===== */
+/* Mobile */
 @media(max-width:1100px){#cols{grid-template-columns:320px 1fr}#cols.norp{grid-template-columns:320px 1fr}#rp{display:none}#rp-t{display:none}}
 @media(max-width:700px){
   #top{gap:.6rem;padding:.4rem .8rem}.brand b,.pill.cs{display:none}.tools{margin-left:auto}
   nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:8;background:var(--card);box-shadow:0 -2px 10px #0002;margin:0;gap:0;justify-content:space-around;padding:.2rem 0 calc(.2rem + env(safe-area-inset-bottom))}
   nav a{flex-direction:column;font-size:.68rem;gap:.1rem;padding:.4rem .5rem;border-bottom:0!important}
-  #app.chatting nav{display:none}#app.chatting aside{display:none}#app:not(.chatting) main{display:none}#back{display:inline-block}
+  #app.chatting nav{display:none}#app.chatting #cols>aside{display:none}
+  /* BUG FIX: was `#app:not(.chatting) main{display:none}` which hid the home feed <main> too */
+  #app:not(.chatting) #cols main{display:none}
+  #back{display:inline-block}
   #app:not(.chatting) #cols,.page,#pm{padding-bottom:4.8rem}
   #cols{grid-template-columns:1fr;padding:.5rem}
   .qa{grid-template-columns:1fr 1fr}#np{top:56px;right:.5rem}
@@ -244,7 +241,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
   .composer-tools button{padding:.5rem}
 }
 
-/* ===== Instagram-Style Compact UI Overrides ===== */
 .feed-post { padding-bottom: 0.5rem; }
 .fp-head { padding: .75rem 1rem 0; align-items: flex-start; }
 .fp-head img { width: 40px; height: 40px; }
@@ -252,24 +248,13 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .fp-head .who small { font-size: 0.75rem; }
 .fp-body { padding: .4rem 1rem 0; font-size: 0.92rem; line-height: 1.4; }
 .fp-meta { padding: .4rem 1rem; font-size: 0.75rem; gap: 0.6rem; }
-
 .fp-actions { padding: .2rem; }
-.fp-actions button { 
-  padding: .5rem; 
-  font-size: .8rem; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  gap: .3rem; 
-  color: var(--mut);
-}
+.fp-actions button { padding: .5rem; font-size: .8rem; display: flex; align-items: center; justify-content: center; gap: .3rem; color: var(--mut); }
 .fp-actions button.on { color: var(--pri); }
 .fp-actions button svg { width: 18px; height: 18px; }
-
 .react-pop { padding: .2rem; border-radius: 99px; gap: 0; }
 .react-pop button { padding: .3rem .4rem; font-size: 1.1rem; }
 .react-pop button:hover { background: var(--hov); transform: translateY(-2px); }
-
 .fp-cmts { padding: .4rem 1rem .6rem; }
 .cmt { padding: .3rem 0; gap: .4rem; }
 .cmt img { width: 28px; height: 28px; }
@@ -280,7 +265,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .cmt .acts a { font-size: 0.7rem; }
 .cmt-form input { padding: .4rem .8rem; font-size: 0.85rem; border-radius: 99px; }
 .cmt-form button { padding: .4rem .8rem; font-size: 0.8rem; }
-
 .composer { padding: .8rem; }
 .composer-top { gap: .6rem; }
 .composer-top img { width: 36px; height: 36px; }
@@ -290,7 +274,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .composer-tools button svg { width: 16px; height: 16px; }
 .composer-tools select { padding: .4rem; font-size: 0.8rem; }
 
-/* Profile Specific */
 .profile-stats { display: flex; gap: 1.5rem; margin: 1rem 0; font-size: 0.95rem; justify-content: center; }
 .profile-stats b { font-size: 1.1rem; color: var(--pri); display: block; }
 .profile-stats span { cursor: pointer; font-size: 0.8rem; color: var(--mut); }
@@ -299,6 +282,22 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .profile-meta span { display: flex; align-items: center; gap: 0.4rem; }
 .profile-meta svg { width: 14px; height: 14px; }
 .map-container { height: 200px; border-radius: 12px; margin-top: 0.5rem; z-index: 1; }
+
+/* Private profile lock */
+.lock-view{text-align:center;padding:2rem 1rem;color:var(--mut)}
+.lock-view .lock-icon{font-size:3rem;margin-bottom:.5rem}
+.lock-view h3{color:var(--tx);margin:.5rem 0}
+
+/* Requests card */
+.req-item{display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid var(--line)}
+.req-item:last-child{border-bottom:0}
+.req-item img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:none;cursor:pointer}
+.req-item .who{flex:1;min-width:0}
+.req-item .who b{display:block;font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.req-item .who small{color:var(--mut);font-size:.75rem;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Override badge */
+.disp-adjusted{font-size:.65rem;color:var(--pri);margin-left:.2rem}
 </style>
 <script>try{if(localStorage.getItem("ara-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -335,10 +334,10 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
     <div class="me">
       <img id="me-av" alt="Menu">
       <b id="me-name"></b>
+      <!-- FIX: admin toggle removed from menu -->
       <div id="menu" hidden>
         <button id="menu-prof" class="ghost">Profile</button>
         <button id="menu-priv" class="ghost">Privacy &amp; Security</button>
-        <button id="admin-menu" class="ghost" hidden>Admin Panel</button>
         <button id="out" class="ghost">Logout</button>
       </div>
     </div>
@@ -348,7 +347,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
     <div class="feed-wrap">
       <aside class="feed-left">
         <div class="feed-card profile-mini">
-          <img id="hm-av" alt="" onclick="openLightbox(this.src)">
+          <img id="hm-av" alt="">
           <div style="min-width:0">
             <b id="hm-name"></b>
             <small id="hm-user" class="soon"></small>
@@ -411,7 +410,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
     <main>
       <div id="head">
         <button id="back" class="ic" aria-label="Back">←</button>
-        <img id="h-av" hidden alt="" onclick="openLightbox(this.src)">
+        <img id="h-av" hidden alt="">
         <div><b id="h-name">Select a conversation</b><br><small id="h-seen" class="soon"></small></div>
         <span id="h-dot" class="dot"></span>
         <span class="sp"></span>
@@ -446,7 +445,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
     <section id="rp">
       <div id="rp-empty" class="soon">Select a conversation to see the profile.</div>
       <div id="rp-body" hidden>
-        <img id="rp-av" alt="" onclick="openLightbox(this.src)">
+        <img id="rp-av" alt="">
         <h3 id="rp-name"></h3>
         <small id="rp-user" class="soon"></small>
         <div class="profile-stats">
@@ -474,7 +473,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 
   <section id="v-contacts" class="page" hidden>
     <div class="phead"><h2>Search Friend</h2></div>
-    <input id="ct-q" placeholder="Search friends by name or username…" aria-label="Search friends" style="margin-bottom:1rem">
+    <input id="ct-q" placeholder="Search by name, username or UID…" aria-label="Search friends" style="margin-bottom:1rem">
     <div id="ct-list" class="plist"></div>
   </section>
 
@@ -502,10 +501,10 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
         <p class="soon">Online status, last seen, read receipts and blocked users.</p>
         <button id="st-priv" class="ghost sm" type="button">Open privacy settings</button>
       </div>
-      <div class="card" id="st-admin-card" hidden><h4>Administration</h4>
-        <p class="soon">Admin panel (double-tap P to open).</p>
-        <button id="st-admin" class="ghost sm" type="button">Open Admin Panel</button>
+      <div class="card" id="st-requests-card" hidden><h4>Follow requests</h4>
+        <div id="st-requests"></div>
       </div>
+      <!-- FIX: Admin card removed from settings -->
     </div>
   </section>
 
@@ -515,9 +514,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
       <label>Nickname<input id="pf-nick" maxlength="30"></label>
       <label>Username (unique)<input id="pf-user" maxlength="20"></label>
       <label>Bio<input id="pf-bio" maxlength="140"></label>
-      
       <label>Profession<input id="pf-prof" placeholder="Software Engineer, Student, etc."></label>
-      
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;">
         <label>Gender
           <select id="pf-gender">
@@ -531,7 +528,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
         <label>Date of Birth<input type="date" id="pf-dob"></label>
       </div>
       <label id="pf-custom-gender-wrap" hidden>Custom Gender<input id="pf-custom-gender" maxlength="30"></label>
-
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;">
         <label>Relationship Status
           <select id="pf-rel">
@@ -556,7 +552,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
           </select>
         </label>
       </div>
-
       <label>Economic Category
         <select id="pf-econ">
           <option value="">Prefer not to say</option>
@@ -572,13 +567,14 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
       <input id="pf-loc-search" placeholder="Search for a city...">
       <div id="pf-map" class="map-container"></div>
       <small id="pf-loc-label" class="soon">No location selected</small>
-      <input type="hidden" id="pf-loc-lat">
-      <input type="hidden" id="pf-loc-lng">
 
       <label>Profile photo<img id="pf-prev" style="width:84px;height:84px;border-radius:50%;object-fit:cover;justify-self:center;background:#ddd;"><input id="pf-file" type="file" accept="image/*"></label>
       
       <h4>Profile Privacy</h4>
-      <p class="soon" style="font-size:0.8rem">Control who can see your sensitive information.</p>
+      <p class="soon" style="font-size:0.8rem">Control who can see your profile and posts.</p>
+      <label class="sw-row">Private profile<input type="checkbox" id="pf-private" class="sw"></label>
+      <small class="soon" style="font-size:0.78rem;margin-top:-.4rem">When on, only approved followers can see your posts, followers and following.</small>
+      <label class="sw-row">Require approval for new followers<input type="checkbox" id="pf-approve" class="sw"></label>
       <div style="display:grid;gap:0.5rem;margin-bottom:1rem;">
         <label style="display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;">
           Date of Birth <select id="pf-priv-dob" style="width:auto;padding:0.3rem;"><option value="public">Public</option><option value="followers">Followers</option><option value="private">Only me</option></select>
@@ -602,22 +598,16 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
   <section id="v-profile-page" class="page" hidden>
     <div style="max-width:600px;margin:0 auto;padding:1rem;">
       <div style="text-align:center; margin-bottom: 1rem;">
-        <img id="pp-av" src="" style="width:96px;height:96px;border-radius:50%;object-fit:cover;margin:0 auto;background:#ddd;cursor:pointer;" onclick="openLightbox(this.src)">
+        <img id="pp-av" src="" style="width:96px;height:96px;border-radius:50%;object-fit:cover;margin:0 auto;background:#ddd;cursor:zoom-in;">
         <h2 id="pp-name" style="margin:0.5rem 0 0.2rem;display:flex;align-items:center;justify-content:center;gap:0.4rem;"></h2>
         <div id="pp-user" style="color:var(--mut);font-size:0.9rem;"></div>
         <p id="pp-bio" style="margin:0.5rem 0;font-size:0.95rem;"></p>
       </div>
       
       <div class="profile-stats">
-        <div style="text-align:center;">
-          <b id="pp-posts">0</b><span>Posts</span>
-        </div>
-        <div style="text-align:center;" id="pp-followers-btn">
-          <b id="pp-followers">0</b><span>Followers</span>
-        </div>
-        <div style="text-align:center;" id="pp-following-btn">
-          <b id="pp-following">0</b><span>Following</span>
-        </div>
+        <div style="text-align:center;"><b id="pp-posts">0</b><span>Posts</span></div>
+        <div style="text-align:center;" id="pp-followers-btn"><b id="pp-followers">0</b><span>Followers</span></div>
+        <div style="text-align:center;" id="pp-following-btn"><b id="pp-following">0</b><span>Following</span></div>
       </div>
       
       <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1rem;">
@@ -627,9 +617,13 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
       </div>
       
       <div id="pp-meta" class="profile-meta" hidden></div>
-      
+      <div id="pp-lock" class="lock-view" hidden>
+        <div class="lock-icon">🔒</div>
+        <h3>This account is private</h3>
+        <p>Follow this account to see their posts, followers and following.</p>
+      </div>
       <div style="margin-top:1.5rem;">
-        <h3 style="font-size:1.1rem;margin-bottom:0.5rem;">Posts</h3>
+        <h3 id="pp-posts-title" style="font-size:1.1rem;margin-bottom:0.5rem;">Posts</h3>
         <div id="pp-posts-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.3rem;"></div>
       </div>
     </div>
@@ -714,7 +708,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 <div id="admin" hidden>
   <div class="panel">
     <h2>🛡️ Admin Panel <span class="sp" style="flex:1"></span><button id="adm-x" class="ghost sm">Close</button></h2>
-    <div class="notice">Shortcut: double-tap <b>P</b>. Admin actions are enforced by Firestore rules against your UID.</div>
+    <div class="notice">Hidden shortcut: double-tap <b>P</b>. Not present in normal UI. Admin actions are enforced by Firestore rules.</div>
     <div class="tabs">
       <button data-tab="dash" class="on">Dashboard</button>
       <button data-tab="users">Users</button>
@@ -722,7 +716,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
       <button data-tab="reports">Reports</button>
     </div>
     <div id="adm-dash" class="adm-tab">
-      <div class="stat-grid" id="adm-stats">
+      <div class="stat-grid">
         <div class="stat"><b id="st-total">…</b><small>Registered users</small></div>
         <div class="stat"><b id="st-online">…</b><small>Online</small></div>
         <div class="stat"><b id="st-susp">…</b><small>Suspended</small></div>
@@ -799,9 +793,9 @@ const LS = {
 };
 const mk = (t,c,x) => { const e = document.createElement(t); if(c) e.className = c; if(x != null) e.textContent = x; return e; };
 
-/* ==== GLOBALS (declared early to avoid TDZ / ReferenceErrors in strict mode) ==== */
+/* ---- globals ---- */
 let me = null;
-let newPhoto = null;          // <-- FIX #1: was previously undeclared; broke openPm()
+let newPhoto = null;
 let activeCid = null;
 let unsub = [];
 let cache = {};
@@ -812,21 +806,21 @@ let renderMsgs = () => {};
 let curView = "home";
 let convList = [];
 let reqIn = new Map(), reqOut = new Map(), prevUn = {};
-let myFollowing = new Set();  // <-- FIX #6
+let myFollowing = new Set();
+let pendingRequests = [];
+let notifUnsub = null, notifCache = [];
 let pin = null, convsData = [], replying = null, unreadNow = 0;
 let peer = null, ps = {};
 let priv = { online: "everyone", lastSeen: "everyone", readReceipts: true };
 let blocked = new Map();
 let isAdmin = false;
 
-/* Map state */
 let mapInstance = null;
 let mapMarker = null;
 let selectedLat = null;
 let selectedLng = null;
 let selectedLocationName = "";
 
-// LIGHTBOX
 window.openLightbox = (src) => {
   if (!src) return;
   $("lb-img-dyn").src = src;
@@ -862,8 +856,7 @@ const P = {
   globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
   lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
   mapPin: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
-  briefcase: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
-  heartOutline: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>'
+  briefcase: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>'
 };
 const ico = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]||""}</svg>`;
 const paint = (r=document) => r.querySelectorAll("[data-i]:not([data-p])").forEach(e => {
@@ -920,7 +913,8 @@ $("su-go").onclick = async () => {
   const p = {
     uid, username: name, usernameLower: name, nickname: nick, nicknameLower: nick.toLowerCase(),
     photoURL: avatar(name), coverURL: "", bio: "", createdAt: serverTimestamp(),
-    verified: false, suspended: false,
+    verified: false, suspended: false, admin: false,
+    privateProfile: false, followApproval: false,
     followersCount: 0, followingCount: 0, postsCount: 0
   };
   try {
@@ -943,13 +937,14 @@ function startApp() {
   listenIncoming();
   initPrivacy();
   listenFriends();
+  listenNotifications();
   loadFollowing();
   applyRp();
   showView("home");
   $("me-av").src = me.photoURL;
   $("me-name").textContent = me.nickname;
   $("comp-av").src = me.photoURL;
-  if (isAdmin) { $("admin-menu").hidden = false; $("st-admin-card").hidden = false; }
+  loadPendingRequests();
 
   onValue(ref(rtdb, ".info/connected"), s => {
     setConn(!!s.val());
@@ -1001,8 +996,12 @@ function startApp() {
 async function loadFollowing() {
   try {
     const s = await getDocs(query(collection(db, "follows"), where("followerUid", "==", me.uid)));
-    myFollowing = new Set(s.docs.map(d => d.data().followeeUid));
-  } catch (e) { /* rules not deployed yet */ }
+    myFollowing = new Set();
+    s.docs.forEach(d => {
+      const v = d.data();
+      if (v.status === "accepted" || !v.status) myFollowing.add(v.followeeUid);
+    });
+  } catch {}
 }
 
 function row(u) {
@@ -1015,7 +1014,7 @@ function row(u) {
   onValue(ref(rtdb, `status/${u.uid}/connections`), s =>
     r.querySelector(".dot").classList.toggle("on", s.exists()), () => {});
   r.onclick = () => openChat(u);
-  r.querySelector("img").onclick = (e) => { e.stopPropagation(); openLightbox(u.photoURL); };
+  r.querySelector("img").onclick = (e) => { e.stopPropagation(); showProfilePage(u); };
   return r;
 }
 
@@ -1034,8 +1033,7 @@ $("q").oninput = e => {
       [...a.docs, ...b.docs].forEach(d => {
         const u = d.data();
         if (u.uid === me.uid || seen.has(u.uid)) return;
-        seen.add(u.uid);
-        cache[u.uid] = u;
+        seen.add(u.uid); cache[u.uid] = u;
         box.append(row(u));
       });
       if (!seen.size) box.innerHTML = '<i class="soon">No users found</i>';
@@ -1055,6 +1053,7 @@ async function openChat(u) {
   $("app").classList.add("chatting");
   $("back").style.display = ""; $("back").onclick = () => $("app").classList.remove("chatting");
   $("h-av").src = u.photoURL; $("h-av").hidden = false;
+  $("h-av").onclick = () => showProfilePage(u);
   $("h-name").textContent = u.nickname;
   $("send").hidden = blocked.has(u.uid);
   syncBlockBtns();
@@ -1117,7 +1116,7 @@ async function openChat(u) {
       el.append(s);
       el.onclick = ev => { ev.stopPropagation(); if (String(getSelection())) return; msgMenu(el, d, m, mine, ev); };
 
-      /* === FIX #8: long-press (mobile) === */
+      /* long-press */
       let lpTimer = null, lpStart = null;
       const clearLp = () => { if (lpTimer) { clearTimeout(lpTimer); lpTimer = null; } };
       el.addEventListener("pointerdown", ev => {
@@ -1138,7 +1137,6 @@ async function openChat(u) {
       el.addEventListener("pointercancel", clearLp);
       el.addEventListener("pointerleave", clearLp);
       el.addEventListener("contextmenu", ev => ev.preventDefault());
-      /* === /long-press === */
 
       const x = document.createElement("a"); x.textContent = "⋮"; x.title = "More";
       x.onclick = ev => { ev.stopPropagation(); msgMenu(x, d, m, mine); };
@@ -1202,13 +1200,15 @@ $("send").onsubmit = async e => {
     replying = null; renderReply();
     await updateDoc(doc(db, "conversations", activeCid),
       { lastMessage: text.slice(0,80), updatedAt: serverTimestamp(), ["unread." + peer.uid]: increment(1) });
+    createNotification(peer.uid, "message", { preview: text.slice(0,60), cid: activeCid });
   } catch (err) {
     $("text").value = text;
-    replying = rep; renderReply();   // <-- FIX #10: restore reply state on error
+    replying = rep; renderReply();
     toast("Message failed to send: " + err.code);
   }
 };
 
+/* ========== WebRTC ========== */
 const ICE = [
   { urls: "stun:stun.l.google.com:19302" },
   { urls: "stun:stun1.l.google.com:19302" },
@@ -1398,520 +1398,345 @@ $("c-cam").onclick = e => {
 $("c-fs").onclick = () => $("callui").requestFullscreen?.().catch(() => {});
 $("c-pip").onclick = () => $("rv").requestPictureInPicture?.().catch(() => toast("PiP not supported here."));
 
-// ============ PROFILE UI & FOLLOW LOGIC ============
-async function fillRp(u) {
-  $("rp-empty").hidden = true;
-  $("rp-body").hidden = false;
-  $("rp-av").src = u.photoURL;
-  $("rp-name").innerHTML = `${u.nickname}${u.verified ? ` <span class="verified" title="Verified">${ico("check")}</span>` : ""}`;
-  $("rp-user").textContent = "@" + u.username;
-  $("rp-bio").textContent = u.bio || "No bio yet.";
-  
-  const uDoc = await getDoc(doc(db, "users", u.uid));
-  const fresh = uDoc.exists() ? uDoc.data() : u;
-  $("rp-posts").textContent = fresh.postsCount || 0;
-  $("rp-followers").textContent = fresh.followersCount || 0;
-  $("rp-following").textContent = fresh.followingCount || 0;
-  
-  const followBtn = $("rp-follow-btn");
-  if (u.uid === me.uid) {
-    followBtn.hidden = true;
-  } else {
-    followBtn.hidden = false;
-    const isFollowing = await checkFollowing(u.uid);
-    followBtn.textContent = isFollowing ? "Following" : "Follow";
-    followBtn.style.background = isFollowing ? "var(--hov)" : "var(--pri)";
-    followBtn.style.color = isFollowing ? "var(--tx)" : "#fff";
-    followBtn.onclick = async () => {
-      await toggleFollow(fresh);
-      fillRp(fresh);
-    };
+/* ================= FOLLOW SYSTEM (atomic + privacy) ================= */
+async function getFollowStatus(targetUid) {
+  if (targetUid === me.uid) return "self";
+  const snap = await getDoc(doc(db, "follows", me.uid + "_" + targetUid));
+  if (!snap.exists()) return "none";
+  return snap.data().status === "pending" ? "pending" : "accepted";
+}
+
+async function toggleFollow(targetUid, targetUser) {
+  if (targetUid === me.uid) return toast("You can't follow yourself.");
+  const fRef = doc(db, "follows", me.uid + "_" + targetUid);
+  const targetRef = doc(db, "users", targetUid);
+  const meRef = doc(db, "users", me.uid);
+  try {
+    const result = await runTransaction(db, async tx => {
+      const fSnap = await tx.get(fRef);
+      const tSnap = await tx.get(targetRef);
+      const mSnap = await tx.get(meRef);
+      if (!tSnap.exists() || !mSnap.exists()) throw new Error("User not found");
+      const tData = tSnap.data(), mData = mSnap.data();
+
+      if (fSnap.exists()) {
+        const oldStatus = fSnap.data().status || "accepted";
+        tx.delete(fRef);
+        if (oldStatus === "accepted") {
+          tx.update(targetRef, { followersCount: Math.max(0, (tData.followersCount || 0) - 1) });
+          tx.update(meRef, { followingCount: Math.max(0, (mData.followingCount || 0) - 1) });
+        }
+        return { action: "unfollowed", was: oldStatus };
+      }
+
+      const needsApproval = tData.privateProfile && tData.followApproval;
+      const status = needsApproval ? "pending" : "accepted";
+      tx.set(fRef, {
+        followerUid: me.uid, followeeUid: targetUid,
+        status, createdAt: serverTimestamp()
+      });
+      if (status === "accepted") {
+        tx.update(targetRef, { followersCount: (tData.followersCount || 0) + 1 });
+        tx.update(meRef, { followingCount: (mData.followingCount || 0) + 1 });
+      }
+      return { action: status === "pending" ? "pending" : "followed" };
+    });
+
+    if (result.action === "unfollowed") {
+      myFollowing.delete(targetUid);
+      toast(result.was === "pending" ? "Request cancelled." : "Unfollowed.");
+      refreshProfileFollowUI(targetUid);
+    } else if (result.action === "pending") {
+      toast("Follow request sent.", 1);
+      createNotification(targetUid, "follow_request", { fromUid: me.uid });
+    } else {
+      myFollowing.add(targetUid);
+      toast("Following.", 1);
+      createNotification(targetUid, "follow", { fromUid: me.uid });
+    }
+  } catch (e) {
+    toast("Action failed: " + (e.code || e.message));
   }
-  
-  renderFr(u);
+}
+
+async function refreshProfileFollowUI(targetUid) {
+  if (curView === "profile" && peer && peer.uid !== targetUid) return;
+  try {
+    const snap = await getDoc(doc(db, "users", targetUid));
+    if (snap.exists()) {
+      $("pp-followers").textContent = snap.data().followersCount || 0;
+      const mySnap = await getDoc(doc(db, "users", me.uid));
+      if (mySnap.exists()) $("pp-following").textContent = mySnap.data().followingCount || 0;
+    }
+  } catch {}
 }
 
 async function checkFollowing(targetUid) {
-  const fid = me.uid + "_" + targetUid;
-  const snap = await getDoc(doc(db, "follows", fid));
-  return snap.exists();
+  const st = await getFollowStatus(targetUid);
+  return st === "accepted";
 }
 
-async function toggleFollow(u) {
-  const fid = me.uid + "_" + u.uid;
-  const fRef = doc(db, "follows", fid);
-  const snap = await getDoc(fRef);
-  
-  if (snap.exists()) {
-    await deleteDoc(fRef);
-    await updateDoc(doc(db, "users", u.uid), { followersCount: increment(-1) });
-    await updateDoc(doc(db, "users", me.uid), { followingCount: increment(-1) });
-    myFollowing.delete(u.uid);
-    toast("Unfollowed " + u.nickname);
-  } else {
-    await setDoc(fRef, {
-      followerUid: me.uid,
-      followeeUid: u.uid,
-      createdAt: serverTimestamp()
-    });
-    await updateDoc(doc(db, "users", u.uid), { followersCount: increment(1) });
-    await updateDoc(doc(db, "users", me.uid), { followingCount: increment(1) });
-    myFollowing.add(u.uid);
-    toast("Followed " + u.nickname, 1);
-  }
-}
-
-// ============ FOLLOWERS/FOLLOWING MODAL ============
-async function openFollowersModal(uid, type) {
-  const modal = $("fol-modal");
-  const title = $("fol-title");
-  const list = $("fol-list");
-  
-  title.textContent = type === "followers" ? "Followers" : "Following";
-  list.innerHTML = '<p class="soon">Loading…</p>';
-  modal.hidden = false;
-  
+/* ---- pending follow requests ---- */
+async function loadPendingRequests() {
   try {
-    const q = type === "followers"
-      ? query(collection(db, "follows"), where("followeeUid", "==", uid), limit(50))
-      : query(collection(db, "follows"), where("followerUid", "==", uid), limit(50));
-    
-    const snap = await getDocs(q);
-    list.innerHTML = "";
-    
-    if (snap.empty) {
-      list.innerHTML = '<p class="soon" style="text-align:center;">No users yet.</p>';
-      return;
-    }
-    
-    for (const d of snap.docs) {
-      const f = d.data();
-      const otherUid = type === "followers" ? f.followerUid : f.followeeUid;
-      const uSnap = await getDoc(doc(db, "users", otherUid));
-      if (!uSnap.exists()) continue;
-      const u = uSnap.data();
-      
-      const row = document.createElement("div");
-      row.style = "display:flex;gap:0.7rem;align-items:center;padding:0.4rem;border-bottom:1px solid var(--line);cursor:pointer;";
-      row.innerHTML = `
-        <img src="${u.photoURL}" style="width:38px;height:38px;border-radius:50%;object-fit:cover;">
-        <div style="flex:1;min-width:0;">
-          <b style="display:block;font-size:0.9rem;">${u.nickname}</b>
-          <small style="color:var(--mut);font-size:0.75rem;">@${u.username}</small>
-        </div>
-      `;
-      list.appendChild(row);
-      
-      row.onclick = () => {
-        modal.hidden = true;
-        if (u.uid !== me.uid) {
-          showProfilePage(u);
-        } else {
-          $("nav-profile").click();
-        }
-      };
-    }
-  } catch (e) {
-    list.innerHTML = '<p class="err">Failed to load: ' + e.message + '</p>';
+    const s = await getDocs(query(
+      collection(db, "follows"),
+      where("followeeUid", "==", me.uid),
+      where("status", "==", "pending")
+    ));
+    pendingRequests = s.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderPendingRequests();
+  } catch { pendingRequests = []; }
+}
+
+async function renderPendingRequests() {
+  const box = $("st-requests");
+  const card = $("st-requests-card");
+  if (!box || !card) return;
+  if (!pendingRequests.length) {
+    card.hidden = true; box.innerHTML = "";
+    return;
+  }
+  card.hidden = false;
+  box.innerHTML = "";
+  for (const r of pendingRequests) {
+    const u = await getUser(r.followerUid);
+    if (!u) continue;
+    const rowEl = document.createElement("div");
+    rowEl.className = "req-item";
+    const img = document.createElement("img");
+    img.src = u.photoURL; img.alt = "";
+    img.onclick = () => showProfilePage(u);
+    const who = document.createElement("div");
+    who.className = "who";
+    const bEl = mk("b"); bEl.textContent = u.nickname || "User";
+    const sm = mk("small", "", "@" + (u.username || ""));
+    who.append(bEl, sm);
+    const acc = mk("button", "sm", "Accept");
+    acc.type = "button";
+    acc.onclick = () => approveFollowRequest(r.followerUid);
+    const rej = mk("button", "ghost sm", "Decline");
+    rej.type = "button";
+    rej.onclick = () => rejectFollowRequest(r.followerUid);
+    rowEl.append(img, who, acc, rej);
+    box.append(rowEl);
   }
 }
 
-$("fol-x").onclick = () => { $("fol-modal").hidden = true; };
-
-// ============ EDIT PROFILE & MAP ============
-function initMap() {
-  if (mapInstance) return;
-  
-  mapInstance = L.map('pf-map').setView([20, 0], 2);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap'
-  }).addTo(mapInstance);
-  
-  mapInstance.on('click', async (e) => {
-    const { lat, lng } = e.latlng;
-    if (mapMarker) mapInstance.removeLayer(mapMarker);
-    mapMarker = L.marker([lat, lng]).addTo(mapInstance);
-    
-    try {
-      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
-      const data = await res.json();
-      const city = data.address?.city || data.address?.town || data.address?.village || data.address?.county || "Unknown";
-      const country = data.address?.country || "";
-      selectedLocationName = `${city}, ${country}`.replace(/, $/, "");
-      $("pf-loc-label").textContent = selectedLocationName;
-      selectedLat = lat;
-      selectedLng = lng;
-    } catch (err) {
-      selectedLocationName = `Lat: ${lat.toFixed(2)}, Lng: ${lng.toFixed(2)}`;
-      $("pf-loc-label").textContent = selectedLocationName;
-      selectedLat = lat;
-      selectedLng = lng;
-    }
-  });
-}
-
-$("pf-loc-search").oninput = async (e) => {
-  const q = e.target.value.trim();
-  if (q.length < 3) return;
-  
-  try {
-    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=1`);
-    const data = await res.json();
-    if (data.length > 0) {
-      const { lat, lon, display_name } = data[0];
-      if (mapInstance) {
-        mapInstance.setView([parseFloat(lat), parseFloat(lon)], 12);
-        if (mapMarker) mapInstance.removeLayer(mapMarker);
-        mapMarker = L.marker([parseFloat(lat), parseFloat(lon)]).addTo(mapInstance);
-        selectedLocationName = display_name.split(',')[0];
-        $("pf-loc-label").textContent = selectedLocationName;
-        selectedLat = parseFloat(lat);
-        selectedLng = parseFloat(lon);
-      }
-    }
-  } catch (err) {}
-};
-
-$("pf-gender").onchange = (e) => {
-  $("pf-custom-gender-wrap").hidden = e.target.value !== "Custom";
-};
-
-const openPm = () => {
-  // populate form first
-  $("pf-nick").value = me.nickname || "";
-  $("pf-user").value = me.username || "";
-  $("pf-bio").value = me.bio || "";
-  $("pf-prof").value = me.profession || "";
-  $("pf-gender").value = me.gender || "";
-  $("pf-dob").value = me.dob || "";
-  $("pf-custom-gender").value = me.customGender || "";
-  $("pf-rel").value = me.relationshipStatus || "";
-  $("pf-orient").value = me.orientation || "";
-  $("pf-econ").value = me.economicCategory || "";
-  $("pf-custom-gender-wrap").hidden = (me.gender || "") !== "Custom";
-  
-  $("pf-priv-dob").value = me.privacy?.dob || "private";
-  $("pf-priv-rel").value = me.privacy?.rel || "private";
-  $("pf-priv-orient").value = me.privacy?.orient || "private";
-  $("pf-priv-econ").value = me.privacy?.econ || "private";
-  
-  $("pf-prev").src = me.photoURL;
-  newPhoto = null;
-  $("pf-file").value = "";
-  $("pf-err").textContent = "";
-
-  // Location
-  if (me.locationLat && me.locationLng) {
-    selectedLat = me.locationLat;
-    selectedLng = me.locationLng;
-    selectedLocationName = me.location || "";
-    $("pf-loc-label").textContent = selectedLocationName;
-    $("pf-loc-search").value = selectedLocationName;
-  } else {
-    $("pf-loc-label").textContent = "No location selected";
-    $("pf-loc-search").value = "";
-    selectedLat = null; selectedLng = null; selectedLocationName = "";
-  }
-
-  // FIX #1 + #7: actually show the modal, always init the map
-  $("pm").hidden = false;
-  setTimeout(() => {
-    initMap();
-    if (mapInstance && selectedLat != null) {
-      mapInstance.setView([selectedLat, selectedLng], 11);
-      if (mapMarker) mapInstance.removeLayer(mapMarker);
-      mapMarker = L.marker([selectedLat, selectedLng]).addTo(mapInstance);
-    }
-    if (mapInstance) mapInstance.invalidateSize();
-  }, 120);
-};
-// FIX #4: expose for inline handlers
-window.openPm = openPm;
-
-// FIX #2 + #3: avatar opens menu, stops propagation so document doesn't close it
-$("me-av").onclick = (ev) => {
-  ev.stopPropagation();
-  $("menu").hidden = !$("menu").hidden;
-};
-$("menu").onclick = (ev) => ev.stopPropagation();
-
-$("menu-prof").onclick = () => { $("menu").hidden = true; openPm(); };
-$("pf-x").onclick = () => {
-  $("pm").hidden = true;
-  // FIX #2: do NOT remove #v-profile-page from the DOM
-};
-
-$("pf").onsubmit = async e => {
-  e.preventDefault();
-  const err = $("pf-err"); err.textContent = "";
-  
-  const nick = $("pf-nick").value.trim();
-  const name = $("pf-user").value.trim().toLowerCase();
-  const bio = $("pf-bio").value.trim();
-  if (!nick) return err.textContent = "Nickname required.";
-  if (!/^[a-z0-9_]{3,20}$/.test(name)) return err.textContent = "Username: 3-20 chars, a-z 0-9 _";
-  
-  const upd = {
-    username: name, usernameLower: name, nickname: nick,
-    nicknameLower: nick.toLowerCase(), bio,
-    photoURL: newPhoto || me.photoURL,
-    profession: $("pf-prof").value.trim(),
-    gender: $("pf-gender").value,
-    dob: $("pf-dob").value,
-    customGender: $("pf-custom-gender").value.trim(),
-    relationshipStatus: $("pf-rel").value,
-    orientation: $("pf-orient").value,
-    economicCategory: $("pf-econ").value,
-    location: selectedLocationName,
-    locationLat: selectedLat,
-    locationLng: selectedLng,
-    privacy: {
-      dob: $("pf-priv-dob").value,
-      rel: $("pf-priv-rel").value,
-      orient: $("pf-priv-orient").value,
-      econ: $("pf-priv-econ").value
-    }
-  };
-  
+async function approveFollowRequest(followerUid) {
+  const fRef = doc(db, "follows", followerUid + "_" + me.uid);
   try {
     await runTransaction(db, async tx => {
-      if (name !== me.usernameLower) {
-        const r = doc(db, "usernames", name);
-        if ((await tx.get(r)).exists()) throw new Error("taken");
-        tx.set(r, { uid: me.uid });
-        tx.delete(doc(db, "usernames", me.usernameLower));
-      }
-      tx.update(doc(db, "users", me.uid), upd);
+      const fSnap = await tx.get(fRef);
+      if (!fSnap.exists() || fSnap.data().status !== "pending") throw new Error("No pending request.");
+      const tSnap = await tx.get(doc(db, "users", me.uid));
+      const mSnap = await tx.get(doc(db, "users", followerUid));
+      tx.update(fRef, { status: "accepted", approvedAt: serverTimestamp() });
+      tx.update(doc(db, "users", me.uid), { followersCount: (tSnap.data().followersCount || 0) + 1 });
+      tx.update(doc(db, "users", followerUid), { followingCount: (mSnap.data().followingCount || 0) + 1 });
     });
-    me = { ...me, ...upd };
-    cache[me.uid] = me;
-    $("me-av").src = me.photoURL;
-    $("me-name").textContent = me.nickname;
-    toast("Profile saved.", 1);
-    $("pm").hidden = true;
-    showProfilePage(me);
-  } catch (x) {
-    err.textContent = x.message === "taken" ? "Username already taken." : "Could not save: " + (x.code || x.message);
-  }
-};
+    createNotification(followerUid, "follow_accepted", { fromUid: me.uid });
+    toast("Request approved.", 1);
+    loadPendingRequests();
+  } catch (e) { toast("Failed: " + (e.code || e.message)); }
+}
 
-$("pf-file").onchange = e => {
-  const f = e.target.files[0]; if (!f) return;
-  if (!f.type.startsWith("image/")) return $("pf-err").textContent = "Please choose an image.";
-  const img = new Image(), u = URL.createObjectURL(f);
-  img.onload = () => {
-    const s = Math.min(img.width, img.height), c = document.createElement("canvas");
-    c.width = c.height = 160;
-    c.getContext("2d").drawImage(img, (img.width - s)/2, (img.height - s)/2, s, s, 0, 0, 160, 160);
-    newPhoto = c.toDataURL("image/jpeg", .82);
-    $("pf-prev").src = newPhoto; $("pf-err").textContent = "";
-    URL.revokeObjectURL(u);
-  };
-  img.onerror = () => $("pf-err").textContent = "Could not read that image.";
-  img.src = u;
-};
+async function rejectFollowRequest(followerUid) {
+  try {
+    await deleteDoc(doc(db, "follows", followerUid + "_" + me.uid));
+    toast("Request declined.");
+    loadPendingRequests();
+  } catch (e) { toast("Failed: " + (e.code || e.message)); }
+}
 
-// ============ PROFILE PAGE ============
-async function showProfilePage(u) {
-  showView("profile");
-  const isOwn = u.uid === me.uid;
-  
-  const snap = await getDoc(doc(db, "users", u.uid));
-  const fresh = snap.exists() ? snap.data() : u;
-  
-  $("pp-av").src = fresh.photoURL;
-  $("pp-name").innerHTML = `${fresh.nickname}${fresh.verified ? `<span class="verified" title="Verified">${ico("check")}</span>` : ""}`;
-  $("pp-user").textContent = "@" + fresh.username;
-  $("pp-bio").textContent = fresh.bio || "No bio yet.";
-  
-  $("pp-posts").textContent = fresh.postsCount || 0;
-  $("pp-followers").textContent = fresh.followersCount || 0;
-  $("pp-following").textContent = fresh.followingCount || 0;
-  
-  $("pp-followers-btn").onclick = () => openFollowersModal(u.uid, "followers");
-  $("pp-following-btn").onclick = () => openFollowersModal(u.uid, "following");
-  
-  $("pp-follow-btn").hidden = true;
-  $("pp-msg-btn").hidden = true;
-  $("pp-edit-btn").hidden = true;
-  
-  if (isOwn) {
-    $("pp-edit-btn").hidden = false;
-    // FIX #13: use module-scoped openPm directly
-    $("pp-edit-btn").onclick = () => openPm();
-  } else {
-    $("pp-follow-btn").hidden = false;
-    $("pp-msg-btn").hidden = false;
-    $("pp-msg-btn").onclick = () => openChat(fresh);
-    
-    const isFollowing = await checkFollowing(u.uid);
-    const fBtn = $("pp-follow-btn");
-    fBtn.textContent = isFollowing ? "Following" : "Follow";
-    fBtn.style.background = isFollowing ? "var(--hov)" : "var(--pri)";
-    fBtn.style.color = isFollowing ? "var(--tx)" : "#fff";
-    
-    fBtn.onclick = async () => {
-      await toggleFollow(fresh);
-      const updated = await checkFollowing(u.uid);
-      fBtn.textContent = updated ? "Following" : "Follow";
-      fBtn.style.background = updated ? "var(--hov)" : "var(--pri)";
-      fBtn.style.color = updated ? "var(--tx)" : "#fff";
-      const uSnap = await getDoc(doc(db, "users", u.uid));
-      $("pp-followers").textContent = uSnap.data().followersCount || 0;
-      const meSnap = await getDoc(doc(db, "users", me.uid));
-      $("pp-following").textContent = meSnap.data().followingCount || 0;
-    };
-  }
-  
-  const meta = $("pp-meta");
-  meta.innerHTML = "";
-  let hasMeta = false;
-  if (fresh.profession) { meta.innerHTML += `<span>${ico("briefcase")} ${fresh.profession}</span>`; hasMeta = true; }
-  if (fresh.gender && fresh.gender !== "Prefer not to say") { meta.innerHTML += `<span>👤 ${fresh.gender}</span>`; hasMeta = true; }
-  if (fresh.location) { meta.innerHTML += `<span>${ico("mapPin")} ${fresh.location}</span>`; hasMeta = true; }
-  meta.hidden = !hasMeta;
-  
-  const postsSnap = await getDocs(query(
-    collection(db, "posts"),
-    where("uid", "==", u.uid),
-    orderBy("createdAt", "desc"),
-    limit(12)
-  ));
-  
-  const postsGrid = $("pp-posts-grid");
-  postsGrid.innerHTML = "";
-  if (postsSnap.empty) {
-    postsGrid.innerHTML = '<p class="soon" style="grid-column:1/-1;text-align:center;">No posts yet.</p>';
-  } else {
-    postsSnap.docs.forEach(d => {
-      const p = d.data();
-      const imgs = (p.media || []).filter(m => m.type === "image");
-      if (imgs.length > 0) {
-        const img = document.createElement("img");
-        img.src = imgs[0].data;
-        img.style = "width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;cursor:pointer;";
-        img.onclick = () => { $("lb-img").src = imgs[0].data; $("lb").hidden = false; };
-        postsGrid.appendChild(img);
-      } else if (p.content) {
-        const textPost = document.createElement("div");
-        textPost.style = "aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:0.5rem;font-size:0.75rem;overflow:hidden;cursor:pointer;";
-        textPost.textContent = p.content.slice(0, 100);
-        postsGrid.appendChild(textPost);
-      }
+/* =============== NOTIFICATIONS =============== */
+async function createNotification(toUid, type, extra = {}) {
+  if (!me || !toUid || toUid === me.uid) return;
+  try {
+    await addDoc(collection(db, "notifications", toUid, "items"), {
+      type, fromUid: me.uid,
+      fromName: me.nickname || "User",
+      fromPhoto: me.photoURL || "",
+      read: false, createdAt: serverTimestamp(),
+      ...extra
     });
-  }
-  
-  document.querySelectorAll("nav a").forEach(a => a.classList.remove("act"));
-  $("nav-profile").classList.add("act");
+  } catch {}
 }
 
-// ============ VIEWS & STATE ============
-function renderSeen() {
-  $("h-dot").classList.toggle("on", ps.on === true);
-  $("h-seen").textContent = ps.on === true ? "Online"
-    : ps.ls === "hidden" ? "Last seen hidden"
-    : ps.ls ? "Last seen " + new Date(ps.ls).toLocaleString([], {dateStyle:"short",timeStyle:"short"})
-    : "";
+function listenNotifications() {
+  if (notifUnsub) { notifUnsub(); notifUnsub = null; }
+  notifUnsub = onSnapshot(
+    query(collection(db, "notifications", me.uid, "items"), orderBy("createdAt", "desc"), limit(30)),
+    snap => {
+      notifCache = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      updBell();
+      if (!$("np").hidden) renderNotifs();
+    },
+    () => {}
+  );
 }
-async function initPrivacy() {
-  try {
-    const pr = doc(db, "privacy", me.uid), s = await getDoc(pr);
-    if (s.exists()) priv = { ...priv, ...s.data() };
-    else await setDoc(pr, { readReceipts: true });
-    const r = (await get(ref(rtdb, `privacy/${me.uid}`))).val();
-    if (r) priv = { ...priv, ...r };
-    else await set(ref(rtdb, `privacy/${me.uid}`), { online: "everyone", lastSeen: "everyone" });
-  } catch (e) { toast("Could not load privacy: " + (e.code || e.message)); }
-  onSnapshot(collection(db, "blocks", me.uid, "users"), snap => {
-    blocked = new Map(snap.docs.map(d => [d.id, d.data()]));
-    if (peer) $("send").hidden = blocked.has(peer.uid);
-    renderBlocked(); syncBlockBtns();
-  }, e => console.warn("Block list failed:", e.message));
+
+async function markNotifRead(notifId) {
+  try { await updateDoc(doc(db, "notifications", me.uid, "items", notifId), { read: true }); } catch {}
 }
-$("menu-priv").onclick = () => {
-  $("menu").hidden = true;
-  $("s-on").value = priv.online; $("s-ls").value = priv.lastSeen; $("s-rr").checked = priv.readReceipts;
-  renderBlocked(); $("sm").hidden = false;
-};
-$("s-x").onclick = () => $("sm").hidden = true;
-async function savePriv(k, v) {
-  const old = priv[k]; priv[k] = v;
-  try {
-    if (k === "readReceipts") await setDoc(doc(db, "privacy", me.uid), { readReceipts: v }, { merge: true });
-    else await update(ref(rtdb, `privacy/${me.uid}`), { [k]: v });
-    toast("Saved.", 1);
-  } catch (e) {
-    priv[k] = old;
-    toast("Could not save: " + (e.code || e.message));
-    $("s-on").value = priv.online;
-    $("s-ls").value = priv.lastSeen;
-    $("s-rr").checked = priv.readReceipts;
-  }
-}
-$("s-on").onchange = e => savePriv("online", e.target.value);
-$("s-ls").onchange = e => savePriv("lastSeen", e.target.value);
-$("s-rr").onchange = e => savePriv("readReceipts", e.target.checked);
-function renderBlocked() {
-  const b = $("s-blocked");
-  b.innerHTML = blocked.size ? "" : '<i class="soon">No blocked users</i>';
-  blocked.forEach((v, uid) => {
-    const r = document.createElement("div"); r.className = "brow";
-    const n = document.createElement("span"); n.textContent = v.name || uid;
-    const x = document.createElement("button"); x.className = "ghost"; x.textContent = "Unblock";
-    x.onclick = () => unblock(uid);
-    r.append(n, x); b.append(r);
+
+function notifItems() {
+  const it = [];
+  convList.forEach(({ c, u }) => {
+    const n = c.unread?.[me.uid] || 0;
+    if (n > 0 && c.id !== activeCid && !(c.mutedBy || []).includes(me.uid)) it.push({ t: "msg", u, n, c });
   });
+  reqIn.forEach(r => { if (r.status === "pending") it.push({ t: "req", r }); });
+  pendingRequests.forEach(r => it.push({ t: "follow_req", r }));
+  notifCache.filter(n => !n.read).forEach(n => it.push({ t: "notif", n }));
+  return it;
 }
-async function block(u) {
-  if (!confirm(`Block ${u.nickname}?\nThey won't be able to message or call you.`)) return;
-  try {
-    await setDoc(doc(db, "blocks", me.uid, "users", u.uid), { name: u.nickname, at: serverTimestamp() });
-    await set(ref(rtdb, `blocks/${me.uid}/${u.uid}`), true);
-    toast(u.nickname + " blocked.", 1);
-  } catch (e) { toast("Could not block: " + (e.code || e.message)); }
-}
-async function unblock(uid) {
-  if (!confirm("Unblock this user?")) return;
-  try {
-    await deleteDoc(doc(db, "blocks", me.uid, "users", uid));
-    await remove(ref(rtdb, `blocks/${me.uid}/${uid}`));
-    toast("Unblocked.", 1);
-  } catch (e) { toast("Could not unblock: " + (e.code || e.message)); }
-}
-function syncBlockBtns() {
-  const b = peer && blocked.has(peer.uid);
-  $("rp-block").textContent = b ? "Unblock" : "Block";
-  $("h-block").title = b ? "Unblock user" : "Block user";
-}
-const toggleBlock = () => {
-  if (!peer) return;
-  blocked.has(peer.uid) ? unblock(peer.uid) : block(peer);
-};
-$("rp-block").onclick = toggleBlock;
-$("h-block").onclick = toggleBlock;
-$("rp-report").onclick = () => {
-  if (!peer) return;
-  $("r-err").textContent = ""; $("r-desc").value = ""; $("rm").hidden = false;
-};
-$("r-x").onclick = () => $("rm").hidden = true;
-$("rf").onsubmit = async e => {
-  e.preventDefault();
-  if (!confirm(`Report ${peer.nickname}?`)) return;
-  try {
-    await setDoc(doc(db, "reports", me.uid + "_" + peer.uid), {
-      reporter: me.uid, reported: peer.uid,
-      reason: $("r-reason").value, description: $("r-desc").value.trim().slice(0,500),
-      createdAt: serverTimestamp()
-    });
-    $("rm").hidden = true;
-    toast("Report submitted. Thank you.", 1);
-  } catch (x) {
-    $("r-err").textContent = x.code === "permission-denied"
-      ? "You have already reported this user."
-      : "Could not submit: " + (x.code || x.message);
-  }
-};
 
+function updBell() {
+  const n = notifItems().reduce((a, x) =>
+    a + (x.t === "msg" ? x.n : x.t === "notif" ? 1 : x.t === "follow_req" ? 1 : 1), 0);
+  const b = $("bell-n");
+  b.hidden = !n;
+  b.textContent = n > 99 ? "99+" : n;
+  if (!$("np").hidden) renderNotifs();
+}
+
+function notifText(n) {
+  switch (n.type) {
+    case "follow": return "started following you";
+    case "follow_request": return "requested to follow you";
+    case "follow_accepted": return "accepted your follow request";
+    case "like": return "reacted to your post";
+    case "comment": return "commented on your post";
+    case "reply": return "replied to your comment";
+    case "message": return n.preview ? `sent: ${n.preview}` : "sent you a message";
+    default: return n.type || "notification";
+  }
+}
+
+async function renderNotifs() {
+  const box = $("np");
+  box.innerHTML = "";
+  box.append(mk("h4", "", "Notifications"));
+  const it = notifItems();
+  if (!it.length) { box.append(mk("p", "soon", "You're all caught up.")); return; }
+
+  for (const x of it) {
+    if (x.t === "msg") {
+      const w = userItem(x.u, x.n + (x.n === 1 ? " new message" : " new messages") + (x.c.lastMessage ? " · " + x.c.lastMessage : ""));
+      w.style.cursor = "pointer";
+      w.onclick = () => { $("np").hidden = true; openChat(x.u); };
+      box.append(w);
+    } else if (x.t === "req" || x.t === "follow_req") {
+      const u = await getUser(x.r.followerUid || x.r.from);
+      if (!u) continue;
+      const w = userItem(u, "requested to follow you");
+      const a = mk("div", "acts2");
+      a.append(btn("Accept", "check", () => approveFollowRequest(u.uid), "sm"),
+               btn("Decline", "x", () => rejectFollowRequest(u.uid)));
+      w.append(a);
+      box.append(w);
+    } else if (x.t === "notif") {
+      const u = await getUser(x.n.fromUid);
+      if (!u) continue;
+      const w = userItem(u, notifText(x.n));
+      w.style.cursor = "pointer";
+      w.onclick = () => {
+        $("np").hidden = true;
+        markNotifRead(x.n.id);
+        handleNotifClick(x.n);
+      };
+      box.append(w);
+    }
+  }
+}
+
+function handleNotifClick(n) {
+  if (n.type === "follow" || n.type === "follow_request" || n.type === "follow_accepted") {
+    getUser(n.fromUid).then(u => u && showProfilePage(u));
+  } else if (n.cid) {
+    (async () => {
+      const other = n.cid.split("_").find(x => x !== me.uid);
+      const u = await getUser(other);
+      if (u) openChat(u);
+    })();
+  } else if (n.postId) {
+    location.hash = "#post=" + n.postId;
+    showView("home");
+  }
+}
+
+$("bell-b").onclick = ev => {
+  ev.stopPropagation();
+  $("np").hidden = !$("np").hidden;
+  if (!$("np").hidden) renderNotifs();
+};
+$("np").onclick = ev => ev.stopPropagation();
+
+/* ============== CHAT helpers ============== */
+let hmUn = [];
+let feedState = { last: null, loading: false, exhausted: false, unsub: null };
+let composerMedia = [];
+
+/* ============== CONVERSATION LIST INTERACTION ============== */
+function decorate(r, c) {
+  const n = c.unread?.[me.uid] || 0;
+  const mu = (c.mutedBy || []).includes(me.uid);
+  const tdt = c.updatedAt?.toDate?.();
+  if (tdt) {
+    const nw = new Date();
+    r.append(mk("small", "tm",
+      tdt.toDateString() === nw.toDateString()
+        ? tdt.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})
+        : tdt.toLocaleDateString([], {month:"short",day:"numeric"})));
+  }
+  if (mu) { const i = document.createElement("span"); i.innerHTML = ico("bellOff"); i.className = "mi"; i.title = "Muted"; r.append(i); }
+  if (n > 0 && c.id !== activeCid) {
+    const b = document.createElement("span");
+    b.className = "bdg" + (mu ? " mu" : "");
+    b.textContent = n > 99 ? "99+" : n;
+    r.append(b);
+  }
+  const mb = document.createElement("a");
+  mb.className = "cmb"; mb.textContent = "⋮"; mb.title = "More";
+  mb.onclick = ev => { ev.stopPropagation(); convMenu(mb, c, mu); };
+  r.append(mb);
+}
+function convMenu(btn, c, mu) {
+  const mm = $("mm"), cref = doc(db, "conversations", c.id);
+  $("rpk").hidden = true; mm.innerHTML = "";
+  const add = (t, f) => {
+    const b = document.createElement("button");
+    b.textContent = t; b.onclick = () => { mm.hidden = true; f(); }; mm.append(b);
+  };
+  add(mu ? "Unmute" : "Mute", () => updateDoc(cref, {
+    mutedBy: mu ? arrayRemove(me.uid) : arrayUnion(me.uid)
+  }).catch(e => toast("Failed: " + e.code)));
+  add("Delete chat", () => {
+    if (!confirm("Delete this chat for you? The other person keeps their copy.")) return;
+    updateDoc(cref, { ["clearedAt." + me.uid]: serverTimestamp(), ["unread." + me.uid]: 0 })
+      .then(() => { if (c.id === activeCid) closeChat(); })
+      .catch(e => toast("Delete failed: " + e.code));
+  });
+  const r = btn.getBoundingClientRect();
+  mm.hidden = false;
+  mm.style.top = Math.max(8, Math.min(r.bottom + 4, innerHeight - mm.offsetHeight - 8)) + "px";
+  mm.style.left = Math.max(8, Math.min(r.right - mm.offsetWidth, innerWidth - mm.offsetWidth - 8)) + "px";
+}
+function closeChat() {
+  if (rec) stopRec(false);
+  unsub.forEach(f => f()); unsub = [];
+  activeCid = null; peer = null;
+  replying = null; renderReply();
+  $("msgs").innerHTML = '<div class="empty">💬<h3>Start a conversation</h3><p>Search a username, say hi, or make a call.</p></div>';
+  $("send").hidden = true; $("pinbar").hidden = true;
+  $("h-name").textContent = "Select a conversation";
+  $("h-av").hidden = true; $("h-seen").textContent = "";
+  $("rp-body").hidden = true; $("rp-empty").hidden = false;
+  $("app").classList.remove("chatting");
+}
+
+/* ============== MESSAGE helpers ============== */
 const EMO = ["❤️","😂","😮","😢","👍","👎","🔥","🎉"];
 function renderPin() {
   $("pinbar").hidden = !pin;
@@ -2030,63 +1855,8 @@ const resetUnread = () => activeCid && updateDoc(doc(db, "conversations", active
 document.addEventListener("visibilitychange", () => {
   if (!document.hidden && unreadNow > 0) resetUnread();
 });
-function decorate(r, c) {
-  const n = c.unread?.[me.uid] || 0;
-  const mu = (c.mutedBy || []).includes(me.uid);
-  const tdt = c.updatedAt?.toDate?.();
-  if (tdt) {
-    const nw = new Date();
-    r.append(mk("small", "tm",
-      tdt.toDateString() === nw.toDateString()
-        ? tdt.toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})
-        : tdt.toLocaleDateString([], {month:"short",day:"numeric"})));
-  }
-  if (mu) { const i = document.createElement("span"); i.innerHTML = ico("bellOff"); i.className = "mi"; i.title = "Muted"; r.append(i); }
-  if (n > 0 && c.id !== activeCid) {
-    const b = document.createElement("span");
-    b.className = "bdg" + (mu ? " mu" : "");
-    b.textContent = n > 99 ? "99+" : n;
-    r.append(b);
-  }
-  const mb = document.createElement("a");
-  mb.className = "cmb"; mb.textContent = "⋮"; mb.title = "More";
-  mb.onclick = ev => { ev.stopPropagation(); convMenu(mb, c, mu); };
-  r.append(mb);
-}
-function convMenu(btn, c, mu) {
-  const mm = $("mm"), cref = doc(db, "conversations", c.id);
-  $("rpk").hidden = true; mm.innerHTML = "";
-  const add = (t, f) => {
-    const b = document.createElement("button");
-    b.textContent = t; b.onclick = () => { mm.hidden = true; f(); }; mm.append(b);
-  };
-  add(mu ? "Unmute" : "Mute", () => updateDoc(cref, {
-    mutedBy: mu ? arrayRemove(me.uid) : arrayUnion(me.uid)
-  }).catch(e => toast("Failed: " + e.code)));
-  add("Delete chat", () => {
-    if (!confirm("Delete this chat for you? The other person keeps their copy.")) return;
-    updateDoc(cref, { ["clearedAt." + me.uid]: serverTimestamp(), ["unread." + me.uid]: 0 })
-      .then(() => { if (c.id === activeCid) closeChat(); })
-      .catch(e => toast("Delete failed: " + e.code));
-  });
-  const r = btn.getBoundingClientRect();
-  mm.hidden = false;
-  mm.style.top = Math.max(8, Math.min(r.bottom + 4, innerHeight - mm.offsetHeight - 8)) + "px";
-  mm.style.left = Math.max(8, Math.min(r.right - mm.offsetWidth, innerWidth - mm.offsetWidth - 8)) + "px";
-}
-function closeChat() {
-  if (rec) stopRec(false);
-  unsub.forEach(f => f()); unsub = [];
-  activeCid = null; peer = null;
-  replying = null; renderReply();
-  $("msgs").innerHTML = '<div class="empty">💬<h3>Start a conversation</h3><p>Search a username, say hi, or make a call.</p></div>';
-  $("send").hidden = true; $("pinbar").hidden = true;
-  $("h-name").textContent = "Select a conversation";
-  $("h-av").hidden = true; $("h-seen").textContent = "";
-  $("rp-body").hidden = true; $("rp-empty").hidden = false;
-  $("app").classList.remove("chatting");
-}
 
+/* ============== MEDIA / VOICE ============== */
 async function sendMedia(f, label) {
   if (!activeCid || !peer) return;
   if (!navigator.onLine) return toast("You are offline.");
@@ -2101,6 +1871,7 @@ async function sendMedia(f, label) {
       lastMessage: label, updatedAt: serverTimestamp(),
       ["unread." + peer.uid]: increment(1)
     });
+    createNotification(peer.uid, "message", { preview: label, cid: activeCid });
   } catch (e) { toast("Send failed: " + (e.code || e.message)); }
 }
 async function shrink(file) {
@@ -2141,8 +1912,6 @@ function recUi(on) {
   ["text","pic-b","mic-b","send-b"].forEach(i => $(i).hidden = on);
   $("rec").hidden = !on;
 }
-
-/* ==== FIX #11: Safari prefers audio/mp4 ==== */
 function pickRecMime() {
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent || "");
   const order = isSafari
@@ -2150,7 +1919,6 @@ function pickRecMime() {
     : ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg;codecs=opus"];
   return order.find(t => MediaRecorder.isTypeSupported(t)) || "";
 }
-
 async function startRec() {
   if (rec || !activeCid) return;
   if (typeof MediaRecorder === "undefined") return toast("Voice messages not supported here.");
@@ -2194,6 +1962,7 @@ $("mic-b").onclick = startRec;
 $("rec-x").onclick = () => stopRec(false);
 $("rec-ok").onclick = () => stopRec(true);
 
+/* ============== VIEWS ============== */
 const VIEWS = {
   home: "v-home", chats: "cols", contacts: "v-contacts",
   calls: "v-calls", profile: "v-profile-page", settings: "v-settings"
@@ -2207,7 +1976,7 @@ function showView(v) {
   if (v === "home") renderHome();
   if (v === "contacts") loadContacts();
   if (v === "calls") loadCalls();
-  if (v === "settings") renderSettings();
+  if (v === "settings") { renderSettings(); loadPendingRequests(); }
 }
 $("nav-profile").onclick = () => showProfilePage(me);
 ["home","chats","contacts","calls","settings"].forEach(k => $("nav-" + k).onclick = () => showView(k));
@@ -2232,7 +2001,7 @@ const btn = (txt, icn, fn, cls = "ghost sm", dis) => {
 function userItem(u, sub, un) {
   const w = mk("div", "item"), im = mk("img"), i = mk("div", "info"), d = mk("span", "dot");
   im.src = u.photoURL; im.alt = "";
-  im.onclick = (ev) => { ev.stopPropagation(); openLightbox(u.photoURL); };
+  im.onclick = (ev) => { ev.stopPropagation(); showProfilePage(u); };
   const bb = mk("b");
   bb.innerHTML = `${u.nickname}${u.verified ? ` <span class="verified" title="Verified">${ico("check")}</span>` : ""}`;
   i.append(bb, mk("small", "soon", sub));
@@ -2241,10 +2010,11 @@ function userItem(u, sub, un) {
   return w;
 }
 
+/* ============== FRIEND REQUESTS (legacy) ============== */
 function listenFriends() {
   onSnapshot(query(collection(db, "friendRequests"), where("from", "==", me.uid)),
     s => { reqOut = new Map(s.docs.map(d => [d.data().to, d.data()])); frChanged(); },
-    e => toast("Friends unavailable (" + e.code + ")."));
+    () => {});
   onSnapshot(query(collection(db, "friendRequests"), where("to", "==", me.uid)),
     s => { reqIn = new Map(s.docs.map(d => [d.data().from, d.data()])); frChanged(); },
     () => {});
@@ -2257,63 +2027,14 @@ function frChanged() {
 function renderFr(u) {
   const b = $("rp-fr");
   if (!u) { b.hidden = true; return; }
-  b.hidden = false;
-  const r = rel(u.uid);
-  const set = (t, i, f, d) => { b.innerHTML = ico(i); b.append(" " + t); b.disabled = !!d; b.onclick = f || null; };
-  r === "none" ? set("Add Friend", "userplus", () => sendReq(u))
-    : r === "sent" ? set("Request sent (tap to cancel)", "userplus", () => delRel(u.uid))
-    : r === "received" ? set("Accept friend request", "check", () => acceptReq(u.uid))
-    : set("Friends", "check", null, 1);
+  b.hidden = true; // legacy friend requests not used in profile panel anymore
 }
-
-function notifItems() {
-  const it = [];
-  convList.forEach(({ c, u }) => {
-    const n = c.unread?.[me.uid] || 0;
-    if (n > 0 && c.id !== activeCid && !(c.mutedBy || []).includes(me.uid)) it.push({ t: "msg", u, n, c });
-  });
-  reqIn.forEach(r => { if (r.status === "pending") it.push({ t: "req", r }); });
-  return it;
+function rel(uid) {
+  if (reqOut.has(uid)) return "sent";
+  if (reqIn.has(uid)) return "received";
+  return "none";
 }
-function updBell() {
-  const n = notifItems().reduce((a, x) => a + (x.t === "msg" ? x.n : 1), 0);
-  const b = $("bell-n");
-  b.hidden = !n;
-  b.textContent = n > 99 ? "99+" : n;
-  if (!$("np").hidden) renderNotifs();
-}
-let npv = 0;
-async function renderNotifs() {
-  const v = ++npv, box = $("np");
-  box.innerHTML = "";
-  box.append(mk("h4", "", "Notifications"));
-  const it = notifItems();
-  if (!it.length) { box.append(mk("p", "soon", "You're all caught up.")); return; }
-  for (const x of it) {
-    if (v !== npv) return;
-    if (x.t === "msg") {
-      const w = userItem(x.u, x.n + (x.n === 1 ? " new message" : " new messages") + (x.c.lastMessage ? " · " + x.c.lastMessage : ""));
-      w.style.cursor = "pointer";
-      w.onclick = () => { $("np").hidden = true; openChat(x.u); };
-      box.append(w);
-    } else {
-      const u = await getUser(x.r.from);
-      if (!u || v !== npv) continue;
-      const w = userItem(u, "sent you a friend request");
-      const a = mk("div", "acts2");
-      a.append(btn("Accept", "check", () => acceptReq(u.uid), "sm"),
-               btn("Decline", "x", () => delRel(u.uid)));
-      w.append(a);
-      box.append(w);
-    }
-  }
-}
-$("bell-b").onclick = ev => {
-  ev.stopPropagation();
-  $("np").hidden = !$("np").hidden;
-  if (!$("np").hidden) renderNotifs();
-};
-$("np").onclick = ev => ev.stopPropagation();
+function frBtns() { return []; }
 
 function onConvs() {
   updBell();
@@ -2328,16 +2049,12 @@ function onConvs() {
     }
     prevUn[c.id] = n;
   });
-  // FIX #5: re-render home when convs change
   if (curView === "home") renderHome();
 }
 
-let hmUn = [];
-let feedState = { last: null, loading: false, exhausted: false, unsub: null };
-let composerMedia = [];
-
 function renderHome() {
   $("hm-av").src = me.photoURL;
+  $("hm-av").onclick = () => showProfilePage(me);
   $("hm-name").innerHTML = `${me.nickname}${me.verified ? ` <span class="verified" title="Verified">${ico("check")}</span>` : ""}`;
   $("hm-user").textContent = "@" + me.username;
   $("comp-av").src = me.photoURL;
@@ -2386,11 +2103,8 @@ async function renderSuggested() {
       bb.innerHTML = `${u.nickname}${u.verified ? ` <span class="verified">${ico("check")}</span>` : ""}`;
       w.innerHTML = `<img src="${u.photoURL}" alt=""><div class="who"></div>`;
       w.querySelector(".who").append(bb, mk("small", "", "@" + u.username));
-      w.querySelector("img").onclick = () => openLightbox(u.photoURL);
-      w.querySelector(".who").onclick = () => {
-        if (u.uid === me.uid) $("nav-profile").click();
-        else showProfilePage(u);
-      };
+      w.querySelector("img").onclick = () => showProfilePage(u);
+      w.querySelector(".who").onclick = () => showProfilePage(u);
       const b = btn("Message", "chat", () => openChat(u), "ghost sm");
       w.append(b);
       box.append(w);
@@ -2400,6 +2114,7 @@ async function renderSuggested() {
   }
 }
 
+/* ============== FEED ============== */
 function startFeed() {
   if (feedState.unsub) feedState.unsub();
   feedState = { last: null, loading: false, exhausted: false, unsub: null };
@@ -2453,7 +2168,6 @@ async function loadFeedPage() {
   }
 }
 
-// FIX #6: use follows (not friend-requests) for "followers" visibility
 async function canSeePost(p) {
   if (p.uid === me.uid) return true;
   if (p.visibility === "public") return true;
@@ -2461,7 +2175,7 @@ async function canSeePost(p) {
     if (myFollowing.has(p.uid)) return true;
     try {
       const s = await getDoc(doc(db, "follows", me.uid + "_" + p.uid));
-      if (s.exists()) { myFollowing.add(p.uid); return true; }
+      if (s.exists() && (s.data().status === "accepted" || !s.data().status)) { myFollowing.add(p.uid); return true; }
     } catch {}
     return false;
   }
@@ -2537,11 +2251,7 @@ $("comp-post").onclick = async () => {
       content: text,
       media,
       visibility,
-      likesCount: 0,
-      commentsCount: 0,
-      sharesCount: 0,
-      repostsCount: 0,
-      viewsCount: 0,
+      likesCount: 0, commentsCount: 0, sharesCount: 0, repostsCount: 0, viewsCount: 0,
       reactionCounts: { like:0, love:0, haha:0, wow:0, sad:0, angry:0 },
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
@@ -2607,11 +2317,12 @@ async function renderPost(d) {
   const myReaction = myLike?.exists() ? myLike.data().type : null;
   const isMine = p.uid === me.uid;
   const canDelete = isMine || isAdmin;
+  const dOv = p.displayOverrides || {};
 
   card.innerHTML = `
     <div class="fp-head">
-      <img src="${p.authorPhoto || avatar(p.authorUsername || p.authorName)}" alt="" onclick="openLightbox(this.src)">
-      <div class="who" onclick="(window.openUserProfile || (()=>{}))('${p.uid}')">
+      <img src="${p.authorPhoto || avatar(p.authorUsername || p.authorName)}" alt="" data-uid="${p.uid}" class="post-avatar">
+      <div class="who" data-uid="${p.uid}">
         <b>${escapeHtml(p.authorName || "User")}${p.authorVerified ? ` <span class="verified" title="Verified">${ico("check")}</span>` : ""}</b>
         <small>@${escapeHtml(p.authorUsername || "")} · ${timeAgo(date)} · <span class="privacy-tag" title="Privacy">${privacyIcon(p.visibility)}</span></small>
       </div>
@@ -2625,15 +2336,21 @@ async function renderPost(d) {
       <span data-count="views">0 views</span>
     </div>
     <div class="fp-actions">
-      <button data-act="react" data-icon="${ico("heart")}">${ico("heart")} React</button>
+      <button data-act="react">${ico("heart")} React</button>
       <button data-act="comment">${ico("comment")} Comment</button>
       <button data-act="share">${ico("share")} Share</button>
       <button data-act="repost">${ico("repeat")} Repost</button>
     </div>
     <div class="fp-cmts" data-comments></div>
   `;
-  // FIX #12: menu visible to everyone (Hide / Copy / Report usable by all)
-  card.querySelector(".post-menu").style.visibility = "visible";
+  card.querySelector(".post-avatar").onclick = ev => {
+    ev.stopPropagation();
+    window.openUserProfile(p.uid);
+  };
+  card.querySelector(".who").onclick = ev => {
+    ev.stopPropagation();
+    window.openUserProfile(p.uid);
+  };
 
   const mEl = card.querySelector("[data-media]");
   const imgs = (p.media || []).filter(m => m.type === "image");
@@ -2648,11 +2365,21 @@ async function renderPost(d) {
     mEl.append(grid);
   }
 
-  const reactionTotal = Object.values(p.reactionCounts || {}).reduce((a, b) => a + (b || 0), 0);
-  card.querySelector('[data-count="reactions"]').textContent =
-    (reactionTotal ? "❤️ " + reactionTotal : "0 reactions");
-  card.querySelector('[data-count="comments"]').textContent = (p.commentsCount || 0) + " comments";
-  card.querySelector('[data-count="views"]').textContent = (p.viewsCount || 0) + " views";
+  function paintCounts(pp) {
+    const dOv = pp.displayOverrides || {};
+    const realR = Object.values(pp.reactionCounts || {}).reduce((a, b) => a + (b || 0), 0);
+    const realV = pp.viewsCount || 0;
+    const realC = pp.commentsCount || 0;
+    const r = dOv.reactions ?? realR;
+    const v = dOv.views ?? realV;
+    const c = dOv.comments ?? realC;
+    const rAdj = dOv.reactions !== undefined ? ' <span class="disp-adjusted">†</span>' : "";
+    const vAdj = dOv.views !== undefined ? ' <span class="disp-adjusted">†</span>' : "";
+    card.querySelector('[data-count="reactions"]').innerHTML = (r ? "❤️ " + r : "0 reactions") + rAdj;
+    card.querySelector('[data-count="comments"]').textContent = c + " comments";
+    card.querySelector('[data-count="views"]').innerHTML = v + " views" + vAdj;
+  }
+  paintCounts(p);
 
   card.querySelector('[data-act="react"]').classList.toggle("on", !!myReaction);
   card.querySelector('[data-act="react"]').onclick = ev => openReactPicker(ev.currentTarget, postId, p, myReaction);
@@ -2664,10 +2391,7 @@ async function renderPost(d) {
   const unsubPost = onSnapshot(doc(db, "posts", postId), s => {
     if (!s.exists()) { card.remove(); unsubPost(); return; }
     const pp = s.data();
-    const tot = Object.values(pp.reactionCounts || {}).reduce((a, b) => a + (b || 0), 0);
-    card.querySelector('[data-count="reactions"]').textContent = tot ? "❤️ " + tot : "0 reactions";
-    card.querySelector('[data-count="comments"]').textContent = (pp.commentsCount || 0) + " comments";
-    card.querySelector('[data-count="views"]').textContent = (pp.viewsCount || 0) + " views";
+    paintCounts(pp);
     if ((pp.hiddenBy || []).includes(me.uid)) { card.remove(); }
   });
   card._unsub = unsubPost;
@@ -2679,9 +2403,7 @@ function escapeHtml(s) {
   return String(s || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-const REACTIONS = {
-  like: "👍", love: "❤️", haha: "😂", wow: "😮", sad: "😢", angry: "😡"
-};
+const REACTIONS = { like: "👍", love: "❤️", haha: "😂", wow: "😮", sad: "😢", angry: "😡" };
 async function openReactPicker(btn, postId, p, myReaction) {
   const pop = document.createElement("div");
   pop.className = "react-pop";
@@ -2707,9 +2429,11 @@ async function setReaction(postId, type) {
   try {
     const postRef = doc(db, "posts", postId);
     const reactRef = doc(db, "postReactions", postId, "users", me.uid);
+    let added = false, authorUid = null;
     await runTransaction(db, async tx => {
       const postSnap = await tx.get(postRef);
       if (!postSnap.exists()) throw new Error("Post missing.");
+      authorUid = postSnap.data().uid;
       const reactSnap = await tx.get(reactRef);
       const cur = reactSnap.exists() ? reactSnap.data().type : null;
       const counts = { ...(postSnap.data().reactionCounts || {}) };
@@ -2720,9 +2444,13 @@ async function setReaction(postId, type) {
         if (cur) counts[cur] = Math.max(0, (counts[cur] || 0) - 1);
         counts[type] = (counts[type] || 0) + 1;
         tx.set(reactRef, { type, at: serverTimestamp() });
+        added = true;
       }
       tx.update(postRef, { reactionCounts: counts, updatedAt: serverTimestamp() });
     });
+    if (added && authorUid) {
+      createNotification(authorUid, "like", { postId, reaction: type });
+    }
   } catch (e) {
     toast("Reaction failed: " + (e.code || e.message));
   }
@@ -2744,17 +2472,11 @@ async function sharePost(p, postId) {
 async function repost(p, postId) {
   try {
     const newPost = {
-      uid: me.uid,
-      authorName: me.nickname,
-      authorUsername: me.username,
-      authorPhoto: me.photoURL,
-      authorVerified: !!me.verified,
-      content: p.content || "",
-      media: p.media || [],
-      visibility: "public",
-      repostOf: postId,
-      repostOfAuthor: p.authorName,
-      repostOfUsername: p.authorUsername,
+      uid: me.uid, authorName: me.nickname, authorUsername: me.username,
+      authorPhoto: me.photoURL, authorVerified: !!me.verified,
+      content: p.content || "", media: p.media || [],
+      visibility: "public", repostOf: postId,
+      repostOfAuthor: p.authorName, repostOfUsername: p.authorUsername,
       likesCount: 0, commentsCount: 0, sharesCount: 0, repostsCount: 0, viewsCount: 0,
       reactionCounts: { like:0, love:0, haha:0, wow:0, sad:0, angry:0 },
       createdAt: serverTimestamp(), updatedAt: serverTimestamp(), hiddenBy: []
@@ -2784,11 +2506,14 @@ function toggleComments(card, postId) {
     if (!text) return;
     input.value = "";
     try {
-      await addDoc(collection(db, "posts", postId, "comments"), {
+      const cRef = await addDoc(collection(db, "posts", postId, "comments"), {
         uid: me.uid, name: me.nickname, username: me.username, photo: me.photoURL,
         text, parentId, createdAt: serverTimestamp()
       });
       await updateDoc(doc(db, "posts", postId), { commentsCount: increment(1) });
+      const postSnap = await getDoc(doc(db, "posts", postId));
+      const authorUid = postSnap.exists() ? postSnap.data().uid : null;
+      if (authorUid) createNotification(authorUid, parentId ? "reply" : "comment", { postId, commentId: cRef.id, preview: text.slice(0,60) });
       parentId = null;
     } catch (e) { toast("Comment failed: " + (e.code || e.message)); }
   };
@@ -2838,8 +2563,10 @@ function toggleComments(card, postId) {
       if (edit.parentNode) acts.append(edit);
       if (del.parentNode) acts.append(del);
       cx.append(acts);
-      w.append(document.createElement("img"), cx);
-      w.querySelector("img").src = c.photo || avatar(c.username);
+      const av = document.createElement("img");
+      av.src = c.photo || avatar(c.username);
+      av.onclick = ev => { ev.stopPropagation(); window.openUserProfile(c.uid); };
+      w.append(av, cx);
       list.append(w);
       const kids = byParent.get(c.id) || [];
       kids.forEach(k => renderCmt(k, depth + 1));
@@ -2898,38 +2625,43 @@ function postMenu(btn, p, postId, isMine) {
   mm.style.left = Math.max(8, Math.min(r.right - mm.offsetWidth, innerWidth - mm.offsetWidth - 8)) + "px";
 }
 
-// Helper to open profile from post
 window.openUserProfile = async (uid) => {
+  if (!uid) return;
   if (uid === me.uid) {
-    $("nav-profile").click();
-  } else {
-    const u = await getUser(uid);
-    if (u) showProfilePage(u);
+    showProfilePage(me);
+    return;
   }
+  const u = await getUser(uid);
+  if (u) showProfilePage(u);
 };
 
-let ctUsers = [], ctUn = [], ctAt = 0;
-let ctTimer = null;
+/* ============== SEARCH FRIEND ============== */
+let ctUsers = [], ctUn = [], ctAt = 0, ctTimer = null;
 
-// FIX #9: real DB search on the "Search Friend" page
 async function loadContacts(force = false) {
-  const q = $("ct-q").value.trim().toLowerCase();
+  const q = $("ct-q").value.trim();
   if (q) {
+    const lower = q.toLowerCase();
+    const results = new Map();
+    // 1) exact UID lookup (users/{uid})
+    try {
+      if (q.length >= 20) {
+        const uidSnap = await getDoc(doc(db, "users", q));
+        if (uidSnap.exists()) results.set(uidSnap.id, uidSnap.data());
+      }
+    } catch {}
+    // 2) prefix search on usernameLower + nicknameLower
     try {
       const [a, b] = await Promise.all([
-        getDocs(query(collection(db, "users"), orderBy("usernameLower"), startAt(q), endAt(q + "\uf8ff"), limit(20))),
-        getDocs(query(collection(db, "users"), orderBy("nicknameLower"), startAt(q), endAt(q + "\uf8ff"), limit(20)))
+        getDocs(query(collection(db, "users"), orderBy("usernameLower"), startAt(lower), endAt(lower + "\uf8ff"), limit(20))),
+        getDocs(query(collection(db, "users"), orderBy("nicknameLower"), startAt(lower), endAt(lower + "\uf8ff"), limit(20)))
       ]);
-      const seen = new Set(), results = [];
       [...a.docs, ...b.docs].forEach(d => {
-        const u = d.data();
-        if (u.uid === me.uid || seen.has(u.uid) || u.suspended) return;
-        seen.add(u.uid);
-        cache[u.uid] = u;
-        results.push(u);
+        if (d.id !== me.uid) results.set(d.id, d.data());
       });
-      ctUsers = results;
     } catch (e) { toast("Search failed: " + e.code); }
+    ctUsers = [...results.values()].filter(u => !u.suspended);
+    ctUsers.forEach(u => cache[u.uid] = u);
   } else if (!ctUsers.length || Date.now() - ctAt > 60000 || force) {
     try {
       const s = await getDocs(query(collection(db, "users"), limit(100)));
@@ -2940,15 +2672,26 @@ async function loadContacts(force = false) {
   }
   renderContacts();
 }
+
 function renderContacts() {
   const box = $("ct-list"), q = $("ct-q").value.trim().toLowerCase();
   ctUn.forEach(f => f()); ctUn = []; box.innerHTML = "";
-  const l = ctUsers.filter(u => !q || (u.nicknameLower || "").includes(q) || (u.usernameLower || "").includes(q));
-  if (!l.length) { box.append(mk("p", "soon", q ? "No matching friends." : "No other users yet.")); return; }
+  const l = ctUsers.filter(u => {
+    if (!q) return true;
+    return (u.nicknameLower || "").includes(q)
+      || (u.usernameLower || "").includes(q)
+      || u.uid === q;
+  });
+  if (!l.length) {
+    box.append(mk("p", "soon", q ? "No matching friends." : "No other users yet."));
+    return;
+  }
   l.forEach(u => {
-    const w = userItem(u, "@" + u.username, ctUn);
+    const w = userItem(u, "@" + u.username + " · UID " + u.uid.slice(0, 8) + "…", ctUn);
+    w.querySelector("img").onclick = (ev) => { ev.stopPropagation(); showProfilePage(u); };
     const a = mk("div", "acts2");
-    a.append(btn("Message", "chat", () => openChat(u), "sm"), ...frBtns(u));
+    a.append(btn("Message", "chat", () => openChat(u), "sm"),
+             btn("Profile", "user", () => showProfilePage(u), "ghost sm"));
     w.append(a);
     box.append(w);
   });
@@ -2958,6 +2701,7 @@ $("ct-q").oninput = () => {
   ctTimer = setTimeout(() => loadContacts(), 300);
 };
 
+/* ============== CALL LOG ============== */
 function logCall(c, msg) {
   const m = msg || "";
   const st = c.t0 ? "completed"
@@ -3010,6 +2754,7 @@ async function loadCalls() {
   }
 }
 
+/* ============== SETTINGS & PROFILE EDIT ============== */
 function renderSettings() {
   $("st-acc").textContent = me.nickname + " · @" + me.username + (auth.currentUser?.email ? " · " + auth.currentUser.email : "");
   $("st-dark").checked = document.documentElement.dataset.theme === "dark";
@@ -3028,7 +2773,6 @@ $("st-notif").onchange = async e => {
 $("st-priv").onclick = () => $("menu-priv").click();
 $("st-edit").onclick = openPm;
 $("st-out").onclick = () => signOut(auth);
-$("st-admin").onclick = openAdmin;
 
 function renderMedia(snap) {
   const g = $("rp-media");
@@ -3046,8 +2790,9 @@ function renderMedia(snap) {
   $("rp-mc").hidden = !n;
 }
 
+/* ---- admin open: hidden from normal UI ---- */
 function openAdmin() {
-  if (!isAdmin) return toast("Not authorized.");
+  if (!isAdmin) return; /* silent — do not reveal admin action */
   $("admin").hidden = false;
   loadAdminDash();
 }
@@ -3072,13 +2817,12 @@ document.addEventListener("keydown", e => {
   if (e.repeat) return;
   const now = Date.now();
   if (now - lastP < 400) {
-    if (isAdmin) openAdmin();
     lastP = 0;
+    if (isAdmin) openAdmin();
   } else {
     lastP = now;
   }
 });
-$("admin-menu").onclick = () => { $("menu").hidden = true; openAdmin(); };
 
 async function loadAdminDash() {
   try {
@@ -3151,13 +2895,37 @@ async function loadAdminPosts() {
       w.innerHTML = `<img src="${p.authorPhoto || avatar(p.authorUsername)}" alt="">
         <div class="who"><b>${escapeHtml(p.authorName)} <small class="soon">@${escapeHtml(p.authorUsername)}</small></b>
           <small>${escapeHtml((p.content || "").slice(0, 80))}</small></div>`;
+      const disp = btn("Display", "eye", async () => {
+        const rIn = prompt("Display reactions (blank = use real):", (p.displayOverrides?.reactions ?? ""));
+        const vIn = prompt("Display views (blank = use real):", (p.displayOverrides?.views ?? ""));
+        const before = p.displayOverrides || null;
+        const after = {};
+        if (rIn !== null && rIn.trim() !== "") {
+          const n = parseInt(rIn, 10);
+          if (isNaN(n) || n < 0) return toast("Invalid reactions value.");
+          after.reactions = n;
+        }
+        if (vIn !== null && vIn.trim() !== "") {
+          const n = parseInt(vIn, 10);
+          if (isNaN(n) || n < 0) return toast("Invalid views value.");
+          after.views = n;
+        }
+        try {
+          await updateDoc(doc(db, "posts", d.id), { displayOverrides: after });
+          await addDoc(collection(db, "adminAudit"), {
+            type: "displayOverride", admin: me.uid, adminName: me.nickname,
+            postId: d.id, before, after, at: serverTimestamp()
+          });
+          toast("Display updated.", 1);
+        } catch (e) { toast("Failed: " + (e.code || e.message)); }
+      }, "ghost sm");
       const del = btn("Delete", "x", async () => {
         if (!confirm("Delete this post permanently?")) return;
         try { await deleteDoc(doc(db, "posts", d.id)); w.remove(); toast("Deleted.", 1); }
         catch (e) { toast("Delete failed: " + (e.code || e.message)); }
       }, "ghost sm");
       del.classList.add("warn");
-      w.append(del);
+      w.append(disp, del);
       box.append(w);
     });
   } catch (e) { box.innerHTML = '<p class="err">' + (e.code || e.message) + "</p>"; }
@@ -3190,7 +2958,499 @@ async function loadAdminReports() {
   }
 }
 
-document.addEventListener("click", () => { $("menu").hidden = true; });
+/* ============== PROFILE PAGE (privacy-aware) ============== */
+async function showProfilePage(u) {
+  showView("profile");
+  peer = u;
+  const isOwn = u.uid === me.uid;
+
+  const snap = await getDoc(doc(db, "users", u.uid));
+  const fresh = snap.exists() ? snap.data() : u;
+  const followStatus = isOwn ? "self" : await getFollowStatus(u.uid);
+  const isFollower = followStatus === "accepted";
+  const isPrivate = !!fresh.privateProfile;
+  const canSeeContent = isOwn || !isPrivate || isFollower;
+
+  $("pp-av").src = fresh.photoURL;
+  $("pp-av").onclick = () => openLightbox(fresh.photoURL);
+  $("pp-name").innerHTML = `${fresh.nickname}${fresh.verified ? `<span class="verified" title="Verified">${ico("check")}</span>` : ""}`;
+  $("pp-user").textContent = "@" + fresh.username;
+  $("pp-bio").textContent = fresh.bio || (canSeeContent ? "No bio yet." : "");
+
+  $("pp-posts").textContent = canSeeContent ? (fresh.postsCount || 0) : "—";
+  $("pp-followers").textContent = fresh.followersCount || 0;
+  $("pp-following").textContent = fresh.followingCount || 0;
+
+  $("pp-followers-btn").onclick = canSeeContent ? () => openFollowersModal(u.uid, "followers") : null;
+  $("pp-following-btn").onclick = canSeeContent ? () => openFollowersModal(u.uid, "following") : null;
+
+  $("pp-follow-btn").hidden = true;
+  $("pp-msg-btn").hidden = true;
+  $("pp-edit-btn").hidden = true;
+
+  if (isOwn) {
+    $("pp-edit-btn").hidden = false;
+    $("pp-edit-btn").onclick = () => openPm();
+  } else {
+    $("pp-msg-btn").hidden = false;
+    $("pp-msg-btn").onclick = () => openChat(fresh);
+
+    const fBtn = $("pp-follow-btn");
+    fBtn.hidden = false;
+    const paint = () => {
+      if (followStatus === "accepted") {
+        fBtn.textContent = "Following";
+        fBtn.style.background = "var(--hov)";
+        fBtn.style.color = "var(--tx)";
+      } else if (followStatus === "pending") {
+        fBtn.textContent = "Requested";
+        fBtn.style.background = "var(--hov)";
+        fBtn.style.color = "var(--tx)";
+      } else {
+        fBtn.textContent = isPrivate && fresh.followApproval ? "Request to Follow" : "Follow";
+        fBtn.style.background = "var(--pri)";
+        fBtn.style.color = "#fff";
+      }
+    };
+    paint();
+    fBtn.onclick = async () => {
+      await toggleFollow(u.uid, fresh);
+      showProfilePage(fresh);
+    };
+  }
+
+  const meta = $("pp-meta");
+  meta.innerHTML = "";
+  let hasMeta = false;
+  if (canSeeContent) {
+    if (fresh.profession) { meta.innerHTML += `<span>${ico("briefcase")} ${escapeHtml(fresh.profession)}</span>`; hasMeta = true; }
+    if (fresh.gender && fresh.gender !== "Prefer not to say") { meta.innerHTML += `<span>👤 ${escapeHtml(fresh.gender)}</span>`; hasMeta = true; }
+    if (fresh.location) { meta.innerHTML += `<span>${ico("mapPin")} ${escapeHtml(fresh.location)}</span>`; hasMeta = true; }
+  }
+  meta.hidden = !hasMeta;
+
+  $("pp-lock").hidden = canSeeContent;
+  $("pp-posts-title").hidden = !canSeeContent;
+
+  const postsGrid = $("pp-posts-grid");
+  postsGrid.innerHTML = "";
+  if (!canSeeContent) {
+    postsGrid.innerHTML = "";
+    document.querySelectorAll("nav a").forEach(a => a.classList.remove("act"));
+    return;
+  }
+
+  const postsSnap = await getDocs(query(
+    collection(db, "posts"),
+    where("uid", "==", u.uid),
+    orderBy("createdAt", "desc"),
+    limit(12)
+  ));
+  if (postsSnap.empty) {
+    postsGrid.innerHTML = '<p class="soon" style="grid-column:1/-1;text-align:center;">No posts yet.</p>';
+  } else {
+    postsSnap.docs.forEach(d => {
+      const p = d.data();
+      const imgs = (p.media || []).filter(m => m.type === "image");
+      if (imgs.length > 0) {
+        const img = document.createElement("img");
+        img.src = imgs[0].data;
+        img.style = "width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;cursor:pointer;";
+        img.onclick = () => { $("lb-img").src = imgs[0].data; $("lb").hidden = false; };
+        postsGrid.appendChild(img);
+      } else if (p.content) {
+        const textPost = document.createElement("div");
+        textPost.style = "aspect-ratio:1;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:0.5rem;font-size:0.75rem;overflow:hidden;cursor:pointer;";
+        textPost.textContent = p.content.slice(0, 100);
+        postsGrid.appendChild(textPost);
+      }
+    });
+  }
+
+  document.querySelectorAll("nav a").forEach(a => a.classList.remove("act"));
+}
+
+/* ============== RP (chat-side profile) ============== */
+async function fillRp(u) {
+  $("rp-empty").hidden = true;
+  $("rp-body").hidden = false;
+  $("rp-av").src = u.photoURL;
+  $("rp-av").onclick = () => openLightbox(u.photoURL);
+  $("rp-name").innerHTML = `${u.nickname}${u.verified ? ` <span class="verified" title="Verified">${ico("check")}</span>` : ""}`;
+  $("rp-user").textContent = "@" + u.username;
+  $("rp-bio").textContent = u.bio || "No bio yet.";
+
+  const uDoc = await getDoc(doc(db, "users", u.uid));
+  const fresh = uDoc.exists() ? uDoc.data() : u;
+  $("rp-posts").textContent = fresh.postsCount || 0;
+  $("rp-followers").textContent = fresh.followersCount || 0;
+  $("rp-following").textContent = fresh.followingCount || 0;
+
+  const followBtn = $("rp-follow-btn");
+  if (u.uid === me.uid) {
+    followBtn.hidden = true;
+  } else {
+    followBtn.hidden = false;
+    const st = await getFollowStatus(u.uid);
+    const paint = () => {
+      if (st === "accepted") {
+        followBtn.textContent = "Following";
+        followBtn.style.background = "var(--hov)";
+        followBtn.style.color = "var(--tx)";
+      } else if (st === "pending") {
+        followBtn.textContent = "Requested";
+        followBtn.style.background = "var(--hov)";
+        followBtn.style.color = "var(--tx)";
+      } else {
+        followBtn.textContent = (fresh.privateProfile && fresh.followApproval) ? "Request to Follow" : "Follow";
+        followBtn.style.background = "var(--pri)";
+        followBtn.style.color = "#fff";
+      }
+    };
+    paint();
+    followBtn.onclick = async () => {
+      await toggleFollow(u.uid, fresh);
+      fillRp(fresh);
+    };
+  }
+}
+
+/* ============== FOLLOWERS MODAL ============== */
+async function openFollowersModal(uid, type) {
+  const modal = $("fol-modal");
+  const title = $("fol-title");
+  const list = $("fol-list");
+  title.textContent = type === "followers" ? "Followers" : "Following";
+  list.innerHTML = '<p class="soon">Loading…</p>';
+  modal.hidden = false;
+  try {
+    const q = type === "followers"
+      ? query(collection(db, "follows"), where("followeeUid", "==", uid), limit(50))
+      : query(collection(db, "follows"), where("followerUid", "==", uid), limit(50));
+    const snap = await getDocs(q);
+    list.innerHTML = "";
+    if (snap.empty) {
+      list.innerHTML = '<p class="soon" style="text-align:center;">No users yet.</p>';
+      return;
+    }
+    for (const d of snap.docs) {
+      const f = d.data();
+      if (f.status && f.status !== "accepted") continue;
+      const otherUid = type === "followers" ? f.followerUid : f.followeeUid;
+      const uSnap = await getDoc(doc(db, "users", otherUid));
+      if (!uSnap.exists()) continue;
+      const u = uSnap.data();
+      const row = document.createElement("div");
+      row.style = "display:flex;gap:0.7rem;align-items:center;padding:0.4rem;border-bottom:1px solid var(--line);cursor:pointer;";
+      row.innerHTML = `
+        <img src="${u.photoURL}" style="width:38px;height:38px;border-radius:50%;object-fit:cover;cursor:pointer;">
+        <div style="flex:1;min-width:0;">
+          <b style="display:block;font-size:0.9rem;">${u.nickname}</b>
+          <small style="color:var(--mut);font-size:0.75rem;">@${u.username}</small>
+        </div>
+      `;
+      row.querySelector("img").onclick = (ev) => {
+        ev.stopPropagation(); modal.hidden = true; showProfilePage(u);
+      };
+      row.onclick = () => {
+        modal.hidden = true;
+        if (u.uid === me.uid) showProfilePage(me); else showProfilePage(u);
+      };
+      list.appendChild(row);
+    }
+  } catch (e) {
+    list.innerHTML = '<p class="err">Failed to load: ' + (e.message || e.code) + '</p>';
+  }
+}
+window.openFollowersModal = openFollowersModal;
+$("fol-x").onclick = () => { $("fol-modal").hidden = true; };
+
+/* ============== MAP + EDIT PROFILE ============== */
+function initMap() {
+  if (mapInstance) return;
+  mapInstance = L.map('pf-map').setView([20, 0], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(mapInstance);
+  mapInstance.on('click', async (e) => {
+    const { lat, lng } = e.latlng;
+    if (mapMarker) mapInstance.removeLayer(mapMarker);
+    mapMarker = L.marker([lat, lng]).addTo(mapInstance);
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+      const data = await res.json();
+      const city = data.address?.city || data.address?.town || data.address?.village || data.address?.county || "Unknown";
+      const country = data.address?.country || "";
+      selectedLocationName = `${city}, ${country}`.replace(/, $/, "");
+      $("pf-loc-label").textContent = selectedLocationName;
+      selectedLat = lat; selectedLng = lng;
+    } catch {
+      selectedLocationName = `Lat: ${lat.toFixed(2)}, Lng: ${lng.toFixed(2)}`;
+      $("pf-loc-label").textContent = selectedLocationName;
+      selectedLat = lat; selectedLng = lng;
+    }
+  });
+}
+
+$("pf-loc-search").oninput = async (e) => {
+  const q = e.target.value.trim();
+  if (q.length < 3) return;
+  try {
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=1`);
+    const data = await res.json();
+    if (data.length > 0) {
+      const { lat, lon, display_name } = data[0];
+      if (mapInstance) {
+        mapInstance.setView([parseFloat(lat), parseFloat(lon)], 12);
+        if (mapMarker) mapInstance.removeLayer(mapMarker);
+        mapMarker = L.marker([parseFloat(lat), parseFloat(lon)]).addTo(mapInstance);
+        selectedLocationName = display_name.split(',')[0];
+        $("pf-loc-label").textContent = selectedLocationName;
+        selectedLat = parseFloat(lat);
+        selectedLng = parseFloat(lon);
+      }
+    }
+  } catch {}
+};
+
+$("pf-gender").onchange = (e) => {
+  $("pf-custom-gender-wrap").hidden = e.target.value !== "Custom";
+};
+
+const openPm = () => {
+  $("pf-nick").value = me.nickname || "";
+  $("pf-user").value = me.username || "";
+  $("pf-bio").value = me.bio || "";
+  $("pf-prof").value = me.profession || "";
+  $("pf-gender").value = me.gender || "";
+  $("pf-dob").value = me.dob || "";
+  $("pf-custom-gender").value = me.customGender || "";
+  $("pf-rel").value = me.relationshipStatus || "";
+  $("pf-orient").value = me.orientation || "";
+  $("pf-econ").value = me.economicCategory || "";
+  $("pf-custom-gender-wrap").hidden = (me.gender || "") !== "Custom";
+  $("pf-private").checked = !!me.privateProfile;
+  $("pf-approve").checked = !!me.followApproval;
+
+  $("pf-priv-dob").value = me.privacy?.dob || "private";
+  $("pf-priv-rel").value = me.privacy?.rel || "private";
+  $("pf-priv-orient").value = me.privacy?.orient || "private";
+  $("pf-priv-econ").value = me.privacy?.econ || "private";
+
+  $("pf-prev").src = me.photoURL;
+  newPhoto = null;
+  $("pf-file").value = "";
+  $("pf-err").textContent = "";
+
+  if (me.locationLat && me.locationLng) {
+    selectedLat = me.locationLat; selectedLng = me.locationLng;
+    selectedLocationName = me.location || "";
+    $("pf-loc-label").textContent = selectedLocationName;
+    $("pf-loc-search").value = selectedLocationName;
+  } else {
+    $("pf-loc-label").textContent = "No location selected";
+    $("pf-loc-search").value = "";
+    selectedLat = null; selectedLng = null; selectedLocationName = "";
+  }
+
+  $("pm").hidden = false;
+  setTimeout(() => {
+    initMap();
+    if (mapInstance && selectedLat != null) {
+      mapInstance.setView([selectedLat, selectedLng], 11);
+      if (mapMarker) mapInstance.removeLayer(mapMarker);
+      mapMarker = L.marker([selectedLat, selectedLng]).addTo(mapInstance);
+    }
+    if (mapInstance) mapInstance.invalidateSize();
+  }, 120);
+};
+window.openPm = openPm;
+
+$("me-av").onclick = (ev) => {
+  ev.stopPropagation();
+  $("menu").hidden = !$("menu").hidden;
+};
+$("menu").onclick = (ev) => ev.stopPropagation();
+$("menu-prof").onclick = () => { $("menu").hidden = true; openPm(); };
+$("pf-x").onclick = () => { $("pm").hidden = true; };
+
+$("pf").onsubmit = async e => {
+  e.preventDefault();
+  const err = $("pf-err"); err.textContent = "";
+  const nick = $("pf-nick").value.trim();
+  const name = $("pf-user").value.trim().toLowerCase();
+  const bio = $("pf-bio").value.trim();
+  if (!nick) return err.textContent = "Nickname required.";
+  if (!/^[a-z0-9_]{3,20}$/.test(name)) return err.textContent = "Username: 3-20 chars, a-z 0-9 _";
+
+  const upd = {
+    username: name, usernameLower: name, nickname: nick,
+    nicknameLower: nick.toLowerCase(), bio,
+    photoURL: newPhoto || me.photoURL,
+    profession: $("pf-prof").value.trim(),
+    gender: $("pf-gender").value,
+    dob: $("pf-dob").value,
+    customGender: $("pf-custom-gender").value.trim(),
+    relationshipStatus: $("pf-rel").value,
+    orientation: $("pf-orient").value,
+    economicCategory: $("pf-econ").value,
+    location: selectedLocationName,
+    locationLat: selectedLat,
+    locationLng: selectedLng,
+    privateProfile: $("pf-private").checked,
+    followApproval: $("pf-approve").checked,
+    privacy: {
+      dob: $("pf-priv-dob").value,
+      rel: $("pf-priv-rel").value,
+      orient: $("pf-priv-orient").value,
+      econ: $("pf-priv-econ").value
+    }
+  };
+
+  try {
+    await runTransaction(db, async tx => {
+      if (name !== me.usernameLower) {
+        const r = doc(db, "usernames", name);
+        if ((await tx.get(r)).exists()) throw new Error("taken");
+        tx.set(r, { uid: me.uid });
+        tx.delete(doc(db, "usernames", me.usernameLower));
+      }
+      tx.update(doc(db, "users", me.uid), upd);
+    });
+    me = { ...me, ...upd };
+    cache[me.uid] = me;
+    $("me-av").src = me.photoURL;
+    $("me-name").textContent = me.nickname;
+    toast("Profile saved.", 1);
+    $("pm").hidden = true;
+    showProfilePage(me);
+  } catch (x) {
+    err.textContent = x.message === "taken" ? "Username already taken." : "Could not save: " + (x.code || x.message);
+  }
+};
+
+$("pf-file").onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  if (!f.type.startsWith("image/")) return $("pf-err").textContent = "Please choose an image.";
+  const img = new Image(), u = URL.createObjectURL(f);
+  img.onload = () => {
+    const s = Math.min(img.width, img.height), c = document.createElement("canvas");
+    c.width = c.height = 160;
+    c.getContext("2d").drawImage(img, (img.width - s)/2, (img.height - s)/2, s, s, 0, 0, 160, 160);
+    newPhoto = c.toDataURL("image/jpeg", .82);
+    $("pf-prev").src = newPhoto; $("pf-err").textContent = "";
+    URL.revokeObjectURL(u);
+  };
+  img.onerror = () => $("pf-err").textContent = "Could not read that image.";
+  img.src = u;
+};
+
+/* ============== PRIVACY & BLOCK ============== */
+function renderSeen() {
+  $("h-dot").classList.toggle("on", ps.on === true);
+  $("h-seen").textContent = ps.on === true ? "Online"
+    : ps.ls === "hidden" ? "Last seen hidden"
+    : ps.ls ? "Last seen " + new Date(ps.ls).toLocaleString([], {dateStyle:"short",timeStyle:"short"})
+    : "";
+}
+async function initPrivacy() {
+  try {
+    const pr = doc(db, "privacy", me.uid), s = await getDoc(pr);
+    if (s.exists()) priv = { ...priv, ...s.data() };
+    else await setDoc(pr, { readReceipts: true });
+    const r = (await get(ref(rtdb, `privacy/${me.uid}`))).val();
+    if (r) priv = { ...priv, ...r };
+    else await set(ref(rtdb, `privacy/${me.uid}`), { online: "everyone", lastSeen: "everyone" });
+  } catch (e) { toast("Could not load privacy: " + (e.code || e.message)); }
+  onSnapshot(collection(db, "blocks", me.uid, "users"), snap => {
+    blocked = new Map(snap.docs.map(d => [d.id, d.data()]));
+    if (peer) $("send").hidden = blocked.has(peer.uid);
+    renderBlocked(); syncBlockBtns();
+  }, e => console.warn("Block list failed:", e.message));
+}
+$("menu-priv").onclick = () => {
+  $("menu").hidden = true;
+  $("s-on").value = priv.online; $("s-ls").value = priv.lastSeen; $("s-rr").checked = priv.readReceipts;
+  renderBlocked(); $("sm").hidden = false;
+};
+$("s-x").onclick = () => $("sm").hidden = true;
+async function savePriv(k, v) {
+  const old = priv[k]; priv[k] = v;
+  try {
+    if (k === "readReceipts") await setDoc(doc(db, "privacy", me.uid), { readReceipts: v }, { merge: true });
+    else await update(ref(rtdb, `privacy/${me.uid}`), { [k]: v });
+    toast("Saved.", 1);
+  } catch (e) {
+    priv[k] = old;
+    toast("Could not save: " + (e.code || e.message));
+    $("s-on").value = priv.online;
+    $("s-ls").value = priv.lastSeen;
+    $("s-rr").checked = priv.readReceipts;
+  }
+}
+$("s-on").onchange = e => savePriv("online", e.target.value);
+$("s-ls").onchange = e => savePriv("lastSeen", e.target.value);
+$("s-rr").onchange = e => savePriv("readReceipts", e.target.checked);
+function renderBlocked() {
+  const b = $("s-blocked");
+  b.innerHTML = blocked.size ? "" : '<i class="soon">No blocked users</i>';
+  blocked.forEach((v, uid) => {
+    const r = document.createElement("div"); r.className = "brow";
+    const n = document.createElement("span"); n.textContent = v.name || uid;
+    const x = document.createElement("button"); x.className = "ghost"; x.textContent = "Unblock";
+    x.onclick = () => unblock(uid);
+    r.append(n, x); b.append(r);
+  });
+}
+async function block(u) {
+  if (!confirm(`Block ${u.nickname}?\nThey won't be able to message or call you.`)) return;
+  try {
+    await setDoc(doc(db, "blocks", me.uid, "users", u.uid), { name: u.nickname, at: serverTimestamp() });
+    await set(ref(rtdb, `blocks/${me.uid}/${u.uid}`), true);
+    toast(u.nickname + " blocked.", 1);
+  } catch (e) { toast("Could not block: " + (e.code || e.message)); }
+}
+async function unblock(uid) {
+  if (!confirm("Unblock this user?")) return;
+  try {
+    await deleteDoc(doc(db, "blocks", me.uid, "users", uid));
+    await remove(ref(rtdb, `blocks/${me.uid}/${uid}`));
+    toast("Unblocked.", 1);
+  } catch (e) { toast("Could not unblock: " + (e.code || e.message)); }
+}
+function syncBlockBtns() {
+  const b = peer && blocked.has(peer.uid);
+  $("rp-block").textContent = b ? "Unblock" : "Block";
+  $("h-block").title = b ? "Unblock user" : "Block user";
+}
+const toggleBlock = () => {
+  if (!peer) return;
+  blocked.has(peer.uid) ? unblock(peer.uid) : block(peer);
+};
+$("rp-block").onclick = toggleBlock;
+$("h-block").onclick = toggleBlock;
+$("rp-report").onclick = () => {
+  if (!peer) return;
+  $("r-err").textContent = ""; $("r-desc").value = ""; $("rm").hidden = false;
+};
+$("r-x").onclick = () => $("rm").hidden = true;
+$("rf").onsubmit = async e => {
+  e.preventDefault();
+  if (!confirm(`Report ${peer.nickname}?`)) return;
+  try {
+    await setDoc(doc(db, "reports", me.uid + "_" + peer.uid), {
+      reporter: me.uid, reported: peer.uid,
+      reason: $("r-reason").value, description: $("r-desc").value.trim().slice(0,500),
+      createdAt: serverTimestamp()
+    });
+    $("rm").hidden = true;
+    toast("Report submitted. Thank you.", 1);
+  } catch (x) {
+    $("r-err").textContent = x.code === "permission-denied"
+      ? "You have already reported this user."
+      : "Could not submit: " + (x.code || x.message);
+  }
+};
 </script>
 </body>
 </html>
