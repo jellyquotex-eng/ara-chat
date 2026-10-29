@@ -47,7 +47,7 @@ main{display:flex;flex-direction:column}
 #h-av{width:44px;height:44px;border-radius:50%;object-fit:cover;cursor:pointer;}.sp{flex:1}#back{display:none}
 #msgs{flex:1;overflow:auto;padding:1rem;display:flex;flex-direction:column;gap:.4rem;background:linear-gradient(#f2f4ec,#e8ebdf)}
 .empty{margin:auto;text-align:center;color:var(--mut);font-size:2.5rem}.empty h3{color:var(--pri);margin:.3rem 0;font-size:1.3rem}.empty p{font-size:.95rem;margin:0}
-.m{max-width:70%;padding:.55rem .8rem;border-radius:16px;background:#fff;word-break:break-word;white-space:pre-wrap;cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.m{max-width:70%;padding:.55rem .8rem;border-radius:16px;background:#fff;word-break:break-word;white-space:pre-wrap;cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
 .m.mine{align-self:flex-end;background:var(--pri);color:#fff}.m small{display:block;opacity:.65;font-size:.7rem;margin-top:.2rem}
 form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send input{border-radius:99px}#typing{padding:0 1rem;height:1.2rem;font-size:.8rem;color:var(--ok)}
 #rp{padding:1.2rem;overflow:auto}#rp-av{width:76px;height:76px;border-radius:50%;object-fit:cover;cursor:pointer;}#rp h3{margin:.4rem 0 0}
@@ -323,7 +323,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
     <nav aria-label="Main">
       <a id="nav-home" data-i="home" tabindex="0"><span>Home</span></a>
       <a id="nav-chats" data-i="chat" tabindex="0"><span>Chats</span></a>
-      <a id="nav-contacts" data-i="users" tabindex="0"><span>Contacts</span></a>
+      <a id="nav-contacts" data-i="users" tabindex="0"><span>Search Friend</span></a>
       <a id="nav-calls" data-i="phone" tabindex="0"><span>Calls</span></a>
       <a id="nav-profile" data-i="user" tabindex="0"><span>Profile</span></a>
       <a id="nav-settings" data-i="gear" tabindex="0"><span>Settings</span></a>
@@ -333,7 +333,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
       <button id="bell-b" class="ic" data-i="bell" aria-label="Notifications"><b id="bell-n" class="bdg" hidden></b></button>
     </div>
     <div class="me">
-      <img id="me-av" alt="Menu" onclick="openLightbox(this.src)">
+      <img id="me-av" alt="Menu">
       <b id="me-name"></b>
       <div id="menu" hidden>
         <button id="menu-prof" class="ghost">Profile</button>
@@ -356,7 +356,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
         </div>
         <div class="feed-card navbox">
           <button id="qa-chat" data-i="chat" type="button">Messages</button>
-          <button id="qa-con" data-i="users" type="button">Contacts</button>
+          <button id="qa-con" data-i="users" type="button">Search Friend</button>
           <button id="qa-call" data-i="phone" type="button">Calls</button>
           <button id="qa-grp" data-i="video" type="button">Group call</button>
         </div>
@@ -473,8 +473,8 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
   </div>
 
   <section id="v-contacts" class="page" hidden>
-    <div class="phead"><h2>Contacts</h2></div>
-    <input id="ct-q" placeholder="Search contacts by name or username…" aria-label="Search contacts" style="margin-bottom:1rem">
+    <div class="phead"><h2>Search Friend</h2></div>
+    <input id="ct-q" placeholder="Search friends by name or username…" aria-label="Search friends" style="margin-bottom:1rem">
     <div id="ct-list" class="plist"></div>
   </section>
 
@@ -797,7 +797,34 @@ const LS = {
   get: k => { try { return localStorage.getItem(k); } catch { return null; } },
   set: (k,v) => { try { localStorage.setItem(k,v); } catch {} }
 };
-const mk = (t,c,x) => { const e = document.createElement(t); if(c) e.className = c; if(x != null) e.textContent = x; return e };
+const mk = (t,c,x) => { const e = document.createElement(t); if(c) e.className = c; if(x != null) e.textContent = x; return e; };
+
+/* ==== GLOBALS (declared early to avoid TDZ / ReferenceErrors in strict mode) ==== */
+let me = null;
+let newPhoto = null;          // <-- FIX #1: was previously undeclared; broke openPm()
+let activeCid = null;
+let unsub = [];
+let cache = {};
+let started = false;
+let lastSnap = null;
+let clr = 0;
+let renderMsgs = () => {};
+let curView = "home";
+let convList = [];
+let reqIn = new Map(), reqOut = new Map(), prevUn = {};
+let myFollowing = new Set();  // <-- FIX #6
+let pin = null, convsData = [], replying = null, unreadNow = 0;
+let peer = null, ps = {};
+let priv = { online: "everyone", lastSeen: "everyone", readReceipts: true };
+let blocked = new Map();
+let isAdmin = false;
+
+/* Map state */
+let mapInstance = null;
+let mapMarker = null;
+let selectedLat = null;
+let selectedLng = null;
+let selectedLocationName = "";
 
 // LIGHTBOX
 window.openLightbox = (src) => {
@@ -860,22 +887,6 @@ const applyRp = () => {
 };
 $("rp-t").onclick = () => { LS.set("ara-rp", LS.get("ara-rp") === "0" ? "1" : "0"); applyRp(); };
 
-let me, activeCid, unsub = [], cache = {}, started = false, lastSnap = null,
-    clr = 0, renderMsgs = () => {}, curView = "home";
-let convList = [], reqIn = new Map(), reqOut = new Map(), prevUn = {};
-let pin = null, convsData = [], replying = null, unreadNow = 0;
-let peer = null, ps = {};
-let priv = { online: "everyone", lastSeen: "everyone", readReceipts: true };
-let blocked = new Map();
-let isAdmin = false;
-
-// Map state
-let mapInstance = null;
-let mapMarker = null;
-let selectedLat = null;
-let selectedLng = null;
-let selectedLocationName = "";
-
 const getUser = async uid => cache[uid] || (cache[uid] = (await getDoc(doc(db,"users",uid))).data());
 
 $("gbtn").onclick = async () => {
@@ -932,6 +943,7 @@ function startApp() {
   listenIncoming();
   initPrivacy();
   listenFriends();
+  loadFollowing();
   applyRp();
   showView("home");
   $("me-av").src = me.photoURL;
@@ -984,6 +996,13 @@ function startApp() {
   );
 
   startFeed();
+}
+
+async function loadFollowing() {
+  try {
+    const s = await getDocs(query(collection(db, "follows"), where("followerUid", "==", me.uid)));
+    myFollowing = new Set(s.docs.map(d => d.data().followeeUid));
+  } catch (e) { /* rules not deployed yet */ }
 }
 
 function row(u) {
@@ -1097,6 +1116,30 @@ async function openChat(u) {
       s.textContent = tm + (mine ? (m.seenBy.length > 1 ? " ✓✓ Seen" : " ✓ Sent") : "");
       el.append(s);
       el.onclick = ev => { ev.stopPropagation(); if (String(getSelection())) return; msgMenu(el, d, m, mine, ev); };
+
+      /* === FIX #8: long-press (mobile) === */
+      let lpTimer = null, lpStart = null;
+      const clearLp = () => { if (lpTimer) { clearTimeout(lpTimer); lpTimer = null; } };
+      el.addEventListener("pointerdown", ev => {
+        if (ev.pointerType === "mouse") return;
+        lpStart = { x: ev.clientX, y: ev.clientY };
+        clearLp();
+        lpTimer = setTimeout(() => {
+          lpTimer = null;
+          if (String(getSelection())) return;
+          msgMenu(el, d, m, mine, ev);
+          if (navigator.vibrate) { try { navigator.vibrate(20); } catch {} }
+        }, 500);
+      });
+      el.addEventListener("pointermove", ev => {
+        if (lpTimer && lpStart && (Math.abs(ev.clientX - lpStart.x) > 10 || Math.abs(ev.clientY - lpStart.y) > 10)) clearLp();
+      });
+      el.addEventListener("pointerup", clearLp);
+      el.addEventListener("pointercancel", clearLp);
+      el.addEventListener("pointerleave", clearLp);
+      el.addEventListener("contextmenu", ev => ev.preventDefault());
+      /* === /long-press === */
+
       const x = document.createElement("a"); x.textContent = "⋮"; x.title = "More";
       x.onclick = ev => { ev.stopPropagation(); msgMenu(x, d, m, mine); };
       const rb = document.createElement("a"); rb.textContent = "☺"; rb.title = "React";
@@ -1161,6 +1204,7 @@ $("send").onsubmit = async e => {
       { lastMessage: text.slice(0,80), updatedAt: serverTimestamp(), ["unread." + peer.uid]: increment(1) });
   } catch (err) {
     $("text").value = text;
+    replying = rep; renderReply();   // <-- FIX #10: restore reply state on error
     toast("Message failed to send: " + err.code);
   }
 };
@@ -1363,7 +1407,6 @@ async function fillRp(u) {
   $("rp-user").textContent = "@" + u.username;
   $("rp-bio").textContent = u.bio || "No bio yet.";
   
-  // Post/follower counts
   const uDoc = await getDoc(doc(db, "users", u.uid));
   const fresh = uDoc.exists() ? uDoc.data() : u;
   $("rp-posts").textContent = fresh.postsCount || 0;
@@ -1381,17 +1424,11 @@ async function fillRp(u) {
     followBtn.style.color = isFollowing ? "var(--tx)" : "#fff";
     followBtn.onclick = async () => {
       await toggleFollow(fresh);
-      fillRp(fresh); // Refresh
+      fillRp(fresh);
     };
   }
   
   renderFr(u);
-  // Do NOT flash the profile fields. The map is only inside the Edit Modal.
-}
-
-async function renderFollowStats(u) {
-  // Called when opening chat
-  fillRp(u);
 }
 
 async function checkFollowing(targetUid) {
@@ -1402,22 +1439,24 @@ async function checkFollowing(targetUid) {
 
 async function toggleFollow(u) {
   const fid = me.uid + "_" + u.uid;
-  const ref = doc(db, "follows", fid);
-  const snap = await getDoc(ref);
+  const fRef = doc(db, "follows", fid);
+  const snap = await getDoc(fRef);
   
   if (snap.exists()) {
-    await deleteDoc(ref);
+    await deleteDoc(fRef);
     await updateDoc(doc(db, "users", u.uid), { followersCount: increment(-1) });
     await updateDoc(doc(db, "users", me.uid), { followingCount: increment(-1) });
+    myFollowing.delete(u.uid);
     toast("Unfollowed " + u.nickname);
   } else {
-    await setDoc(ref, {
+    await setDoc(fRef, {
       followerUid: me.uid,
       followeeUid: u.uid,
       createdAt: serverTimestamp()
     });
     await updateDoc(doc(db, "users", u.uid), { followersCount: increment(1) });
     await updateDoc(doc(db, "users", me.uid), { followingCount: increment(1) });
+    myFollowing.add(u.uid);
     toast("Followed " + u.nickname, 1);
   }
 }
@@ -1538,8 +1577,9 @@ $("pf-gender").onchange = (e) => {
 };
 
 const openPm = () => {
-  $("pf-nick").value = me.nickname;
-  $("pf-user").value = me.username;
+  // populate form first
+  $("pf-nick").value = me.nickname || "";
+  $("pf-user").value = me.username || "";
   $("pf-bio").value = me.bio || "";
   $("pf-prof").value = me.profession || "";
   $("pf-gender").value = me.gender || "";
@@ -1548,16 +1588,18 @@ const openPm = () => {
   $("pf-rel").value = me.relationshipStatus || "";
   $("pf-orient").value = me.orientation || "";
   $("pf-econ").value = me.economicCategory || "";
+  $("pf-custom-gender-wrap").hidden = (me.gender || "") !== "Custom";
   
-  // Load privacy
   $("pf-priv-dob").value = me.privacy?.dob || "private";
   $("pf-priv-rel").value = me.privacy?.rel || "private";
   $("pf-priv-orient").value = me.privacy?.orient || "private";
   $("pf-priv-econ").value = me.privacy?.econ || "private";
   
   $("pf-prev").src = me.photoURL;
-  newPhoto = null; $("pf-file").value = ""; $("pf-err").textContent = "";
-  
+  newPhoto = null;
+  $("pf-file").value = "";
+  $("pf-err").textContent = "";
+
   // Location
   if (me.locationLat && me.locationLng) {
     selectedLat = me.locationLat;
@@ -1565,30 +1607,38 @@ const openPm = () => {
     selectedLocationName = me.location || "";
     $("pf-loc-label").textContent = selectedLocationName;
     $("pf-loc-search").value = selectedLocationName;
-    
-    setTimeout(() => {
-      initMap();
-      if (mapInstance && selectedLat) {
-        mapInstance.setView([selectedLat, selectedLng], 11);
-        if (mapMarker) mapInstance.removeLayer(mapMarker);
-        mapMarker = L.marker([selectedLat, selectedLng]).addTo(mapInstance);
-      }
-    }, 100);
   } else {
     $("pf-loc-label").textContent = "No location selected";
     $("pf-loc-search").value = "";
     selectedLat = null; selectedLng = null; selectedLocationName = "";
   }
-  
-  showView("profile");
-};
 
-$("me-av").onclick = () => $("menu").hidden = !$("menu").hidden;
+  // FIX #1 + #7: actually show the modal, always init the map
+  $("pm").hidden = false;
+  setTimeout(() => {
+    initMap();
+    if (mapInstance && selectedLat != null) {
+      mapInstance.setView([selectedLat, selectedLng], 11);
+      if (mapMarker) mapInstance.removeLayer(mapMarker);
+      mapMarker = L.marker([selectedLat, selectedLng]).addTo(mapInstance);
+    }
+    if (mapInstance) mapInstance.invalidateSize();
+  }, 120);
+};
+// FIX #4: expose for inline handlers
+window.openPm = openPm;
+
+// FIX #2 + #3: avatar opens menu, stops propagation so document doesn't close it
+$("me-av").onclick = (ev) => {
+  ev.stopPropagation();
+  $("menu").hidden = !$("menu").hidden;
+};
+$("menu").onclick = (ev) => ev.stopPropagation();
+
 $("menu-prof").onclick = () => { $("menu").hidden = true; openPm(); };
 $("pf-x").onclick = () => {
   $("pm").hidden = true;
-  document.querySelector("#v-profile-page")?.remove();
-  showView("home");
+  // FIX #2: do NOT remove #v-profile-page from the DOM
 };
 
 $("pf").onsubmit = async e => {
@@ -1639,8 +1689,7 @@ $("pf").onsubmit = async e => {
     $("me-name").textContent = me.nickname;
     toast("Profile saved.", 1);
     $("pm").hidden = true;
-    document.querySelector("#v-profile-page")?.remove();
-    showView("home");
+    showProfilePage(me);
   } catch (x) {
     err.textContent = x.message === "taken" ? "Username already taken." : "Could not save: " + (x.code || x.message);
   }
@@ -1688,7 +1737,8 @@ async function showProfilePage(u) {
   
   if (isOwn) {
     $("pp-edit-btn").hidden = false;
-    $("pp-edit-btn").onclick = () => window.openPm();
+    // FIX #13: use module-scoped openPm directly
+    $("pp-edit-btn").onclick = () => openPm();
   } else {
     $("pp-follow-btn").hidden = false;
     $("pp-msg-btn").hidden = false;
@@ -2084,21 +2134,32 @@ $("pic-in").onchange = async e => {
   } catch { toast("Could not read that image."); }
 };
 $("lb").onclick = () => { $("lb").hidden = true; $("lb-img").src = ""; };
+
 let rec = null;
 const fmt = n => (n/60|0) + ":" + String(n % 60).padStart(2, "0");
 function recUi(on) {
   ["text","pic-b","mic-b","send-b"].forEach(i => $(i).hidden = on);
   $("rec").hidden = !on;
 }
+
+/* ==== FIX #11: Safari prefers audio/mp4 ==== */
+function pickRecMime() {
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent || "");
+  const order = isSafari
+    ? ["audio/mp4", "audio/webm;codecs=opus", "audio/webm", "audio/ogg;codecs=opus"]
+    : ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg;codecs=opus"];
+  return order.find(t => MediaRecorder.isTypeSupported(t)) || "";
+}
+
 async function startRec() {
   if (rec || !activeCid) return;
   if (typeof MediaRecorder === "undefined") return toast("Voice messages not supported here.");
+  if (!window.isSecureContext) return toast("Voice recording requires HTTPS.");
   const st = await media(false); if (!st) return;
-  const mt = ["audio/webm;codecs=opus","audio/webm","audio/mp4","audio/ogg;codecs=opus"]
-    .find(t => MediaRecorder.isTypeSupported(t));
+  const mt = pickRecMime();
   let mr;
   try {
-    mr = new MediaRecorder(st, mt ? { mimeType: mt, audioBitsPerSecond: 24000 } : { audioBitsPerSecond: 24000 });
+    mr = new MediaRecorder(st, mt ? { mimeType: mt, audioBitsPerSecond: 32000 } : { audioBitsPerSecond: 32000 });
   } catch (e) { st.getTracks().forEach(t => t.stop()); return toast("Cannot record: " + e.name); }
   const r = { mr, chunks: [], t0: Date.now(), send: false };
   rec = r;
@@ -2253,6 +2314,7 @@ $("bell-b").onclick = ev => {
   if (!$("np").hidden) renderNotifs();
 };
 $("np").onclick = ev => ev.stopPropagation();
+
 function onConvs() {
   updBell();
   convList.forEach(({ c, u }) => {
@@ -2266,6 +2328,8 @@ function onConvs() {
     }
     prevUn[c.id] = n;
   });
+  // FIX #5: re-render home when convs change
+  if (curView === "home") renderHome();
 }
 
 let hmUn = [];
@@ -2280,7 +2344,7 @@ function renderHome() {
   const box = $("hm-list");
   hmUn.forEach(f => f()); hmUn = []; box.innerHTML = "";
   if (!convList.length) {
-    box.append(mk("p", "soon", "No conversations yet. Start one from Contacts."));
+    box.append(mk("p", "soon", "No conversations yet. Start one from Search Friend."));
   } else {
     convList.slice(0, 6).forEach(({ c, u }) => {
       const w = userItem(u, c.lastMessage || "@" + u.username, hmUn);
@@ -2345,8 +2409,8 @@ function startFeed() {
     const s = mk("div", "skeleton-post sk");
     feed.append(s);
   }
-  loadFeedPage(true);
-  $("feed-more").onclick = () => loadFeedPage(true);
+  loadFeedPage();
+  $("feed-more").onclick = () => loadFeedPage();
 }
 
 async function loadFeedPage() {
@@ -2389,12 +2453,17 @@ async function loadFeedPage() {
   }
 }
 
+// FIX #6: use follows (not friend-requests) for "followers" visibility
 async function canSeePost(p) {
   if (p.uid === me.uid) return true;
   if (p.visibility === "public") return true;
   if (p.visibility === "followers") {
-    const rel = reqOut.get(p.uid) || reqIn.get(p.uid);
-    return rel?.status === "accepted";
+    if (myFollowing.has(p.uid)) return true;
+    try {
+      const s = await getDoc(doc(db, "follows", me.uid + "_" + p.uid));
+      if (s.exists()) { myFollowing.add(p.uid); return true; }
+    } catch {}
+    return false;
   }
   return false;
 }
@@ -2563,8 +2632,8 @@ async function renderPost(d) {
     </div>
     <div class="fp-cmts" data-comments></div>
   `;
-  if (canDelete) card.querySelector(".post-menu").style.visibility = "visible";
-  else card.querySelector(".post-menu").style.visibility = "hidden";
+  // FIX #12: menu visible to everyone (Hide / Copy / Report usable by all)
+  card.querySelector(".post-menu").style.visibility = "visible";
 
   const mEl = card.querySelector("[data-media]");
   const imgs = (p.media || []).filter(m => m.type === "image");
@@ -2707,6 +2776,7 @@ function toggleComments(card, postId) {
   const form = document.createElement("form");
   form.className = "cmt-form";
   form.innerHTML = `<input placeholder="Write a comment…" maxlength="500"><button type="submit" class="sm">Send</button>`;
+  let parentId = null;
   form.onsubmit = async e => {
     e.preventDefault();
     const input = form.querySelector("input");
@@ -2716,9 +2786,10 @@ function toggleComments(card, postId) {
     try {
       await addDoc(collection(db, "posts", postId, "comments"), {
         uid: me.uid, name: me.nickname, username: me.username, photo: me.photoURL,
-        text, parentId: null, createdAt: serverTimestamp()
+        text, parentId, createdAt: serverTimestamp()
       });
       await updateDoc(doc(db, "posts", postId), { commentsCount: increment(1) });
+      parentId = null;
     } catch (e) { toast("Comment failed: " + (e.code || e.message)); }
   };
   box.append(list, form);
@@ -2748,7 +2819,7 @@ function toggleComments(card, postId) {
         const inp = form.querySelector("input");
         inp.value = "@" + c.name + " ";
         inp.focus();
-        form.dataset.parent = c.id;
+        parentId = c.id;
       };
       del.onclick = async () => {
         if (!confirm("Delete this comment?")) return;
@@ -2777,26 +2848,6 @@ function toggleComments(card, postId) {
     if (!snap.size) list.innerHTML = '<p class="soon" style="padding:.4rem 0">No comments yet.</p>';
   });
   card._unsubCmt = unsub;
-  form.addEventListener("submit", () => {
-    const p = form.dataset.parent || null;
-    if (p) {
-      form.onsubmit = async e => {
-        e.preventDefault();
-        const input = form.querySelector("input");
-        const text = input.value.trim();
-        if (!text) return;
-        input.value = "";
-        try {
-          await addDoc(collection(db, "posts", postId, "comments"), {
-            uid: me.uid, name: me.nickname, username: me.username, photo: me.photoURL,
-            text, parentId: p, createdAt: serverTimestamp()
-          });
-          await updateDoc(doc(db, "posts", postId), { commentsCount: increment(1) });
-          form.dataset.parent = "";
-        } catch (e) { toast("Comment failed: " + (e.code || e.message)); }
-      };
-    }
-  });
 }
 
 function postMenu(btn, p, postId, isMine) {
@@ -2858,14 +2909,34 @@ window.openUserProfile = async (uid) => {
 };
 
 let ctUsers = [], ctUn = [], ctAt = 0;
-async function loadContacts() {
-  if (!ctUsers.length || Date.now() - ctAt > 60000) {
+let ctTimer = null;
+
+// FIX #9: real DB search on the "Search Friend" page
+async function loadContacts(force = false) {
+  const q = $("ct-q").value.trim().toLowerCase();
+  if (q) {
+    try {
+      const [a, b] = await Promise.all([
+        getDocs(query(collection(db, "users"), orderBy("usernameLower"), startAt(q), endAt(q + "\uf8ff"), limit(20))),
+        getDocs(query(collection(db, "users"), orderBy("nicknameLower"), startAt(q), endAt(q + "\uf8ff"), limit(20)))
+      ]);
+      const seen = new Set(), results = [];
+      [...a.docs, ...b.docs].forEach(d => {
+        const u = d.data();
+        if (u.uid === me.uid || seen.has(u.uid) || u.suspended) return;
+        seen.add(u.uid);
+        cache[u.uid] = u;
+        results.push(u);
+      });
+      ctUsers = results;
+    } catch (e) { toast("Search failed: " + e.code); }
+  } else if (!ctUsers.length || Date.now() - ctAt > 60000 || force) {
     try {
       const s = await getDocs(query(collection(db, "users"), limit(100)));
-      ctUsers = s.docs.map(d => d.data()).filter(u => u.uid !== me.uid);
+      ctUsers = s.docs.map(d => d.data()).filter(u => u.uid !== me.uid && !u.suspended);
       ctUsers.forEach(u => cache[u.uid] = u);
       ctAt = Date.now();
-    } catch (e) { toast("Cannot load contacts: " + e.code); }
+    } catch (e) { toast("Cannot load users: " + e.code); }
   }
   renderContacts();
 }
@@ -2873,7 +2944,7 @@ function renderContacts() {
   const box = $("ct-list"), q = $("ct-q").value.trim().toLowerCase();
   ctUn.forEach(f => f()); ctUn = []; box.innerHTML = "";
   const l = ctUsers.filter(u => !q || (u.nicknameLower || "").includes(q) || (u.usernameLower || "").includes(q));
-  if (!l.length) { box.append(mk("p", "soon", q ? "No matching contacts." : "No other users yet.")); return; }
+  if (!l.length) { box.append(mk("p", "soon", q ? "No matching friends." : "No other users yet.")); return; }
   l.forEach(u => {
     const w = userItem(u, "@" + u.username, ctUn);
     const a = mk("div", "acts2");
@@ -2882,7 +2953,10 @@ function renderContacts() {
     box.append(w);
   });
 }
-$("ct-q").oninput = renderContacts;
+$("ct-q").oninput = () => {
+  clearTimeout(ctTimer);
+  ctTimer = setTimeout(() => loadContacts(), 300);
+};
 
 function logCall(c, msg) {
   const m = msg || "";
@@ -2997,9 +3071,9 @@ document.addEventListener("keydown", e => {
   if (e.code !== "KeyP") return;
   if (e.repeat) return;
   const now = Date.now();
-  if (now - lastP < 400) { 
-    if (isAdmin) openAdmin(); 
-    lastP = 0; 
+  if (now - lastP < 400) {
+    if (isAdmin) openAdmin();
+    lastP = 0;
   } else {
     lastP = now;
   }
@@ -3013,7 +3087,6 @@ async function loadAdminDash() {
       getDocs(query(collection(db, "posts"), limit(100)))
     ]);
     const users = uSnap.docs.map(d => d.data());
-    const online = users.filter(u => cache[u.uid]?.online).length;
     $("st-total").textContent = uSnap.size + (uSnap.size === 100 ? "+" : "");
     $("st-susp").textContent = users.filter(u => u.suspended).length;
     $("st-verified").textContent = users.filter(u => u.verified).length;
@@ -3118,7 +3191,6 @@ async function loadAdminReports() {
 }
 
 document.addEventListener("click", () => { $("menu").hidden = true; });
-$("h-block").onclick = toggleBlock;
 </script>
 </body>
 </html>
