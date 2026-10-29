@@ -30,7 +30,7 @@ nav{display:flex;gap:1.2rem;margin:0 auto}nav a{cursor:pointer;padding:.9rem .3r
 #menu button{background:transparent;color:var(--tx);text-align:left;box-shadow:none;border-radius:8px;padding:.5rem .7rem}
 #menu button:hover{background:#e9ecdf}
 
-/* ===== Chat layout (unchanged) ===== */
+/* ===== Chat layout ===== */
 #cols{flex:1;min-height:0;display:grid;grid-template-columns:360px 1fr 340px;gap:.9rem;padding:.9rem}
 #cols.norp{grid-template-columns:360px 1fr}#cols.norp #rp{display:none}
 aside,main,#rp{background:var(--card);border-radius:18px;box-shadow:0 2px 10px #0001;overflow:hidden;min-height:0}
@@ -72,7 +72,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .rdot{width:10px;height:10px;border-radius:50%;background:var(--bad);animation:bl 1s infinite}@keyframes bl{50%{opacity:.25}}
 #rec button{padding:.45rem .9rem}
 
-/* ===== Calls (unchanged) ===== */
+/* ===== Calls ===== */
 #callui{position:fixed;inset:0;background:#000;z-index:9}#rv{width:100%;height:100%;object-fit:cover}
 #lv{position:absolute;right:1rem;bottom:8.5rem;width:110px;height:150px;object-fit:cover;border:2px solid #fff6;border-radius:16px;background:#222}
 #cinfo{position:absolute;top:1rem;left:1rem;display:grid;gap:0;color:#fff;text-shadow:0 0 6px #000}#cinfo b{font-size:1.2rem}#cinfo small{opacity:.85}
@@ -88,7 +88,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .tile span{position:absolute;left:.6rem;bottom:.5rem;background:#0008;padding:.1rem .5rem;border-radius:8px;font-size:.8rem}
 #gctl{position:absolute;bottom:1.5rem;left:0;right:0;display:flex;gap:1rem;justify-content:center}
 
-/* ===== Modals (unchanged) ===== */
+/* ===== Modals ===== */
 #sm,#rm,#fm,#pm{position:fixed;inset:0;background:#0006;display:grid;place-items:center;z-index:11}
 .mod{background:var(--card);padding:1.4rem;border-radius:18px;width:min(92vw,420px);max-height:90vh;overflow:auto;display:grid;gap:.7rem}
 .mod label{display:grid;gap:.25rem;font-weight:600;font-size:.85rem}.mod h3,.mod h4{margin:0}.mod h4{color:var(--pri);margin-top:.5rem}
@@ -243,6 +243,52 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
   .composer-tools button span{display:none}
   .composer-tools button{padding:.5rem}
 }
+
+/* ===== Instagram-Style Compact UI Overrides ===== */
+.feed-post { padding-bottom: 0.5rem; }
+.fp-head { padding: .75rem 1rem 0; align-items: flex-start; }
+.fp-head img { width: 40px; height: 40px; }
+.fp-head .who b { font-size: 0.9rem; }
+.fp-head .who small { font-size: 0.75rem; }
+.fp-body { padding: .4rem 1rem 0; font-size: 0.92rem; line-height: 1.4; }
+.fp-meta { padding: .4rem 1rem; font-size: 0.75rem; gap: 0.6rem; }
+
+.fp-actions { padding: .2rem; }
+.fp-actions button { 
+  padding: .5rem; 
+  font-size: .8rem; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: .3rem; 
+  color: var(--mut);
+}
+.fp-actions button.on { color: var(--pri); }
+.fp-actions button svg { width: 18px; height: 18px; }
+
+.react-pop { padding: .2rem; border-radius: 99px; gap: 0; }
+.react-pop button { padding: .3rem .4rem; font-size: 1.1rem; }
+.react-pop button:hover { background: var(--hov); transform: translateY(-2px); }
+
+.fp-cmts { padding: .4rem 1rem .6rem; }
+.cmt { padding: .3rem 0; gap: .4rem; }
+.cmt img { width: 28px; height: 28px; }
+.cmt .cx { padding: .4rem .6rem; border-radius: 10px; }
+.cmt .cx b { font-size: 0.8rem; }
+.cmt .cx p { font-size: 0.85rem; margin-top: .1rem; }
+.cmt .acts { margin-top: .2rem; gap: .4rem; }
+.cmt .acts a { font-size: 0.7rem; }
+.cmt-form input { padding: .4rem .8rem; font-size: 0.85rem; border-radius: 99px; }
+.cmt-form button { padding: .4rem .8rem; font-size: 0.8rem; }
+
+.composer { padding: .8rem; }
+.composer-top { gap: .6rem; }
+.composer-top img { width: 36px; height: 36px; }
+.composer textarea { min-height: 48px; padding: .5rem .8rem; font-size: 0.9rem; }
+.composer-tools { margin-top: .4rem; gap: .3rem; }
+.composer-tools button { padding: .4rem .6rem; font-size: 0.8rem; }
+.composer-tools button svg { width: 16px; height: 16px; }
+.composer-tools select { padding: .4rem; font-size: 0.8rem; }
 </style>
 <script>try{if(localStorage.getItem("ara-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
 </head>
@@ -289,7 +335,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
     </div>
   </header>
 
-  <!-- ===== Home = Social Feed (new) ===== -->
+  <!-- ===== Home = Social Feed ===== -->
   <section id="v-home" class="page" hidden>
     <div class="feed-wrap">
       <aside class="feed-left">
@@ -353,7 +399,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
     </div>
   </section>
 
-  <!-- ===== Chats (unchanged) ===== -->
+  <!-- ===== Chats ===== -->
   <div id="cols" hidden>
     <aside>
       <button id="new-c" data-i="plus" type="button">New conversation</button>
@@ -552,7 +598,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 <div id="admin" hidden>
   <div class="panel">
     <h2>🛡️ Admin Panel <span class="sp" style="flex:1"></span><button id="adm-x" class="ghost sm">Close</button></h2>
-    <div class="notice">Shortcut: double-tap <b>P</b>. Admin actions are enforced by Firestore rules against your UID — if the rules aren't deployed, actions will fail with permission-denied.</div>
+    <div class="notice">Shortcut: double-tap <b>P</b>. Admin actions are enforced by Firestore rules against your UID.</div>
     <div class="tabs">
       <button data-tab="dash" class="on">Dashboard</button>
       <button data-tab="users">Users</button>
@@ -567,7 +613,7 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
         <div class="stat"><b id="st-verified">…</b><small>Verified</small></div>
         <div class="stat"><b id="st-posts">…</b><small>Total posts</small></div>
       </div>
-      <p class="notice" style="margin-top:.8rem">For accurate aggregates across the whole platform, Cloud Functions would maintain counters — on Spark plan we load counters on demand with a 100-doc cap. Numbers may lag on very large datasets.</p>
+      <p class="notice" style="margin-top:.8rem">Aggregates load on demand with a 100-doc cap to respect Spark plan limits.</p>
     </div>
     <div id="adm-users" class="adm-tab" hidden>
       <input id="adm-q" placeholder="Search nickname or username…" style="margin-bottom:.6rem">
@@ -853,7 +899,7 @@ $("q").oninput = e => {
   }, 300);
 };
 
-/* ---------- 12. Open chat (preserved) ---------- */
+/* ---------- 12. Open chat ---------- */
 async function openChat(u) {
   showView("chats");
   peer = u; fillRp(u);
@@ -963,7 +1009,7 @@ async function openChat(u) {
     e => toast("Cannot load messages: " + e.code)));
 }
 
-/* ---------- 13. Typing + send (preserved) ---------- */
+/* ---------- 13. Typing + send ---------- */
 let tt;
 $("text").oninput = () => {
   if (!activeCid) return;
@@ -992,7 +1038,7 @@ $("send").onsubmit = async e => {
   }
 };
 
-/* ---------- 14. WebRTC calls (preserved) ---------- */
+/* ---------- 14. WebRTC calls ---------- */
 const ICE = [
   { urls: "stun:stun.l.google.com:19302" },
   { urls: "stun:stun1.l.google.com:19302" },
@@ -1256,7 +1302,7 @@ $("pf-file").onchange = e => {
   img.src = u;
 };
 
-/* ---------- 16. Group calls (preserved) ---------- */
+/* ---------- 16. Group calls ---------- */
 let gr = null;
 const rnd = n => Array.from(crypto.getRandomValues(new Uint8Array(n)),
   b => "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[b % 32]).join("");
@@ -1646,7 +1692,7 @@ function closeChat() {
   $("app").classList.remove("chatting");
 }
 
-/* ---------- 20. Chat media (image + voice) — preserved as Base64 ---------- */
+/* ---------- 20. Chat media ---------- */
 async function sendMedia(f, label) {
   if (!activeCid || !peer) return;
   if (!navigator.onLine) return toast("You are offline.");
@@ -1903,10 +1949,10 @@ function onConvs() {
   });
 }
 
-/* ---------- 24. Home (feed) — Part A core ---------- */
+/* ---------- 24. Home (feed) ---------- */
 let hmUn = [];
 let feedState = { last: null, loading: false, exhausted: false, unsub: null };
-let composerMedia = []; // { kind:"image"|"video"|"file", preview, file, url? }
+let composerMedia = [];
 let storageOk = false;
 
 function renderHome() {
@@ -1914,7 +1960,6 @@ function renderHome() {
   $("hm-name").innerHTML = `${me.nickname}${me.verified ? ` <span class="verified" title="Verified">${ico("check")}</span>` : ""}`;
   $("hm-user").textContent = "@" + me.username;
   $("comp-av").src = me.photoURL;
-  // Recent chats
   const box = $("hm-list");
   hmUn.forEach(f => f()); hmUn = []; box.innerHTML = "";
   if (!convList.length) {
@@ -1939,7 +1984,6 @@ $("qa-grp").onclick = () => $("g-new").click();
 $("new-c").onclick = () => $("q").focus();
 $("calls-g").onclick = () => $("g-new").click();
 
-/* Suggested users: show users not yet messaged or friended */
 async function renderSuggested() {
   const box = $("suggested");
   box.innerHTML = '<div class="sugg"><div class="sk" style="width:38px;height:38px;border-radius:50%"></div><div style="flex:1"><div class="sk" style="height:14px;width:60%"></div></div></div>';
@@ -1971,7 +2015,6 @@ async function renderSuggested() {
   }
 }
 
-/* Storage status */
 async function checkStorageStatus() {
   const el = $("storage-status");
   try {
@@ -1979,7 +2022,6 @@ async function checkStorageStatus() {
       method: "GET",
       headers: { "Content-Type": "application/json" }
     });
-    // A 200 or 401 from the endpoint means Storage exists in the project; either is fine.
     if (r.status === 404) throw new Error("no-bucket");
     storageOk = true;
     el.textContent = "Media storage: ready (videos & files use Firebase Storage).";
@@ -1991,7 +2033,6 @@ async function checkStorageStatus() {
   }
 }
 
-/* Feed loading with pagination */
 function startFeed() {
   if (feedState.unsub) feedState.unsub();
   feedState = { last: null, loading: false, exhausted: false, unsub: null };
@@ -2027,7 +2068,6 @@ async function loadFeedPage() {
     } else {
       for (const d of snap.docs) {
         const p = d.data();
-        // Client-side visibility filter (rules enforce the real gate)
         if (!(await canSeePost(p))) continue;
         feed.append(await renderPost(d));
         recordView(d.id);
@@ -2053,13 +2093,21 @@ async function canSeePost(p) {
     const rel = reqOut.get(p.uid) || reqIn.get(p.uid);
     return rel?.status === "accepted";
   }
-  return false; // private
+  return false;
 }
 
 async function recordView(postId) {
   try {
+    const postRef = doc(db, "posts", postId);
     const viewRef = doc(db, "postViews", postId, "views", me.uid);
-    await setDoc(viewRef, { at: serverTimestamp() }, { merge: true });
+    await runTransaction(db, async tx => {
+      const vSnap = await tx.get(viewRef);
+      if (vSnap.exists()) return;
+      const pSnap = await tx.get(postRef);
+      if (!pSnap.exists()) return;
+      tx.set(viewRef, { at: serverTimestamp() });
+      tx.update(postRef, { viewsCount: increment(1) });
+    });
   } catch {}
 }
 
@@ -2130,7 +2178,6 @@ $("comp-post").onclick = async () => {
   const btnP = $("comp-post");
   btnP.disabled = true; btnP.textContent = "Posting…";
   try {
-    // 1. Upload video/file to Firebase Storage if any
     const media = [];
     for (const m of composerMedia) {
       if (m.kind === "image") {
@@ -2161,7 +2208,6 @@ $("comp-post").onclick = async () => {
         media.push({ type: "file", url, path, name: m.file.name, size: m.file.size });
       }
     }
-    // 2. Create post doc
     const visibility = $("comp-privacy").value;
     const postDoc = {
       uid: me.uid,
@@ -2183,13 +2229,11 @@ $("comp-post").onclick = async () => {
       hiddenBy: []
     };
     const newRef = await addDoc(collection(db, "posts"), postDoc);
-    // 3. Reset composer
     $("comp-text").value = "";
     composerMedia.forEach(m => m.kind === "video" && URL.revokeObjectURL(m.preview));
     composerMedia = [];
     renderComposerPrev();
     toast("Posted.", 1);
-    // Prepend
     const feed = $("feed");
     const card = await renderPost({ id: newRef.id, data: () => ({ ...postDoc, createdAt: { toDate: () => new Date() } }) });
     const emptyCard = feed.querySelector(".feed-card");
@@ -2273,7 +2317,6 @@ async function renderPost(d) {
   if (canDelete) card.querySelector(".post-menu").style.visibility = "visible";
   else card.querySelector(".post-menu").style.visibility = "hidden";
 
-  // Media
   const mEl = card.querySelector("[data-media]");
   const imgs = (p.media || []).filter(m => m.type === "image");
   const vids = (p.media || []).filter(m => m.type === "video");
@@ -2302,14 +2345,12 @@ async function renderPost(d) {
     mEl.append(a);
   });
 
-  // Counts
   const reactionTotal = Object.values(p.reactionCounts || {}).reduce((a, b) => a + (b || 0), 0);
   card.querySelector('[data-count="reactions"]').textContent =
     (reactionTotal ? "❤️ " + reactionTotal : "0 reactions");
   card.querySelector('[data-count="comments"]').textContent = (p.commentsCount || 0) + " comments";
   card.querySelector('[data-count="views"]').textContent = (p.viewsCount || 0) + " views";
 
-  // Wire actions
   card.querySelector('[data-act="react"]').classList.toggle("on", !!myReaction);
   card.querySelector('[data-act="react"]').onclick = ev => openReactPicker(ev.currentTarget, postId, p, myReaction);
   card.querySelector('[data-act="comment"]').onclick = () => toggleComments(card, postId);
@@ -2317,7 +2358,6 @@ async function renderPost(d) {
   card.querySelector('[data-act="repost"]').onclick = () => repost(p, postId);
   card.querySelector(".post-menu").onclick = ev => postMenu(ev.currentTarget, p, postId, isMine);
 
-  // Real-time updates (counts + reactions)
   const unsubPost = onSnapshot(doc(db, "posts", postId), s => {
     if (!s.exists()) { card.remove(); unsubPost(); return; }
     const pp = s.data();
@@ -2336,7 +2376,6 @@ function escapeHtml(s) {
   return String(s || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-/* Reactions */
 const REACTIONS = {
   like: "👍", love: "❤️", haha: "😂", wow: "😮", sad: "😢", angry: "😡"
 };
@@ -2372,7 +2411,6 @@ async function setReaction(postId, type) {
       const cur = reactSnap.exists() ? reactSnap.data().type : null;
       const counts = { ...(postSnap.data().reactionCounts || {}) };
       if (cur === type) {
-        // toggle off
         counts[type] = Math.max(0, (counts[type] || 0) - 1);
         tx.delete(reactRef);
       } else {
@@ -2387,7 +2425,6 @@ async function setReaction(postId, type) {
   }
 }
 
-/* Share */
 async function sharePost(p, postId) {
   const url = location.origin + location.pathname + "#post=" + postId;
   const text = (p.content || "Check out this post on ARA").slice(0, 200);
@@ -2401,7 +2438,6 @@ async function sharePost(p, postId) {
   } catch {}
 }
 
-/* Repost */
 async function repost(p, postId) {
   try {
     const newPost = {
@@ -2426,7 +2462,6 @@ async function repost(p, postId) {
   } catch (e) { toast("Repost failed: " + (e.code || e.message)); }
 }
 
-/* Comments */
 function toggleComments(card, postId) {
   const box = card.querySelector("[data-comments]");
   const open = box.classList.toggle("open");
@@ -2508,10 +2543,8 @@ function toggleComments(card, postId) {
     if (!snap.size) list.innerHTML = '<p class="soon" style="padding:.4rem 0">No comments yet.</p>';
   });
   card._unsubCmt = unsub;
-  // Parent reply target on submit
   form.addEventListener("submit", () => {
     const p = form.dataset.parent || null;
-    // Re-inject parentId via closure next submit
     if (p) {
       form.onsubmit = async e => {
         e.preventDefault();
@@ -2532,7 +2565,6 @@ function toggleComments(card, postId) {
   });
 }
 
-/* Post menu */
 function postMenu(btn, p, postId, isMine) {
   const mm = $("mm");
   mm.innerHTML = "";
@@ -2718,16 +2750,20 @@ document.querySelectorAll("#admin .tabs button").forEach(b => {
   };
 });
 
-/* Double-tap P to open admin */
 let lastP = 0;
 document.addEventListener("keydown", e => {
   const ae = document.activeElement;
   if (ae && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA" || ae.isContentEditable)) return;
-  if (e.key !== "p" && e.key !== "P") return;
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.code !== "KeyP") return;
   if (e.repeat) return;
   const now = Date.now();
-  if (now - lastP < 400) { if (isAdmin) openAdmin(); lastP = 0; }
-  else lastP = now;
+  if (now - lastP < 400) { 
+    if (isAdmin) openAdmin(); 
+    lastP = 0; 
+  } else {
+    lastP = now;
+  }
 });
 $("admin-menu").onclick = () => { $("menu").hidden = true; openAdmin(); };
 
@@ -2738,12 +2774,12 @@ async function loadAdminDash() {
       getDocs(query(collection(db, "posts"), limit(100)))
     ]);
     const users = uSnap.docs.map(d => d.data());
-    const online = users.filter(u => cache[u.uid]?.online).length; // approximate
+    const online = users.filter(u => cache[u.uid]?.online).length;
     $("st-total").textContent = uSnap.size + (uSnap.size === 100 ? "+" : "");
     $("st-susp").textContent = users.filter(u => u.suspended).length;
     $("st-verified").textContent = users.filter(u => u.verified).length;
     $("st-posts").textContent = pSnap.size + (pSnap.size === 100 ? "+" : "");
-    $("st-online").textContent = "—"; // real-time online requires RTDB aggregation
+    $("st-online").textContent = "—";
   } catch (e) {
     toast("Admin stats failed: " + (e.code || e.message));
   }
