@@ -201,7 +201,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 @keyframes sk{0%{background-position:100% 0}100%{background-position:-100% 0}}
 .skeleton-post{height:180px;margin-bottom:1rem}
 
-/* Admin */
 #admin{position:fixed;inset:0;background:#0007;z-index:20;display:grid;place-items:center;animation:fadeIn .2s}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 #admin .panel{background:var(--card);border-radius:18px;width:min(96vw,720px);max-height:92vh;overflow:auto;padding:1.2rem;display:grid;gap:1rem;box-shadow:0 20px 60px #0005}
@@ -223,14 +222,12 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 #admin input{padding:.5rem .7rem;font-size:.9rem}
 #admin .notice{font-size:.8rem;color:var(--mut);border-left:3px solid var(--pri);padding:.4rem .7rem;background:var(--bg2);border-radius:6px}
 
-/* Mobile */
 @media(max-width:1100px){#cols{grid-template-columns:320px 1fr}#cols.norp{grid-template-columns:320px 1fr}#rp{display:none}#rp-t{display:none}}
 @media(max-width:700px){
   #top{gap:.6rem;padding:.4rem .8rem}.brand b,.pill.cs{display:none}.tools{margin-left:auto}
   nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:8;background:var(--card);box-shadow:0 -2px 10px #0002;margin:0;gap:0;justify-content:space-around;padding:.2rem 0 calc(.2rem + env(safe-area-inset-bottom))}
   nav a{flex-direction:column;font-size:.68rem;gap:.1rem;padding:.4rem .5rem;border-bottom:0!important}
   #app.chatting nav{display:none}#app.chatting #cols>aside{display:none}
-  /* BUG FIX: was `#app:not(.chatting) main{display:none}` which hid the home feed <main> too */
   #app:not(.chatting) #cols main{display:none}
   #back{display:inline-block}
   #app:not(.chatting) #cols,.page,#pm{padding-bottom:4.8rem}
@@ -283,20 +280,15 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .profile-meta svg { width: 14px; height: 14px; }
 .map-container { height: 200px; border-radius: 12px; margin-top: 0.5rem; z-index: 1; }
 
-/* Private profile lock */
 .lock-view{text-align:center;padding:2rem 1rem;color:var(--mut)}
 .lock-view .lock-icon{font-size:3rem;margin-bottom:.5rem}
 .lock-view h3{color:var(--tx);margin:.5rem 0}
-
-/* Requests card */
 .req-item{display:flex;align-items:center;gap:.6rem;padding:.5rem 0;border-bottom:1px solid var(--line)}
 .req-item:last-child{border-bottom:0}
 .req-item img{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:none;cursor:pointer}
 .req-item .who{flex:1;min-width:0}
 .req-item .who b{display:block;font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .req-item .who small{color:var(--mut);font-size:.75rem;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-/* Override badge */
 .disp-adjusted{font-size:.65rem;color:var(--pri);margin-left:.2rem}
 </style>
 <script>try{if(localStorage.getItem("ara-theme")==="dark")document.documentElement.dataset.theme="dark"}catch(e){}</script>
@@ -334,7 +326,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
     <div class="me">
       <img id="me-av" alt="Menu">
       <b id="me-name"></b>
-      <!-- FIX: admin toggle removed from menu -->
       <div id="menu" hidden>
         <button id="menu-prof" class="ghost">Profile</button>
         <button id="menu-priv" class="ghost">Privacy &amp; Security</button>
@@ -504,7 +495,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
       <div class="card" id="st-requests-card" hidden><h4>Follow requests</h4>
         <div id="st-requests"></div>
       </div>
-      <!-- FIX: Admin card removed from settings -->
     </div>
   </section>
 
@@ -617,6 +607,13 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
       </div>
       
       <div id="pp-meta" class="profile-meta" hidden></div>
+      <div id="pp-settings" class="card" hidden style="margin-top:1rem">
+        <b>Account settings</b>
+        <div style="display:flex;flex-direction:column;gap:.5rem;margin-top:.5rem">
+          <button id="pp-open-edit" class="ghost sm" type="button">Edit profile</button>
+          <button id="pp-open-priv" class="ghost sm" type="button">Privacy &amp; Security</button>
+        </div>
+      </div>
       <div id="pp-lock" class="lock-view" hidden>
         <div class="lock-icon">🔒</div>
         <h3>This account is private</h3>
@@ -641,7 +638,11 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 <div id="sm" hidden>
   <div class="mod">
     <h3>Privacy &amp; Security</h3>
-    <h4>Privacy</h4>
+    <h4>Profile visibility</h4>
+    <label class="sw-row">Private profile<input type="checkbox" id="s-private" class="sw"></label>
+    <small class="soon" style="margin-top:-.4rem;font-size:.78rem">When on, only approved followers can see your posts, followers, and following.</small>
+    <label class="sw-row">Require approval for new followers<input type="checkbox" id="s-approve" class="sw"></label>
+    <h4>Activity</h4>
     <label>Online status<select id="s-on"><option value="everyone">Everyone</option><option value="nobody">Nobody</option></select></label>
     <label>Last seen<select id="s-ls"><option value="everyone">Everyone</option><option value="nobody">Nobody</option></select></label>
     <label class="sw-row">Read receipts<input type="checkbox" id="s-rr" class="sw"></label>
@@ -770,9 +771,9 @@ import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc, runTransaction,
   serverTimestamp, collection, query, where, orderBy, limit, onSnapshot,
-  arrayUnion, arrayRemove, startAt, endAt, deleteField, increment, startAfter }
+  arrayUnion, arrayRemove, startAt, endAt, deleteField, increment }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { ref, onValue, push, set, remove, update, get, onChildAdded, onChildRemoved,
+import { ref, onValue, push, set, remove, update, get, onChildAdded,
   onDisconnect, serverTimestamp as rts }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
@@ -793,7 +794,6 @@ const LS = {
 };
 const mk = (t,c,x) => { const e = document.createElement(t); if(c) e.className = c; if(x != null) e.textContent = x; return e; };
 
-/* ---- globals ---- */
 let me = null;
 let newPhoto = null;
 let activeCid = null;
@@ -815,11 +815,8 @@ let priv = { online: "everyone", lastSeen: "everyone", readReceipts: true };
 let blocked = new Map();
 let isAdmin = false;
 
-let mapInstance = null;
-let mapMarker = null;
-let selectedLat = null;
-let selectedLng = null;
-let selectedLocationName = "";
+let mapInstance = null, mapMarker = null;
+let selectedLat = null, selectedLng = null, selectedLocationName = "";
 
 window.openLightbox = (src) => {
   if (!src) return;
@@ -999,7 +996,7 @@ async function loadFollowing() {
     myFollowing = new Set();
     s.docs.forEach(d => {
       const v = d.data();
-      if (v.status === "accepted" || !v.status) myFollowing.add(v.followeeUid);
+      if (!v.status || v.status === "accepted") myFollowing.add(v.followeeUid);
     });
   } catch {}
 }
@@ -1116,7 +1113,6 @@ async function openChat(u) {
       el.append(s);
       el.onclick = ev => { ev.stopPropagation(); if (String(getSelection())) return; msgMenu(el, d, m, mine, ev); };
 
-      /* long-press */
       let lpTimer = null, lpStart = null;
       const clearLp = () => { if (lpTimer) { clearTimeout(lpTimer); lpTimer = null; } };
       el.addEventListener("pointerdown", ev => {
@@ -1208,7 +1204,7 @@ $("send").onsubmit = async e => {
   }
 };
 
-/* ========== WebRTC ========== */
+/* ============ WebRTC ============ */
 const ICE = [
   { urls: "stun:stun.l.google.com:19302" },
   { urls: "stun:stun1.l.google.com:19302" },
@@ -1398,7 +1394,7 @@ $("c-cam").onclick = e => {
 $("c-fs").onclick = () => $("callui").requestFullscreen?.().catch(() => {});
 $("c-pip").onclick = () => $("rv").requestPictureInPicture?.().catch(() => toast("PiP not supported here."));
 
-/* ================= FOLLOW SYSTEM (atomic + privacy) ================= */
+/* ============ FOLLOW SYSTEM ============ */
 async function getFollowStatus(targetUid) {
   if (targetUid === me.uid) return "self";
   const snap = await getDoc(doc(db, "follows", me.uid + "_" + targetUid));
@@ -1460,7 +1456,6 @@ async function toggleFollow(targetUid, targetUser) {
 }
 
 async function refreshProfileFollowUI(targetUid) {
-  if (curView === "profile" && peer && peer.uid !== targetUid) return;
   try {
     const snap = await getDoc(doc(db, "users", targetUid));
     if (snap.exists()) {
@@ -1472,11 +1467,9 @@ async function refreshProfileFollowUI(targetUid) {
 }
 
 async function checkFollowing(targetUid) {
-  const st = await getFollowStatus(targetUid);
-  return st === "accepted";
+  return (await getFollowStatus(targetUid)) === "accepted";
 }
 
-/* ---- pending follow requests ---- */
 async function loadPendingRequests() {
   try {
     const s = await getDocs(query(
@@ -1549,7 +1542,7 @@ async function rejectFollowRequest(followerUid) {
   } catch (e) { toast("Failed: " + (e.code || e.message)); }
 }
 
-/* =============== NOTIFICATIONS =============== */
+/* ============ NOTIFICATIONS ============ */
 async function createNotification(toUid, type, extra = {}) {
   if (!me || !toUid || toUid === me.uid) return;
   try {
@@ -1560,7 +1553,7 @@ async function createNotification(toUid, type, extra = {}) {
       read: false, createdAt: serverTimestamp(),
       ...extra
     });
-  } catch {}
+  } catch (e) { console.warn("notif create:", e.code); }
 }
 
 function listenNotifications() {
@@ -1593,8 +1586,7 @@ function notifItems() {
 }
 
 function updBell() {
-  const n = notifItems().reduce((a, x) =>
-    a + (x.t === "msg" ? x.n : x.t === "notif" ? 1 : x.t === "follow_req" ? 1 : 1), 0);
+  const n = notifItems().reduce((a, x) => a + (x.t === "msg" ? x.n : 1), 0);
   const b = $("bell-n");
   b.hidden = !n;
   b.textContent = n > 99 ? "99+" : n;
@@ -1673,12 +1665,12 @@ $("bell-b").onclick = ev => {
 };
 $("np").onclick = ev => ev.stopPropagation();
 
-/* ============== CHAT helpers ============== */
 let hmUn = [];
-let feedState = { last: null, loading: false, exhausted: false, unsub: null };
+let feedState = { loading: false, exhausted: false };
+let feedLoadMore = 0;
 let composerMedia = [];
 
-/* ============== CONVERSATION LIST INTERACTION ============== */
+/* ============ CONVERSATION helpers ============ */
 function decorate(r, c) {
   const n = c.unread?.[me.uid] || 0;
   const mu = (c.mutedBy || []).includes(me.uid);
@@ -1736,7 +1728,7 @@ function closeChat() {
   $("app").classList.remove("chatting");
 }
 
-/* ============== MESSAGE helpers ============== */
+/* ============ MESSAGE helpers ============ */
 const EMO = ["❤️","😂","😮","😢","👍","👎","🔥","🎉"];
 function renderPin() {
   $("pinbar").hidden = !pin;
@@ -1856,7 +1848,7 @@ document.addEventListener("visibilitychange", () => {
   if (!document.hidden && unreadNow > 0) resetUnread();
 });
 
-/* ============== MEDIA / VOICE ============== */
+/* ============ MEDIA / VOICE ============ */
 async function sendMedia(f, label) {
   if (!activeCid || !peer) return;
   if (!navigator.onLine) return toast("You are offline.");
@@ -1962,7 +1954,7 @@ $("mic-b").onclick = startRec;
 $("rec-x").onclick = () => stopRec(false);
 $("rec-ok").onclick = () => stopRec(true);
 
-/* ============== VIEWS ============== */
+/* ============ VIEWS ============ */
 const VIEWS = {
   home: "v-home", chats: "cols", contacts: "v-contacts",
   calls: "v-calls", profile: "v-profile-page", settings: "v-settings"
@@ -2010,7 +2002,6 @@ function userItem(u, sub, un) {
   return w;
 }
 
-/* ============== FRIEND REQUESTS (legacy) ============== */
 function listenFriends() {
   onSnapshot(query(collection(db, "friendRequests"), where("from", "==", me.uid)),
     s => { reqOut = new Map(s.docs.map(d => [d.data().to, d.data()])); frChanged(); },
@@ -2021,20 +2012,8 @@ function listenFriends() {
 }
 function frChanged() {
   updBell();
-  renderFr(peer);
   if (curView === "contacts") renderContacts();
 }
-function renderFr(u) {
-  const b = $("rp-fr");
-  if (!u) { b.hidden = true; return; }
-  b.hidden = true; // legacy friend requests not used in profile panel anymore
-}
-function rel(uid) {
-  if (reqOut.has(uid)) return "sent";
-  if (reqIn.has(uid)) return "received";
-  return "none";
-}
-function frBtns() { return []; }
 
 function onConvs() {
   updBell();
@@ -2114,33 +2093,75 @@ async function renderSuggested() {
   }
 }
 
-/* ============== FEED ============== */
+/* ============ FEED (per-query visibility branches) ============ */
 function startFeed() {
-  if (feedState.unsub) feedState.unsub();
-  feedState = { last: null, loading: false, exhausted: false, unsub: null };
+  feedLoadMore = 0;
+  feedState = { loading: false, exhausted: false };
   const feed = $("feed");
   feed.innerHTML = "";
-  for (let i = 0; i < 3; i++) {
-    const s = mk("div", "skeleton-post sk");
-    feed.append(s);
-  }
+  for (let i = 0; i < 3; i++) feed.append(mk("div", "skeleton-post sk"));
   loadFeedPage();
-  $("feed-more").onclick = () => loadFeedPage();
+  $("feed-more").onclick = () => loadFeedPage(true);
 }
 
-async function loadFeedPage() {
-  if (feedState.loading || feedState.exhausted) return;
+async function loadFeedPage(more = false) {
+  if (feedState.loading) return;
+  if (more) feedLoadMore += 10;
   feedState.loading = true;
   const feed = $("feed");
+  const limitCount = 10 + feedLoadMore;
+
   try {
-    let q;
-    const base = [orderBy("createdAt", "desc"), limit(10)];
-    if (feedState.last) base.unshift(startAfter(feedState.last));
-    q = query(collection(db, "posts"), ...base);
-    const snap = await getDocs(q);
-    if (feedState.last === null) feed.innerHTML = "";
-    feedState.last = snap.docs[snap.docs.length - 1] || null;
-    if (snap.empty) {
+    const seen = new Set();
+    const allPosts = [];
+
+    try {
+      const snap = await getDocs(query(
+        collection(db, "posts"),
+        where("visibility", "==", "public"),
+        orderBy("createdAt", "desc"),
+        limit(limitCount)
+      ));
+      snap.docs.forEach(d => { if (!seen.has(d.id)) { seen.add(d.id); allPosts.push(d); } });
+    } catch (e) { console.warn("Public feed query failed:", e.code); }
+
+    try {
+      const snap = await getDocs(query(
+        collection(db, "posts"),
+        where("uid", "==", me.uid),
+        orderBy("createdAt", "desc"),
+        limit(limitCount)
+      ));
+      snap.docs.forEach(d => { if (!seen.has(d.id)) { seen.add(d.id); allPosts.push(d); } });
+    } catch (e) { console.warn("Own feed query failed:", e.code); }
+
+    const followed = [...myFollowing].slice(0, 15);
+    for (const fuid of followed) {
+      try {
+        const snap = await getDocs(query(
+          collection(db, "posts"),
+          where("uid", "==", fuid),
+          where("visibility", "==", "followers"),
+          orderBy("createdAt", "desc"),
+          limit(3)
+        ));
+        snap.docs.forEach(d => { if (!seen.has(d.id)) { seen.add(d.id); allPosts.push(d); } });
+      } catch (e) { console.warn("Follower feed query failed for", fuid, e.code); }
+    }
+
+    allPosts.sort((a, b) => {
+      const ta = a.data().createdAt?.seconds || 0;
+      const tb = b.data().createdAt?.seconds || 0;
+      return tb - ta;
+    });
+
+    if (!more) feed.innerHTML = "";
+    const batch = allPosts.slice(0, limitCount);
+    const existingIds = new Set(
+      [...feed.querySelectorAll("[data-post-id]")].map(el => el.dataset.postId)
+    );
+
+    if (!batch.length) {
       feedState.exhausted = true;
       if (!feed.children.length) {
         const empty = mk("div", "feed-card");
@@ -2148,21 +2169,28 @@ async function loadFeedPage() {
         feed.append(empty);
       }
     } else {
-      for (const d of snap.docs) {
-        const p = d.data();
-        if (!(await canSeePost(p))) continue;
+      for (const d of batch) {
+        if (existingIds.has(d.id)) continue;
+        if (!(await canSeePost(d.data()))) continue;
         feed.append(await renderPost(d));
         recordView(d.id);
       }
-      if (snap.docs.length < 10) feedState.exhausted = true;
+      feedState.exhausted = batch.length < limitCount;
     }
     $("feed-end").hidden = !feedState.exhausted;
   } catch (e) {
-    toast("Feed failed to load: " + e.code);
-    if (feedState.last === null) feed.innerHTML = "";
-    const err = mk("div", "feed-card err");
-    err.textContent = "Could not load feed (" + (e.code || e.message) + "). Publish the new Firestore rules.";
-    feed.append(err);
+    toast("Feed failed to load: " + (e.code || e.message));
+    if (!more) {
+      feed.innerHTML = "";
+      const err = mk("div", "feed-card err");
+      const hint = e.code === "permission-denied"
+        ? " — publish firestore.rules and wait ~60 s for propagation."
+        : e.code === "failed-precondition"
+        ? " — a composite index is missing. Check Firebase Console → Indexes."
+        : "";
+      err.textContent = "Could not load feed: " + (e.code || e.message) + hint;
+      feed.append(err);
+    }
   } finally {
     feedState.loading = false;
   }
@@ -2175,7 +2203,9 @@ async function canSeePost(p) {
     if (myFollowing.has(p.uid)) return true;
     try {
       const s = await getDoc(doc(db, "follows", me.uid + "_" + p.uid));
-      if (s.exists() && (s.data().status === "accepted" || !s.data().status)) { myFollowing.add(p.uid); return true; }
+      if (s.exists() && (s.data().status === "accepted" || !s.data().status)) {
+        myFollowing.add(p.uid); return true;
+      }
     } catch {}
     return false;
   }
@@ -2237,25 +2267,16 @@ $("comp-post").onclick = async () => {
   try {
     const media = [];
     for (const m of composerMedia) {
-      if (m.kind === "image") {
-        media.push({ type: "image", data: m.preview });
-      }
+      if (m.kind === "image") media.push({ type: "image", data: m.preview });
     }
     const visibility = $("comp-privacy").value;
     const postDoc = {
-      uid: me.uid,
-      authorName: me.nickname,
-      authorUsername: me.username,
-      authorPhoto: me.photoURL,
-      authorVerified: !!me.verified,
-      content: text,
-      media,
-      visibility,
+      uid: me.uid, authorName: me.nickname, authorUsername: me.username,
+      authorPhoto: me.photoURL, authorVerified: !!me.verified,
+      content: text, media, visibility,
       likesCount: 0, commentsCount: 0, sharesCount: 0, repostsCount: 0, viewsCount: 0,
       reactionCounts: { like:0, love:0, haha:0, wow:0, sad:0, angry:0 },
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
-      hiddenBy: []
+      createdAt: serverTimestamp(), updatedAt: serverTimestamp(), hiddenBy: []
     };
     const newRef = await addDoc(collection(db, "posts"), postDoc);
     await updateDoc(doc(db, "users", me.uid), { postsCount: increment(1) });
@@ -2316,13 +2337,11 @@ async function renderPost(d) {
   const myLike = await getDoc(doc(db, "postReactions", postId, "users", me.uid)).catch(() => null);
   const myReaction = myLike?.exists() ? myLike.data().type : null;
   const isMine = p.uid === me.uid;
-  const canDelete = isMine || isAdmin;
-  const dOv = p.displayOverrides || {};
 
   card.innerHTML = `
     <div class="fp-head">
-      <img src="${p.authorPhoto || avatar(p.authorUsername || p.authorName)}" alt="" data-uid="${p.uid}" class="post-avatar">
-      <div class="who" data-uid="${p.uid}">
+      <img src="${p.authorPhoto || avatar(p.authorUsername || p.authorName)}" alt="" class="post-avatar">
+      <div class="who">
         <b>${escapeHtml(p.authorName || "User")}${p.authorVerified ? ` <span class="verified" title="Verified">${ico("check")}</span>` : ""}</b>
         <small>@${escapeHtml(p.authorUsername || "")} · ${timeAgo(date)} · <span class="privacy-tag" title="Privacy">${privacyIcon(p.visibility)}</span></small>
       </div>
@@ -2343,14 +2362,8 @@ async function renderPost(d) {
     </div>
     <div class="fp-cmts" data-comments></div>
   `;
-  card.querySelector(".post-avatar").onclick = ev => {
-    ev.stopPropagation();
-    window.openUserProfile(p.uid);
-  };
-  card.querySelector(".who").onclick = ev => {
-    ev.stopPropagation();
-    window.openUserProfile(p.uid);
-  };
+  card.querySelector(".post-avatar").onclick = ev => { ev.stopPropagation(); window.openUserProfile(p.uid); };
+  card.querySelector(".who").onclick = ev => { ev.stopPropagation(); window.openUserProfile(p.uid); };
 
   const mEl = card.querySelector("[data-media]");
   const imgs = (p.media || []).filter(m => m.type === "image");
@@ -2368,11 +2381,9 @@ async function renderPost(d) {
   function paintCounts(pp) {
     const dOv = pp.displayOverrides || {};
     const realR = Object.values(pp.reactionCounts || {}).reduce((a, b) => a + (b || 0), 0);
-    const realV = pp.viewsCount || 0;
-    const realC = pp.commentsCount || 0;
     const r = dOv.reactions ?? realR;
-    const v = dOv.views ?? realV;
-    const c = dOv.comments ?? realC;
+    const v = dOv.views ?? (pp.viewsCount || 0);
+    const c = dOv.comments ?? (pp.commentsCount || 0);
     const rAdj = dOv.reactions !== undefined ? ' <span class="disp-adjusted">†</span>' : "";
     const vAdj = dOv.views !== undefined ? ' <span class="disp-adjusted">†</span>' : "";
     card.querySelector('[data-count="reactions"]').innerHTML = (r ? "❤️ " + r : "0 reactions") + rAdj;
@@ -2411,11 +2422,7 @@ async function openReactPicker(btn, postId, p, myReaction) {
     const b = document.createElement("button");
     b.textContent = emoji; b.title = key;
     b.style.background = myReaction === key ? "#dfe6d3" : "";
-    b.onclick = async e => {
-      e.stopPropagation();
-      pop.remove();
-      await setReaction(postId, key);
-    };
+    b.onclick = async e => { e.stopPropagation(); pop.remove(); await setReaction(postId, key); };
     pop.append(b);
   });
   document.body.append(pop);
@@ -2448,9 +2455,7 @@ async function setReaction(postId, type) {
       }
       tx.update(postRef, { reactionCounts: counts, updatedAt: serverTimestamp() });
     });
-    if (added && authorUid) {
-      createNotification(authorUid, "like", { postId, reaction: type });
-    }
+    if (added && authorUid) createNotification(authorUid, "like", { postId, reaction: type });
   } catch (e) {
     toast("Reaction failed: " + (e.code || e.message));
   }
@@ -2460,12 +2465,8 @@ async function sharePost(p, postId) {
   const url = location.origin + location.pathname + "#post=" + postId;
   const text = (p.content || "Check out this post on ARA").slice(0, 200);
   try {
-    if (navigator.share) {
-      await navigator.share({ title: "ARA Post", text, url });
-    } else {
-      await navigator.clipboard.writeText(url);
-      toast("Link copied.", 1);
-    }
+    if (navigator.share) await navigator.share({ title: "ARA Post", text, url });
+    else { await navigator.clipboard.writeText(url); toast("Link copied.", 1); }
   } catch {}
 }
 
@@ -2538,24 +2539,16 @@ function toggleComments(card, postId) {
       const reply = mk("a", "", "Reply");
       const del = mk("a", "", "Delete");
       const edit = mk("a", "", "Edit");
-      if (c.uid !== me.uid && !isAdmin) edit.remove();
-      if (c.uid !== me.uid && !isAdmin) del.remove();
-      reply.onclick = () => {
-        const inp = form.querySelector("input");
-        inp.value = "@" + c.name + " ";
-        inp.focus();
-        parentId = c.id;
-      };
+      if (c.uid !== me.uid && !isAdmin) { edit.remove(); del.remove(); }
+      reply.onclick = () => { const inp = form.querySelector("input"); inp.value = "@" + c.name + " "; inp.focus(); parentId = c.id; };
       del.onclick = async () => {
         if (!confirm("Delete this comment?")) return;
-        try { await deleteDoc(doc(db, "posts", postId, "comments", c.id)); }
-        catch (e) { toast("Delete failed: " + e.code); }
+        try { await deleteDoc(doc(db, "posts", postId, "comments", c.id)); } catch (e) { toast("Delete failed: " + e.code); }
       };
       edit.onclick = async () => {
         const v = prompt("Edit comment:", c.text);
         if (v === null) return;
-        const t = v.trim();
-        if (!t) return;
+        const t = v.trim(); if (!t) return;
         try { await updateDoc(doc(db, "posts", postId, "comments", c.id), { text: t, editedAt: serverTimestamp() }); }
         catch (e) { toast("Edit failed: " + e.code); }
       };
@@ -2568,8 +2561,7 @@ function toggleComments(card, postId) {
       av.onclick = ev => { ev.stopPropagation(); window.openUserProfile(c.uid); };
       w.append(av, cx);
       list.append(w);
-      const kids = byParent.get(c.id) || [];
-      kids.forEach(k => renderCmt(k, depth + 1));
+      (byParent.get(c.id) || []).forEach(k => renderCmt(k, depth + 1));
     };
     (byParent.get("root") || []).forEach(c => renderCmt(c));
     if (!snap.size) list.innerHTML = '<p class="soon" style="padding:.4rem 0">No comments yet.</p>';
@@ -2608,9 +2600,7 @@ function postMenu(btn, p, postId, isMine) {
   add("Report post", async () => {
     if (!confirm("Report this post to the admin?")) return;
     try {
-      await setDoc(doc(db, "postReports", postId + "_" + me.uid), {
-        postId, reporter: me.uid, at: serverTimestamp()
-      });
+      await setDoc(doc(db, "postReports", postId + "_" + me.uid), { postId, reporter: me.uid, at: serverTimestamp() });
       toast("Reported. Thank you.", 1);
     } catch (e) { toast("Report failed: " + e.code); }
   });
@@ -2627,15 +2617,12 @@ function postMenu(btn, p, postId, isMine) {
 
 window.openUserProfile = async (uid) => {
   if (!uid) return;
-  if (uid === me.uid) {
-    showProfilePage(me);
-    return;
-  }
+  if (uid === me.uid) return showProfilePage(me);
   const u = await getUser(uid);
   if (u) showProfilePage(u);
 };
 
-/* ============== SEARCH FRIEND ============== */
+/* ============ SEARCH FRIEND ============ */
 let ctUsers = [], ctUn = [], ctAt = 0, ctTimer = null;
 
 async function loadContacts(force = false) {
@@ -2643,22 +2630,18 @@ async function loadContacts(force = false) {
   if (q) {
     const lower = q.toLowerCase();
     const results = new Map();
-    // 1) exact UID lookup (users/{uid})
     try {
       if (q.length >= 20) {
         const uidSnap = await getDoc(doc(db, "users", q));
         if (uidSnap.exists()) results.set(uidSnap.id, uidSnap.data());
       }
     } catch {}
-    // 2) prefix search on usernameLower + nicknameLower
     try {
       const [a, b] = await Promise.all([
         getDocs(query(collection(db, "users"), orderBy("usernameLower"), startAt(lower), endAt(lower + "\uf8ff"), limit(20))),
         getDocs(query(collection(db, "users"), orderBy("nicknameLower"), startAt(lower), endAt(lower + "\uf8ff"), limit(20)))
       ]);
-      [...a.docs, ...b.docs].forEach(d => {
-        if (d.id !== me.uid) results.set(d.id, d.data());
-      });
+      [...a.docs, ...b.docs].forEach(d => { if (d.id !== me.uid) results.set(d.id, d.data()); });
     } catch (e) { toast("Search failed: " + e.code); }
     ctUsers = [...results.values()].filter(u => !u.suspended);
     ctUsers.forEach(u => cache[u.uid] = u);
@@ -2701,7 +2684,7 @@ $("ct-q").oninput = () => {
   ctTimer = setTimeout(() => loadContacts(), 300);
 };
 
-/* ============== CALL LOG ============== */
+/* ============ CALL LOG ============ */
 function logCall(c, msg) {
   const m = msg || "";
   const st = c.t0 ? "completed"
@@ -2754,7 +2737,7 @@ async function loadCalls() {
   }
 }
 
-/* ============== SETTINGS & PROFILE EDIT ============== */
+/* ============ SETTINGS ============ */
 function renderSettings() {
   $("st-acc").textContent = me.nickname + " · @" + me.username + (auth.currentUser?.email ? " · " + auth.currentUser.email : "");
   $("st-dark").checked = document.documentElement.dataset.theme === "dark";
@@ -2790,9 +2773,8 @@ function renderMedia(snap) {
   $("rp-mc").hidden = !n;
 }
 
-/* ---- admin open: hidden from normal UI ---- */
+/* ============ ADMIN (double-P, async role verification) ============ */
 function openAdmin() {
-  if (!isAdmin) return; /* silent — do not reveal admin action */
   $("admin").hidden = false;
   loadAdminDash();
 }
@@ -2811,18 +2793,38 @@ document.querySelectorAll("#admin .tabs button").forEach(b => {
 let lastP = 0;
 document.addEventListener("keydown", e => {
   const ae = document.activeElement;
-  if (ae && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA" || ae.isContentEditable)) return;
-  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (ae && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA" || ae.tagName === "SELECT" || ae.isContentEditable)) return;
+  if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
   if (e.code !== "KeyP") return;
   if (e.repeat) return;
   const now = Date.now();
   if (now - lastP < 400) {
     lastP = 0;
-    if (isAdmin) openAdmin();
+    handleAdminShortcut();
   } else {
     lastP = now;
   }
 });
+
+async function handleAdminShortcut() {
+  if (!auth.currentUser) {
+    toast("Sign in first, then press P twice to access admin tools.");
+    return;
+  }
+  try {
+    const snap = await getDoc(doc(db, "users", auth.currentUser.uid));
+    const data = snap.exists() ? snap.data() : {};
+    const isUserAdmin = (auth.currentUser.uid === ADMIN_UID) || data.admin === true;
+    if (!isUserAdmin) {
+      toast("You don't have admin access.");
+      return;
+    }
+    isAdmin = true;
+    openAdmin();
+  } catch (e) {
+    toast("Admin check failed: " + (e.code || e.message));
+  }
+}
 
 async function loadAdminDash() {
   try {
@@ -2858,18 +2860,14 @@ async function loadAdminUsers() {
       const verifyBtn = btn(u.verified ? "Remove ✓" : "Verify", "check", async () => {
         try {
           await updateDoc(doc(db, "users", u.uid), { verified: !u.verified });
-          u.verified = !u.verified;
-          loadAdminUsers();
-          toast("Verification updated.", 1);
+          u.verified = !u.verified; loadAdminUsers(); toast("Verification updated.", 1);
         } catch (e) { toast("Failed: " + (e.code || e.message)); }
       }, "ghost sm");
       const suspBtn = btn(u.suspended ? "Unsuspend" : "Suspend", u.suspended ? "check" : "x", async () => {
         if (!confirm((u.suspended ? "Unsuspend " : "Suspend ") + u.nickname + "?")) return;
         try {
           await updateDoc(doc(db, "users", u.uid), { suspended: !u.suspended });
-          u.suspended = !u.suspended;
-          loadAdminUsers();
-          toast("Updated.", 1);
+          u.suspended = !u.suspended; loadAdminUsers(); toast("Updated.", 1);
         } catch (e) { toast("Failed: " + (e.code || e.message)); }
       }, "ghost sm");
       w.append(verifyBtn, suspBtn);
@@ -2896,9 +2894,8 @@ async function loadAdminPosts() {
         <div class="who"><b>${escapeHtml(p.authorName)} <small class="soon">@${escapeHtml(p.authorUsername)}</small></b>
           <small>${escapeHtml((p.content || "").slice(0, 80))}</small></div>`;
       const disp = btn("Display", "eye", async () => {
-        const rIn = prompt("Display reactions (blank = use real):", (p.displayOverrides?.reactions ?? ""));
-        const vIn = prompt("Display views (blank = use real):", (p.displayOverrides?.views ?? ""));
-        const before = p.displayOverrides || null;
+        const rIn = prompt("Display reactions (blank = real):", (p.displayOverrides?.reactions ?? ""));
+        const vIn = prompt("Display views (blank = real):", (p.displayOverrides?.views ?? ""));
         const after = {};
         if (rIn !== null && rIn.trim() !== "") {
           const n = parseInt(rIn, 10);
@@ -2914,7 +2911,7 @@ async function loadAdminPosts() {
           await updateDoc(doc(db, "posts", d.id), { displayOverrides: after });
           await addDoc(collection(db, "adminAudit"), {
             type: "displayOverride", admin: me.uid, adminName: me.nickname,
-            postId: d.id, before, after, at: serverTimestamp()
+            postId: d.id, before: p.displayOverrides || null, after, at: serverTimestamp()
           });
           toast("Display updated.", 1);
         } catch (e) { toast("Failed: " + (e.code || e.message)); }
@@ -2941,8 +2938,7 @@ async function loadAdminReports() {
     s.docs.forEach(d => {
       const r = d.data();
       const w = mk("div", "admin-row");
-      w.innerHTML = `<div class="who"><b>Post ${escapeHtml(r.postId)}</b>
-        <small>Reported by ${escapeHtml(r.reporter)}</small></div>`;
+      w.innerHTML = `<div class="who"><b>Post ${escapeHtml(r.postId)}</b><small>Reported by ${escapeHtml(r.reporter)}</small></div>`;
       const view = btn("View", "eye", () => { $("admin").hidden = true; location.hash = "#post=" + r.postId; }, "ghost sm");
       const del = btn("Delete", "x", async () => {
         if (!confirm("Delete reported post?")) return;
@@ -2958,7 +2954,7 @@ async function loadAdminReports() {
   }
 }
 
-/* ============== PROFILE PAGE (privacy-aware) ============== */
+/* ============ PROFILE PAGE (privacy-aware) ============ */
 async function showProfilePage(u) {
   showView("profile");
   peer = u;
@@ -2987,10 +2983,12 @@ async function showProfilePage(u) {
   $("pp-follow-btn").hidden = true;
   $("pp-msg-btn").hidden = true;
   $("pp-edit-btn").hidden = true;
+  $("pp-settings").hidden = true;
 
   if (isOwn) {
     $("pp-edit-btn").hidden = false;
     $("pp-edit-btn").onclick = () => openPm();
+    $("pp-settings").hidden = false;
   } else {
     $("pp-msg-btn").hidden = false;
     $("pp-msg-btn").onclick = () => openChat(fresh);
@@ -3000,16 +2998,13 @@ async function showProfilePage(u) {
     const paint = () => {
       if (followStatus === "accepted") {
         fBtn.textContent = "Following";
-        fBtn.style.background = "var(--hov)";
-        fBtn.style.color = "var(--tx)";
+        fBtn.style.background = "var(--hov)"; fBtn.style.color = "var(--tx)";
       } else if (followStatus === "pending") {
         fBtn.textContent = "Requested";
-        fBtn.style.background = "var(--hov)";
-        fBtn.style.color = "var(--tx)";
+        fBtn.style.background = "var(--hov)"; fBtn.style.color = "var(--tx)";
       } else {
         fBtn.textContent = isPrivate && fresh.followApproval ? "Request to Follow" : "Follow";
-        fBtn.style.background = "var(--pri)";
-        fBtn.style.color = "#fff";
+        fBtn.style.background = "var(--pri)"; fBtn.style.color = "#fff";
       }
     };
     paint();
@@ -3035,7 +3030,6 @@ async function showProfilePage(u) {
   const postsGrid = $("pp-posts-grid");
   postsGrid.innerHTML = "";
   if (!canSeeContent) {
-    postsGrid.innerHTML = "";
     document.querySelectorAll("nav a").forEach(a => a.classList.remove("act"));
     return;
   }
@@ -3070,7 +3064,7 @@ async function showProfilePage(u) {
   document.querySelectorAll("nav a").forEach(a => a.classList.remove("act"));
 }
 
-/* ============== RP (chat-side profile) ============== */
+/* ============ RP (chat sidebar profile) ============ */
 async function fillRp(u) {
   $("rp-empty").hidden = true;
   $("rp-body").hidden = false;
@@ -3095,16 +3089,13 @@ async function fillRp(u) {
     const paint = () => {
       if (st === "accepted") {
         followBtn.textContent = "Following";
-        followBtn.style.background = "var(--hov)";
-        followBtn.style.color = "var(--tx)";
+        followBtn.style.background = "var(--hov)"; followBtn.style.color = "var(--tx)";
       } else if (st === "pending") {
         followBtn.textContent = "Requested";
-        followBtn.style.background = "var(--hov)";
-        followBtn.style.color = "var(--tx)";
+        followBtn.style.background = "var(--hov)"; followBtn.style.color = "var(--tx)";
       } else {
         followBtn.textContent = (fresh.privateProfile && fresh.followApproval) ? "Request to Follow" : "Follow";
-        followBtn.style.background = "var(--pri)";
-        followBtn.style.color = "#fff";
+        followBtn.style.background = "var(--pri)"; followBtn.style.color = "#fff";
       }
     };
     paint();
@@ -3115,7 +3106,7 @@ async function fillRp(u) {
   }
 }
 
-/* ============== FOLLOWERS MODAL ============== */
+/* ============ FOLLOWERS MODAL ============ */
 async function openFollowersModal(uid, type) {
   const modal = $("fol-modal");
   const title = $("fol-title");
@@ -3149,13 +3140,8 @@ async function openFollowersModal(uid, type) {
           <small style="color:var(--mut);font-size:0.75rem;">@${u.username}</small>
         </div>
       `;
-      row.querySelector("img").onclick = (ev) => {
-        ev.stopPropagation(); modal.hidden = true; showProfilePage(u);
-      };
-      row.onclick = () => {
-        modal.hidden = true;
-        if (u.uid === me.uid) showProfilePage(me); else showProfilePage(u);
-      };
+      row.querySelector("img").onclick = (ev) => { ev.stopPropagation(); modal.hidden = true; showProfilePage(u); };
+      row.onclick = () => { modal.hidden = true; showProfilePage(u); };
       list.appendChild(row);
     }
   } catch (e) {
@@ -3165,13 +3151,11 @@ async function openFollowersModal(uid, type) {
 window.openFollowersModal = openFollowersModal;
 $("fol-x").onclick = () => { $("fol-modal").hidden = true; };
 
-/* ============== MAP + EDIT PROFILE ============== */
+/* ============ MAP + EDIT PROFILE ============ */
 function initMap() {
   if (mapInstance) return;
   mapInstance = L.map('pf-map').setView([20, 0], 2);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap'
-  }).addTo(mapInstance);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(mapInstance);
   mapInstance.on('click', async (e) => {
     const { lat, lng } = e.latlng;
     if (mapMarker) mapInstance.removeLayer(mapMarker);
@@ -3345,7 +3329,7 @@ $("pf-file").onchange = e => {
   img.src = u;
 };
 
-/* ============== PRIVACY & BLOCK ============== */
+/* ============ PRIVACY & BLOCK ============ */
 function renderSeen() {
   $("h-dot").classList.toggle("on", ps.on === true);
   $("h-seen").textContent = ps.on === true ? "Online"
@@ -3368,12 +3352,19 @@ async function initPrivacy() {
     renderBlocked(); syncBlockBtns();
   }, e => console.warn("Block list failed:", e.message));
 }
+
 $("menu-priv").onclick = () => {
   $("menu").hidden = true;
-  $("s-on").value = priv.online; $("s-ls").value = priv.lastSeen; $("s-rr").checked = priv.readReceipts;
-  renderBlocked(); $("sm").hidden = false;
+  $("s-on").value = priv.online;
+  $("s-ls").value = priv.lastSeen;
+  $("s-rr").checked = priv.readReceipts;
+  $("s-private").checked = !!me.privateProfile;
+  $("s-approve").checked = !!me.followApproval;
+  renderBlocked();
+  $("sm").hidden = false;
 };
 $("s-x").onclick = () => $("sm").hidden = true;
+
 async function savePriv(k, v) {
   const old = priv[k]; priv[k] = v;
   try {
@@ -3391,6 +3382,30 @@ async function savePriv(k, v) {
 $("s-on").onchange = e => savePriv("online", e.target.value);
 $("s-ls").onchange = e => savePriv("lastSeen", e.target.value);
 $("s-rr").onchange = e => savePriv("readReceipts", e.target.checked);
+
+$("s-private").onchange = async e => {
+  const checked = e.target.checked;
+  try {
+    await updateDoc(doc(db, "users", me.uid), { privateProfile: checked });
+    me.privateProfile = checked;
+    toast("Private profile " + (checked ? "enabled" : "disabled"), 1);
+  } catch (err) {
+    e.target.checked = !checked;
+    toast("Failed: " + (err.code || err.message));
+  }
+};
+$("s-approve").onchange = async e => {
+  const checked = e.target.checked;
+  try {
+    await updateDoc(doc(db, "users", me.uid), { followApproval: checked });
+    me.followApproval = checked;
+    toast("Follow approval " + (checked ? "enabled" : "disabled"), 1);
+  } catch (err) {
+    e.target.checked = !checked;
+    toast("Failed: " + (err.code || err.message));
+  }
+};
+
 function renderBlocked() {
   const b = $("s-blocked");
   b.innerHTML = blocked.size ? "" : '<i class="soon">No blocked users</i>';
@@ -3451,6 +3466,9 @@ $("rf").onsubmit = async e => {
       : "Could not submit: " + (x.code || x.message);
   }
 };
+
+$("pp-open-edit").onclick = () => openPm();
+$("pp-open-priv").onclick = () => $("menu-priv").click();
 </script>
 </body>
 </html>
