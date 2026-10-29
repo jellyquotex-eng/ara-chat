@@ -153,9 +153,8 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .composer-tools select{width:auto;padding:.45rem .6rem;font-size:.82rem;border-radius:10px}
 .prev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.4rem;margin-top:.6rem}
 .prev-grid .pv{position:relative;border-radius:10px;overflow:hidden;background:#000;aspect-ratio:1;display:grid;place-items:center}
-.prev-grid .pv img,.prev-grid .pv video{width:100%;height:100%;object-fit:cover}
+.prev-grid .pv img{width:100%;height:100%;object-fit:cover}
 .prev-grid .pv .x{position:absolute;top:4px;right:4px;background:#000a;color:#fff;border:0;border-radius:50%;width:24px;height:24px;padding:0;font-size:.9rem;cursor:pointer}
-.prev-grid .pv .file{font-size:.7rem;padding:.4rem;color:#fff;text-align:center;word-break:break-all;background:#222;width:100%;height:100%;display:grid;place-items:center}
 .feed-post{background:var(--card);border-radius:18px;border:1px solid var(--line);margin-bottom:1rem;box-shadow:0 2px 8px #0001;overflow:hidden}
 .fp-head{display:flex;align-items:center;gap:.7rem;padding:.9rem 1rem 0}
 .fp-head img{width:46px;height:46px;border-radius:50%;object-fit:cover;flex:none}
@@ -173,10 +172,8 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 .fp-media .grid.n2{grid-template-columns:1fr 1fr}
 .fp-media .grid.n3{grid-template-columns:2fr 1fr 1fr}
 .fp-media .grid.n4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
-.fp-media img,.fp-media video{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;background:#000}
-.fp-media .grid.n1 img,.fp-media .grid.n1 video{max-height:520px;object-fit:contain}
-.fp-media .attach{display:flex;align-items:center;gap:.6rem;padding:.6rem;border:1px solid var(--line);border-radius:10px;margin-top:.4rem;background:var(--w)}
-.fp-media .attach a{color:var(--pri);font-weight:700;text-decoration:none}
+.fp-media img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;background:#000}
+.fp-media .grid.n1 img{max-height:520px;object-fit:contain}
 .fp-meta{display:flex;gap:.8rem;padding:.5rem 1rem;color:var(--mut);font-size:.8rem}
 .fp-actions{display:flex;border-top:1px solid var(--line);padding:.2rem}
 .fp-actions button{flex:1;background:none;color:var(--tx);box-shadow:none;padding:.6rem;font-weight:600;border-radius:8px;font-size:.88rem}
@@ -294,7 +291,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 </head>
 <body>
 
-<!-- ===== Boot / Auth / Setup ===== -->
 <section id="boot" class="center"><div class="logo">ARA</div><p class="soon">Loading…</p></section>
 <section id="login" class="center" hidden>
   <div class="logo">ARA</div><p>A New Way to Connect.</p>
@@ -307,7 +303,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
   <button id="su-go">Create profile</button><div id="su-err" class="err"></div>
 </section>
 
-<!-- ===== Main app ===== -->
 <div id="app" hidden>
   <header id="top">
     <div class="brand"><span class="lg">A</span><b>ARA</b><span class="pill cs"><i class="dot on"></i><span>Online</span></span></div>
@@ -335,7 +330,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
     </div>
   </header>
 
-  <!-- ===== Home = Social Feed ===== -->
   <section id="v-home" class="page" hidden>
     <div class="feed-wrap">
       <aside class="feed-left">
@@ -366,8 +360,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
           <div id="comp-prev" class="prev-grid"></div>
           <div class="composer-tools">
             <button type="button" id="comp-pic" data-i="camera">Photo</button>
-            <button type="button" id="comp-vid" data-i="video">Video</button>
-            <button type="button" id="comp-file" data-i="link">File</button>
             <select id="comp-privacy" title="Who can see this post">
               <option value="public">🌍 Public</option>
               <option value="followers">👥 Followers</option>
@@ -377,8 +369,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
             <button type="button" id="comp-post" style="background:var(--pri);color:#fff">Post</button>
           </div>
           <input type="file" id="f-pic" accept="image/*" multiple hidden>
-          <input type="file" id="f-vid" accept="video/*" hidden>
-          <input type="file" id="f-file" accept=".pdf,.doc,.docx,.txt,.ppt,.pptx,.xls,.xlsx,.zip,application/pdf" hidden>
         </div>
         <div id="feed"></div>
         <div id="feed-end" class="soon" style="text-align:center;padding:1rem" hidden>You're all caught up.</div>
@@ -391,15 +381,10 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
           <b>Suggested people</b>
           <div id="suggested" style="margin-top:.4rem"></div>
         </div>
-        <div class="feed-card">
-          <b>Post status</b>
-          <small id="storage-status" class="soon" style="display:block;margin-top:.4rem">Checking media storage…</small>
-        </div>
       </aside>
     </div>
   </section>
 
-  <!-- ===== Chats ===== -->
   <div id="cols" hidden>
     <aside>
       <button id="new-c" data-i="plus" type="button">New conversation</button>
@@ -467,20 +452,17 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
     </section>
   </div>
 
-  <!-- ===== Contacts ===== -->
   <section id="v-contacts" class="page" hidden>
     <div class="phead"><h2>Contacts</h2></div>
     <input id="ct-q" placeholder="Search contacts by name or username…" aria-label="Search contacts" style="margin-bottom:1rem">
     <div id="ct-list" class="plist"></div>
   </section>
 
-  <!-- ===== Calls ===== -->
   <section id="v-calls" class="page" hidden>
     <div class="phead"><h2>Calls</h2><button id="calls-g" class="ghost sm" data-i="video" type="button">Group call</button></div>
     <div id="cl-list" class="plist"></div>
   </section>
 
-  <!-- ===== Settings ===== -->
   <section id="v-settings" class="page" hidden>
     <div class="phead"><h2>Settings</h2></div>
     <div class="sgrid">
@@ -507,7 +489,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
     </div>
   </section>
 
-  <!-- ===== Edit profile ===== -->
   <div id="pm" hidden>
     <form id="pf">
       <h3>Edit profile</h3>
@@ -521,7 +502,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
   </div>
 </div>
 
-<!-- ===== Privacy & Security ===== -->
 <div id="sm" hidden>
   <div class="mod">
     <h3>Privacy &amp; Security</h3>
@@ -535,7 +515,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
   </div>
 </div>
 
-<!-- ===== Report user ===== -->
 <div id="rm" hidden>
   <form id="rf" class="mod">
     <h3>Report user</h3>
@@ -553,13 +532,11 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
   </form>
 </div>
 
-<!-- ===== Incoming call ===== -->
 <div id="incoming" hidden>
   <b id="inc-name"></b>
   <div style="display:flex;gap:.5rem"><button id="acc">Accept</button><button id="rej" class="bad">Reject</button></div>
 </div>
 
-<!-- ===== 1:1 call ===== -->
 <div id="callui" hidden>
   <video id="rv" autoplay playsinline></video>
   <video id="lv" autoplay playsinline muted></video>
@@ -573,7 +550,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
   </div>
 </div>
 
-<!-- ===== Group call ===== -->
 <div id="gcall" hidden>
   <div id="ginfo"><b>Group call</b><small>Room code: <b id="g-code"></b></small></div>
   <div id="grid"></div>
@@ -585,7 +561,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
   </div>
 </div>
 
-<!-- ===== Forward ===== -->
 <div id="fm" hidden>
   <div class="mod">
     <h3>Forward to…</h3>
@@ -594,7 +569,6 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
   </div>
 </div>
 
-<!-- ===== Admin panel ===== -->
 <div id="admin" hidden>
   <div class="panel">
     <h2>🛡️ Admin Panel <span class="sp" style="flex:1"></span><button id="adm-x" class="ghost sm">Close</button></h2>
@@ -635,19 +609,10 @@ form.send{display:flex;gap:.5rem;padding:.8rem;align-items:center}form.send inpu
 <div id="toast" hidden></div>
 
 <script type="module">
-/* ======================================================================
- * ARA — Part A: Social Feed upgrade (Firebase compat + Spark-plan safe)
- * ====================================================================== */
-
-/* ---------- 1. Admin UID — fill this in with YOUR Firebase Auth UID ---------- */
-const ADMIN_UID = "PASTE_YOUR_FIREBASE_UID_HERE";
-
-/* ---------- 2. Firebase imports (same project as before) ---------- */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDGMXGzibvhc0LslI1f7nms7Z-kGFitf8c",
@@ -663,22 +628,18 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const rtdb = getDatabase(app);
-export const storage = getStorage(app);
 
 import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc, runTransaction,
   serverTimestamp, collection, query, where, orderBy, limit, onSnapshot,
-  arrayUnion, arrayRemove, startAt, endAt, deleteField, increment, startAfter,
-  writeBatch }
+  arrayUnion, arrayRemove, startAt, endAt, deleteField, increment, startAfter }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { ref, onValue, push, set, remove, update, get, onChildAdded, onChildRemoved,
   onDisconnect, serverTimestamp as rts }
   from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-import { ref as sref, uploadBytesResumable, getDownloadURL, deleteObject, uploadBytes }
-  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-/* ---------- 3. Utilities ---------- */
+const ADMIN_UID = "Ze6BLKi3S6XCDwkkpnXEyscZLZ33";
 const $ = id => document.getElementById(id);
 const avatar = s => `https://api.dicebear.com/7.x/thumbs/svg?seed=${encodeURIComponent(s)}`;
 const show = id => ["boot","login","setup","app"].forEach(s => $(s).hidden = s !== id);
@@ -695,7 +656,6 @@ const LS = {
 };
 const mk = (t,c,x) => { const e = document.createElement(t); if(c) e.className = c; if(x != null) e.textContent = x; return e };
 
-/* ---------- 4. Icons ---------- */
 const P = {
   home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
   chat:'<path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
@@ -730,7 +690,6 @@ const paint = (r=document) => r.querySelectorAll("[data-i]:not([data-p])").forEa
 });
 paint();
 
-/* ---------- 5. Theme ---------- */
 function setTheme(t) {
   document.documentElement.dataset.theme = t;
   LS.set("ara-theme", t);
@@ -740,7 +699,6 @@ function setTheme(t) {
 setTheme(LS.get("ara-theme") === "dark" ? "dark" : "light");
 $("theme-b").onclick = () => setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
 
-/* ---------- 6. Profile panel toggle ---------- */
 const applyRp = () => {
   const on = LS.get("ara-rp") !== "0";
   $("cols").classList.toggle("norp", !on);
@@ -748,7 +706,6 @@ const applyRp = () => {
 };
 $("rp-t").onclick = () => { LS.set("ara-rp", LS.get("ara-rp") === "0" ? "1" : "0"); applyRp(); };
 
-/* ---------- 7. State ---------- */
 let me, activeCid, unsub = [], cache = {}, started = false, lastSnap = null,
     clr = 0, renderMsgs = () => {}, curView = "home";
 let convList = [], reqIn = new Map(), reqOut = new Map(), prevUn = {};
@@ -760,7 +717,6 @@ let isAdmin = false;
 
 const getUser = async uid => cache[uid] || (cache[uid] = (await getDoc(doc(db,"users",uid))).data());
 
-/* ---------- 8. Auth ---------- */
 $("gbtn").onclick = async () => {
   try { await signInWithPopup(auth, new GoogleAuthProvider()); }
   catch (e) {
@@ -807,7 +763,6 @@ $("su-go").onclick = async () => {
   }
 };
 
-/* ---------- 9. startApp ---------- */
 function startApp() {
   if (started) return;
   started = true;
@@ -860,7 +815,6 @@ function startApp() {
   startFeed();
 }
 
-/* ---------- 10. Chat row ---------- */
 function row(u) {
   const r = document.createElement("div");
   r.className = "row";
@@ -874,7 +828,6 @@ function row(u) {
   return r;
 }
 
-/* ---------- 11. User search ---------- */
 let t;
 $("q").oninput = e => {
   clearTimeout(t);
@@ -899,7 +852,6 @@ $("q").oninput = e => {
   }, 300);
 };
 
-/* ---------- 12. Open chat ---------- */
 async function openChat(u) {
   showView("chats");
   peer = u; fillRp(u);
@@ -1009,7 +961,6 @@ async function openChat(u) {
     e => toast("Cannot load messages: " + e.code)));
 }
 
-/* ---------- 13. Typing + send ---------- */
 let tt;
 $("text").oninput = () => {
   if (!activeCid) return;
@@ -1038,7 +989,6 @@ $("send").onsubmit = async e => {
   }
 };
 
-/* ---------- 14. WebRTC calls ---------- */
 const ICE = [
   { urls: "stun:stun.l.google.com:19302" },
   { urls: "stun:stun1.l.google.com:19302" },
@@ -1228,7 +1178,6 @@ $("c-cam").onclick = e => {
 $("c-fs").onclick = () => $("callui").requestFullscreen?.().catch(() => {});
 $("c-pip").onclick = () => $("rv").requestPictureInPicture?.().catch(() => toast("PiP not supported here."));
 
-/* ---------- 15. Profile panel + edit ---------- */
 function fillRp(u) {
   $("rp-empty").hidden = true;
   $("rp-body").hidden = false;
@@ -1302,7 +1251,6 @@ $("pf-file").onchange = e => {
   img.src = u;
 };
 
-/* ---------- 16. Group calls ---------- */
 let gr = null;
 const rnd = n => Array.from(crypto.getRandomValues(new Uint8Array(n)),
   b => "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[b % 32]).join("");
@@ -1408,7 +1356,6 @@ $("g-copy").onclick = () => navigator.clipboard?.writeText(gr.code)
   .then(() => toast("Room code copied: " + gr.code), () => toast("Room code: " + gr.code));
 $("g-end").onclick = () => leaveRoom("");
 
-/* ---------- 17. Privacy, blocking, reports ---------- */
 function renderSeen() {
   $("h-dot").classList.toggle("on", ps.on === true);
   $("h-seen").textContent = ps.on === true ? "Online"
@@ -1515,7 +1462,6 @@ $("rf").onsubmit = async e => {
   }
 };
 
-/* ---------- 18. Message menu ---------- */
 const EMO = ["❤️","😂","😮","😢","👍","👎","🔥","🎉"];
 function renderPin() {
   $("pinbar").hidden = !pin;
@@ -1629,7 +1575,6 @@ function fwd(m) {
   $("fm").hidden = false;
 }
 
-/* ---------- 19. Conversation list decoration ---------- */
 const resetUnread = () => activeCid && updateDoc(doc(db, "conversations", activeCid),
   { ["unread." + me.uid]: 0 }).catch(() => {});
 document.addEventListener("visibilitychange", () => {
@@ -1692,7 +1637,6 @@ function closeChat() {
   $("app").classList.remove("chatting");
 }
 
-/* ---------- 20. Chat media ---------- */
 async function sendMedia(f, label) {
   if (!activeCid || !peer) return;
   if (!navigator.onLine) return toast("You are offline.");
@@ -1789,7 +1733,6 @@ $("mic-b").onclick = startRec;
 $("rec-x").onclick = () => stopRec(false);
 $("rec-ok").onclick = () => stopRec(true);
 
-/* ---------- 21. Views ---------- */
 const VIEWS = {
   home: "v-home", chats: "cols", contacts: "v-contacts",
   calls: "v-calls", profile: "pm", settings: "v-settings"
@@ -1835,7 +1778,6 @@ function userItem(u, sub, un) {
   return w;
 }
 
-/* ---------- 22. Friends ---------- */
 const rel = uid => {
   const o = reqOut.get(uid), i = reqIn.get(uid);
   return o?.status === "accepted" || i?.status === "accepted" ? "friends"
@@ -1885,7 +1827,6 @@ function renderFr(u) {
     : set("Friends", "check", null, 1);
 }
 
-/* ---------- 23. Notifications ---------- */
 function notifItems() {
   const it = [];
   convList.forEach(({ c, u }) => {
@@ -1949,11 +1890,9 @@ function onConvs() {
   });
 }
 
-/* ---------- 24. Home (feed) ---------- */
 let hmUn = [];
 let feedState = { last: null, loading: false, exhausted: false, unsub: null };
 let composerMedia = [];
-let storageOk = false;
 
 function renderHome() {
   $("hm-av").src = me.photoURL;
@@ -1975,7 +1914,6 @@ function renderHome() {
     });
   }
   renderSuggested();
-  checkStorageStatus();
 }
 $("qa-chat").onclick = () => { showView("chats"); setTimeout(() => $("q").focus(), 100); };
 $("qa-con").onclick = () => showView("contacts");
@@ -2012,24 +1950,6 @@ async function renderSuggested() {
     });
   } catch (e) {
     box.innerHTML = '<p class="soon">Cannot load suggestions.</p>';
-  }
-}
-
-async function checkStorageStatus() {
-  const el = $("storage-status");
-  try {
-    const r = await fetch(`https://firebasestorage.googleapis.com/v0/b/${firebaseConfig.storageBucket}/o?maxResults=1`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    });
-    if (r.status === 404) throw new Error("no-bucket");
-    storageOk = true;
-    el.textContent = "Media storage: ready (videos & files use Firebase Storage).";
-    el.style.color = "var(--ok)";
-  } catch (e) {
-    storageOk = false;
-    el.textContent = "⚠️ Firebase Storage not enabled — images work; videos & files are disabled until Storage is enabled in the Firebase console.";
-    el.style.color = "var(--bad)";
   }
 }
 
@@ -2111,16 +2031,7 @@ async function recordView(postId) {
   } catch {}
 }
 
-/* ---------- 25. Composer ---------- */
 $("comp-pic").onclick = () => $("f-pic").click();
-$("comp-vid").onclick = () => {
-  if (!storageOk) return toast("Videos need Firebase Storage. Enable it in the Firebase console.");
-  $("f-vid").click();
-};
-$("comp-file").onclick = () => {
-  if (!storageOk) return toast("File uploads need Firebase Storage.");
-  $("f-file").click();
-};
 
 $("f-pic").onchange = async e => {
   const files = [...e.target.files]; e.target.value = "";
@@ -2134,21 +2045,6 @@ $("f-pic").onchange = async e => {
   }
   renderComposerPrev();
 };
-$("f-vid").onchange = e => {
-  const f = e.target.files[0]; e.target.value = "";
-  if (!f) return;
-  if (!f.type.startsWith("video/")) return toast("Please choose a video file.");
-  if (f.size > 60 * 1024 * 1024) return toast("Video must be ≤ 60 MB.");
-  composerMedia.push({ kind: "video", preview: URL.createObjectURL(f), file: f });
-  renderComposerPrev();
-};
-$("f-file").onchange = e => {
-  const f = e.target.files[0]; e.target.value = "";
-  if (!f) return;
-  if (f.size > 20 * 1024 * 1024) return toast("File must be ≤ 20 MB.");
-  composerMedia.push({ kind: "file", preview: f.name, file: f });
-  renderComposerPrev();
-};
 
 function renderComposerPrev() {
   const box = $("comp-prev");
@@ -2158,10 +2054,6 @@ function renderComposerPrev() {
     w.className = "pv";
     if (m.kind === "image") {
       const im = document.createElement("img"); im.src = m.preview; w.append(im);
-    } else if (m.kind === "video") {
-      const v = document.createElement("video"); v.src = m.preview; v.muted = true; w.append(v);
-    } else {
-      const f = document.createElement("div"); f.className = "file"; f.textContent = "📎 " + m.preview; w.append(f);
     }
     const x = document.createElement("button"); x.className = "x"; x.textContent = "✕";
     x.onclick = () => { composerMedia.splice(i, 1); renderComposerPrev(); };
@@ -2170,7 +2062,6 @@ function renderComposerPrev() {
   });
 }
 
-/* ---------- 26. Publish post ---------- */
 $("comp-post").onclick = async () => {
   if (me.suspended) return toast("Your account is suspended. Contact support.");
   const text = $("comp-text").value.trim();
@@ -2182,30 +2073,6 @@ $("comp-post").onclick = async () => {
     for (const m of composerMedia) {
       if (m.kind === "image") {
         media.push({ type: "image", data: m.preview });
-      } else if (m.kind === "video") {
-        if (!storageOk) throw new Error("Storage not available for video.");
-        const path = `posts/${me.uid}/${Date.now()}_${m.file.name.replace(/[^\w.\-]/g, "_")}`;
-        const srefObj = sref(storage, path);
-        const task = uploadBytesResumable(srefObj, m.file);
-        await new Promise((resolve, reject) => {
-          task.on("state_changed", s => {
-            btnP.textContent = "Uploading " + Math.round((s.bytesTransferred / s.totalBytes) * 100) + "%";
-          }, reject, resolve);
-        });
-        const url = await getDownloadURL(srefObj);
-        media.push({ type: "video", url, path });
-      } else if (m.kind === "file") {
-        if (!storageOk) throw new Error("Storage not available for file.");
-        const path = `posts/${me.uid}/files/${Date.now()}_${m.file.name.replace(/[^\w.\-]/g, "_")}`;
-        const srefObj = sref(storage, path);
-        const task = uploadBytesResumable(srefObj, m.file);
-        await new Promise((resolve, reject) => {
-          task.on("state_changed", s => {
-            btnP.textContent = "Uploading " + Math.round((s.bytesTransferred / s.totalBytes) * 100) + "%";
-          }, reject, resolve);
-        });
-        const url = await getDownloadURL(srefObj);
-        media.push({ type: "file", url, path, name: m.file.name, size: m.file.size });
       }
     }
     const visibility = $("comp-privacy").value;
@@ -2230,7 +2097,6 @@ $("comp-post").onclick = async () => {
     };
     const newRef = await addDoc(collection(db, "posts"), postDoc);
     $("comp-text").value = "";
-    composerMedia.forEach(m => m.kind === "video" && URL.revokeObjectURL(m.preview));
     composerMedia = [];
     renderComposerPrev();
     toast("Posted.", 1);
@@ -2247,7 +2113,6 @@ $("comp-post").onclick = async () => {
   }
 };
 
-/* ---------- 27. Render a post card ---------- */
 function timeAgo(date) {
   if (!date) return "just now";
   const s = Math.floor((Date.now() - date.getTime()) / 1000);
@@ -2319,8 +2184,6 @@ async function renderPost(d) {
 
   const mEl = card.querySelector("[data-media]");
   const imgs = (p.media || []).filter(m => m.type === "image");
-  const vids = (p.media || []).filter(m => m.type === "video");
-  const files = (p.media || []).filter(m => m.type === "file");
   if (imgs.length) {
     const grid = mk("div", "grid n" + Math.min(imgs.length, 4));
     imgs.slice(0, 4).forEach(m => {
@@ -2331,19 +2194,6 @@ async function renderPost(d) {
     });
     mEl.append(grid);
   }
-  vids.forEach(v => {
-    const vid = document.createElement("video");
-    vid.src = v.url; vid.controls = true; vid.preload = "metadata"; vid.playsInline = true;
-    vid.style.width = "100%"; vid.style.borderRadius = "12px"; vid.style.marginTop = ".4rem";
-    mEl.append(vid);
-  });
-  files.forEach(f => {
-    const a = document.createElement("div");
-    a.className = "attach";
-    a.innerHTML = `📎 <a href="${f.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(f.name || "Attachment")}</a>
-      <small class="soon" style="margin-left:auto">${Math.round((f.size || 0) / 1024)} KB</small>`;
-    mEl.append(a);
-  });
 
   const reactionTotal = Object.values(p.reactionCounts || {}).reduce((a, b) => a + (b || 0), 0);
   card.querySelector('[data-count="reactions"]').textContent =
@@ -2613,7 +2463,6 @@ function postMenu(btn, p, postId, isMine) {
   mm.style.left = Math.max(8, Math.min(r.right - mm.offsetWidth, innerWidth - mm.offsetWidth - 8)) + "px";
 }
 
-/* ---------- 28. Contacts ---------- */
 let ctUsers = [], ctUn = [], ctAt = 0;
 async function loadContacts() {
   if (!ctUsers.length || Date.now() - ctAt > 60000) {
@@ -2641,7 +2490,6 @@ function renderContacts() {
 }
 $("ct-q").oninput = renderContacts;
 
-/* ---------- 29. Calls log ---------- */
 function logCall(c, msg) {
   const m = msg || "";
   const st = c.t0 ? "completed"
@@ -2694,7 +2542,6 @@ async function loadCalls() {
   }
 }
 
-/* ---------- 30. Settings ---------- */
 function renderSettings() {
   $("st-acc").textContent = me.nickname + " · @" + me.username + (auth.currentUser?.email ? " · " + auth.currentUser.email : "");
   $("st-dark").checked = document.documentElement.dataset.theme === "dark";
@@ -2715,7 +2562,6 @@ $("st-edit").onclick = openPm;
 $("st-out").onclick = () => signOut(auth);
 $("st-admin").onclick = openAdmin;
 
-/* ---------- 31. Shared media ---------- */
 function renderMedia(snap) {
   const g = $("rp-media");
   g.innerHTML = "";
@@ -2732,7 +2578,6 @@ function renderMedia(snap) {
   $("rp-mc").hidden = !n;
 }
 
-/* ---------- 32. Admin panel ---------- */
 function openAdmin() {
   if (!isAdmin) return toast("Not authorized.");
   $("admin").hidden = false;
@@ -2878,7 +2723,6 @@ async function loadAdminReports() {
   }
 }
 
-/* ---------- 33. Wire the rest ---------- */
 document.addEventListener("click", () => { $("menu").hidden = true; });
 $("h-block").onclick = toggleBlock;
 </script>
