@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0a0306">
-<title>I’m Sorryyyyyyyyyyy</title>
+<title>I’m Sorry, My Love.</title>
 <style>
 :root{--black:#0a0306;--wine:#2b0610;--burg:#5c0f24;--rose:#e8909f;--blush:#f7d6dc;--ink:#4a0f1f;
 --serif:"Cormorant Garamond","Didot","Bodoni 72","Playfair Display","Hoefler Text",Georgia,serif;
@@ -25,6 +25,19 @@ background:radial-gradient(120% 90% at 50% 110%,var(--burg) 0%,var(--wine) 38%,v
 .btn:focus-visible{outline:2px solid var(--blush);outline-offset:4px}
 @keyframes rise{from{opacity:0;transform:translateY(14px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
 #tears{position:fixed;inset:0;width:100%;height:100%;z-index:5;pointer-events:none}
+.adm{position:fixed;inset:0;z-index:100;display:none;flex-direction:column;background:rgba(10,3,6,.94);backdrop-filter:blur(8px);color:#f4f0e4;font:16px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}
+.adm.on{display:flex}
+.adh{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;padding:max(1rem,env(safe-area-inset-top)) 1rem 1rem;border-bottom:1px solid rgba(168,216,244,.25)}
+.adh h3{font:italic 400 1.5rem var(--serif);margin-right:auto;color:#a8d8f4}
+.adh button,.ads button{font:inherit;font-size:.9rem;color:#f4f0e4;background:rgba(168,216,244,.12);border:1px solid rgba(168,216,244,.45);border-radius:8px;padding:.45rem .9rem;cursor:pointer}
+.adh .danger,.ads .danger{border-color:#e8909f;color:#ffc2d0;background:rgba(232,80,110,.15)}
+#adBody{flex:1;overflow-y:auto;padding:1rem;-webkit-overflow-scrolling:touch}
+.sum{margin-bottom:1rem;color:#9fb04a}
+.ads{background:rgba(168,216,244,.07);border:1px solid rgba(168,216,244,.2);border-radius:10px;padding:.8rem 1rem;margin-bottom:.8rem}
+.ads b{color:#a8d8f4}.ads .yes{color:#9fb04a}.ads .time{color:#ffc2d0}
+.ads ul{list-style:none;margin:.5rem 0;font-size:.88rem;opacity:.85}
+.ads summary{cursor:pointer;margin:.4rem 0}
+#hot{position:fixed;top:0;left:0;width:56px;height:56px;z-index:30;background:transparent;border:0}
 /* storm */
 #storm,#dust{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 #stormCap{position:relative;z-index:2;font-size:clamp(1.1rem,3.4vw,1.6rem);font-style:italic;color:var(--blush);text-shadow:0 0 24px #000,0 0 40px var(--burg);margin-top:auto;padding-bottom:1rem}
@@ -94,6 +107,8 @@ background:radial-gradient(120% 90% at 50% 110%,var(--burg) 0%,var(--wine) 38%,v
 <div class="choices"><button class="btn show" id="yes">I Forgive You ❤️</button><button class="btn show" id="time">I Need Some Time 🥺</button></div>
 <p id="reply" aria-live="polite"></p></section>
 
+<div class="adm" id="adm" role="dialog" aria-label="Admin panel"><div class="adh"><h3>Admin panel</h3><button id="adRef">Refresh</button><button id="adDel" class="danger">Delete all (fresh start)</button><button id="adX">Close</button></div><div id="adBody"></div></div>
+<button id="hot" aria-hidden="true" tabindex="-1"></button>
 <canvas id="tears" aria-hidden="true"></canvas>
 <script>
 (function(){
@@ -103,7 +118,7 @@ var sleep=function(ms){return new Promise(function(r){setTimeout(r,ms)})};
 var RM=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
 var T=function(ms){return RM?Math.min(ms,250):ms};
 var FONT='"Cormorant Garamond","Didot","Bodoni 72","Playfair Display",Georgia,serif';
-function show(id){document.querySelectorAll(".scene").forEach(function(s){s.classList.toggle("on",s.id===id)})}
+function show(id){document.querySelectorAll(".scene").forEach(function(s){s.classList.toggle("on",s.id===id)});track("scene",id)}
 function reveal(b){b.classList.add("show")}
 
 /* ---------- audio (generated, no files) ---------- */
@@ -274,8 +289,8 @@ function hearts(n){
   document.body.appendChild(s); setTimeout(function(){s.remove()},(d+3)*1000);
  })()}
 }
-$("#yes").addEventListener("click",function(){setTears(0);say("yes");hearts(RM?8:60);setTimeout(function(){hearts(RM?0:30)},3500)});
-$("#time").addEventListener("click",function(){setTears(.6);say("time")});
+$("#yes").addEventListener("click",function(){track("answer","forgive");setTears(0);say("yes");hearts(RM?8:60);setTimeout(function(){hearts(RM?0:30)},3500)});
+$("#time").addEventListener("click",function(){track("answer","time");setTears(.6);say("time")});
 
 /* ---------- crying system: tears run down the screen ---------- */
 var tl=0;function setTears(l){tl=RM?0:l}
@@ -305,6 +320,72 @@ var tl=0;function setTears(l){tl=RM?0:l}
   requestAnimationFrame(f)}
  requestAnimationFrame(f);
 })();
+
+/* ---------- results tracking (Firebase Realtime Database, REST) + admin panel ---------- */
+var DB="https://hot-massage-cf84f-default-rtdb.firebaseio.com/apology";
+var SID=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+var NOTRACK=location.hash==="#test";
+var ORDER=["intro","stormScene","giant","heart","letter","end"];
+var LBL={intro:"Opening",stormScene:"SORRY storm",giant:"Giant words",heart:"Broken heart",letter:"Letter",end:"Ending"};
+function dbf(path,method,body){
+ return fetch(DB+path+".json",{method:method,body:body?JSON.stringify(body):undefined,keepalive:true})
+  .then(function(r){return r.json()}).catch(function(){return "ERR"});
+}
+function track(type,val){
+ if(NOTRACK)return; var t=Date.now();
+ dbf("/sessions/"+SID+"/events","POST",{t:t,type:type,val:val||""});
+ dbf("/sessions/"+SID,"PATCH",{last:t,scene:type==="scene"?val:undefined});
+}
+(function(){
+ if(NOTRACK)return; var ua=navigator.userAgent;
+ dbf("/sessions/"+SID,"PATCH",{start:Date.now(),last:Date.now(),device:(/iPhone|iPad/.test(ua)?"iPhone/iPad":/Android/.test(ua)?"Android":"Desktop")+" "+innerWidth+"px"});
+ track("scene","intro");
+})();
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function dur(ms){var s=Math.round(ms/1000);return Math.floor(s/60)+"m "+s%60+"s"}
+async function loadAdmin(){
+ var box=$("#adBody"),data=await dbf("/sessions","GET");
+ box.textContent="";
+ if(data==="ERR"){box.appendChild(el("p","","Could not reach Firebase. Check internet and database rules."));return}
+ if(!data){box.appendChild(el("p","","No visits yet."));return}
+ var list=Object.keys(data).map(function(k){var d=data[k];d.id=k;
+  d.ev=d.events?Object.keys(d.events).map(function(q){return d.events[q]}).sort(function(a,b){return a.t-b.t}):[];return d})
+  .sort(function(a,b){return (b.start||0)-(a.start||0)});
+ var yes=0,time=0;
+ list.forEach(function(d){var a=d.ev.filter(function(e){return e.type==="answer"}).pop();if(a){a.val==="forgive"?yes++:time++}});
+ box.appendChild(el("p","sum","Visits: "+list.length+"  |  Forgive: "+yes+"  |  Needs time: "+time));
+ list.forEach(function(d){
+  var c=el("div","ads"),far=0;
+  d.ev.forEach(function(e){if(e.type==="scene")far=Math.max(far,ORDER.indexOf(e.val))});
+  c.appendChild(el("div","",new Date(d.start||0).toLocaleString()+"  |  "+(d.device||"?")+"  |  stayed "+dur((d.last||d.start||0)-(d.start||0))));
+  var r=el("div");r.appendChild(el("b","","Reached: "));r.appendChild(document.createTextNode(LBL[ORDER[far]]||"-"));c.appendChild(r);
+  var ans=d.ev.filter(function(e){return e.type==="answer"});
+  var a=el("div");a.appendChild(el("b","","Answer: "));
+  if(!ans.length)a.appendChild(document.createTextNode("none yet"));
+  ans.forEach(function(e,i){var s=el("span",e.val==="forgive"?"yes":"time",(i?"  then  ":"")+(e.val==="forgive"?"❤️ I Forgive You":"🥺 I Need Some Time")+" ("+new Date(e.t).toLocaleTimeString()+")");a.appendChild(s)});
+  c.appendChild(a);
+  var dt=el("details");dt.appendChild(el("summary","","Timeline ("+d.ev.length+")"));var ul=el("ul");
+  d.ev.forEach(function(e){ul.appendChild(el("li","",new Date(e.t).toLocaleTimeString()+"  -  "+(e.type==="scene"?"Scene: "+(LBL[e.val]||e.val):"Answer: "+e.val)))});
+  dt.appendChild(ul);c.appendChild(dt);
+  var b=el("button","danger","Delete this visit");
+  b.addEventListener("click",async function(){await dbf("/sessions/"+d.id,"DELETE");loadAdmin()});
+  c.appendChild(b);box.appendChild(c);
+ });
+}
+var adTimer;
+function openAdmin(){$("#adm").classList.add("on");loadAdmin();clearInterval(adTimer);adTimer=setInterval(loadAdmin,6000)}
+function closeAdmin(){$("#adm").classList.remove("on");clearInterval(adTimer)}
+$("#adX").addEventListener("click",closeAdmin);
+$("#adRef").addEventListener("click",loadAdmin);
+$("#adDel").addEventListener("click",async function(){
+ if(confirm("Delete ALL saved results and start fresh?")){await dbf("/sessions","DELETE");loadAdmin()}});
+var lastP=0;
+addEventListener("keydown",function(e){
+ if(e.key==="Escape"){closeAdmin();return}
+ if((e.key==="p"||e.key==="P")&&!e.repeat){var n=Date.now();
+  if(n-lastP<600){lastP=0;$("#adm").classList.contains("on")?closeAdmin():openAdmin()}else lastP=n}
+});
+var taps=[];$("#hot").addEventListener("click",function(){var n=Date.now();taps.push(n);taps=taps.filter(function(t){return n-t<3000});if(taps.length>=5){taps=[];openAdmin()}});
 
 /* ---------- wiring ---------- */
 $("#open").addEventListener("click",function(){
