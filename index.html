@@ -38,6 +38,7 @@ background:radial-gradient(120% 90% at 50% 110%,var(--burg) 0%,var(--wine) 38%,v
 .ads ul{list-style:none;margin:.5rem 0;font-size:.88rem;opacity:.85}
 .ads summary{cursor:pointer;margin:.4rem 0}
 #hot{position:fixed;top:0;left:0;width:56px;height:56px;z-index:30;background:transparent;border:0}
+#hint{position:absolute;bottom:max(1.5rem,env(safe-area-inset-bottom));left:0;right:0;font:italic 1rem var(--serif);opacity:.45;letter-spacing:.08em}
 /* storm */
 #storm,#dust{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 #stormCap{position:relative;z-index:2;font-size:clamp(1.1rem,3.4vw,1.6rem);font-style:italic;color:var(--blush);text-shadow:0 0 24px #000,0 0 40px var(--burg);margin-top:auto;padding-bottom:1rem}
@@ -78,7 +79,7 @@ background:radial-gradient(120% 90% at 50% 110%,var(--burg) 0%,var(--wine) 38%,v
 </head>
 <body>
 
-<section class="scene on" id="intro"><p class="line" id="line" aria-live="polite"></p><button class="btn" id="open">Open My Heart</button></section>
+<section class="scene on" id="intro"><p class="line" id="line" aria-live="polite"></p><p id="hint">tap anywhere ♪</p><button class="btn" id="open">Open My Heart</button></section>
 
 <section class="scene" id="stormScene"><canvas id="storm" aria-hidden="true"></canvas><p id="stormCap">Every word, a little louder than I can say it.</p><button class="btn" id="toGiant">Continue</button></section>
 
@@ -121,42 +122,22 @@ var FONT='"Cormorant Garamond","Didot","Bodoni 72","Playfair Display",Georgia,se
 function show(id){document.querySelectorAll(".scene").forEach(function(s){s.classList.toggle("on",s.id===id)});track("scene",id)}
 function reveal(b){b.classList.add("show")}
 
-/* ---------- audio (generated, no files) ---------- */
-var ac,master,timer,musicOn=false,ci=0;
-var chords=[[57,60,64,69],[53,57,60,65],[48,52,55,60],[55,59,62,67]];
-var hz=function(m){return 440*Math.pow(2,(m-69)/12)};
-function initAudio(){
- if(ac)return true;
- var AC=window.AudioContext||window.webkitAudioContext; if(!AC)return false;
- ac=new AC(); master=ac.createGain(); master.gain.value=0;
- var lp=ac.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=1500;
- master.connect(lp); lp.connect(ac.destination); return true;
-}
-function note(m,t,d,v,type){
- var o=ac.createOscillator(),g=ac.createGain(); o.type=type; o.frequency.value=hz(m);
- g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(v,t+d*.3); g.gain.exponentialRampToValueAtTime(.0001,t+d);
- o.connect(g); g.connect(master); o.start(t); o.stop(t+d+.1);
-}
-function bar(){
- var t=ac.currentTime+.05,ch=chords[ci++%4];
- ch.forEach(function(m){note(m-12,t,5.8,.05,"sine")});
- ch.forEach(function(m,i){note(m+12,t+i*.6+.3,2.8,.035,"triangle")});
- note(ch[0]-24,t,5.8,.07,"sine");
-}
-function setUI(){}
+/* ---------- music: the song file that sits next to index.html ---------- */
+var SONG="Saahel - Baarish Mein Phir (Official Music Video).mp3";
+var song=new Audio(encodeURI(SONG)); song.loop=true; song.preload="auto"; song.volume=0;
+var musicOn=false,fade;
+function fadeTo(v,ms,cb){clearInterval(fade);var st=song.volume,t0=Date.now();
+ fade=setInterval(function(){var k=Math.min(1,(Date.now()-t0)/ms);song.volume=Math.max(0,Math.min(1,st+(v-st)*k));if(k>=1){clearInterval(fade);if(cb)cb()}},50)}
 function musicStart(){
- try{ if(!initAudio())return; ac.resume(); master.gain.cancelScheduledValues(ac.currentTime);
-  master.gain.setValueAtTime(master.gain.value,ac.currentTime); master.gain.linearRampToValueAtTime(.8,ac.currentTime+2.5);
-  clearInterval(timer); bar(); timer=setInterval(bar,4800); musicOn=true;}catch(e){musicOn=false}
- setUI();
+ if(musicOn)return;
+ try{var p=song.play();
+  var ok=function(){musicOn=true;fadeTo(.85,2500);var h=$("#hint");if(h)h.style.display="none"};
+  if(p&&p.then)p.then(ok).catch(function(){});else ok();
+ }catch(e){}
 }
-function musicStop(){
- try{ master.gain.cancelScheduledValues(ac.currentTime); master.gain.setValueAtTime(master.gain.value,ac.currentTime);
-  master.gain.linearRampToValueAtTime(0,ac.currentTime+.8); clearInterval(timer);}catch(e){}
- musicOn=false; setUI();
-}
-function blip(){ if(!musicOn)return; try{note(81,ac.currentTime,.7,.05,"sine");note(88,ac.currentTime+.08,.7,.03,"sine")}catch(e){} }
-document.addEventListener("click",function(e){if(e.target.closest(".btn"))blip()});
+function musicStop(){fadeTo(0,600,function(){song.pause();musicOn=false})}
+function blip(){}
+document.addEventListener("click",musicStart); /* a tap/click anywhere starts the song */
 
 /* ---------- 1. opening ---------- */
 var lines=["Hey, My Love...","I know you’re really angry with me.","I don’t know how to make everything right...","But I want you to know something."];
@@ -394,7 +375,7 @@ $("#open").addEventListener("click",function(){
 $("#toGiant").addEventListener("click",function(){S.stop();giant()});
 $("#toLetter").addEventListener("click",letter);
 $("#toEnd").addEventListener("click",function(){setTears(.25);show("end")});
-document.addEventListener("visibilitychange",function(){if(document.hidden&&musicOn&&ac)ac.suspend();else if(musicOn&&ac)ac.resume()});
+document.addEventListener("visibilitychange",function(){if(!musicOn)return;if(document.hidden)song.pause();else song.play().catch(function(){})});
 dust(); intro();
 })();
 </script>
