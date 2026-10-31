@@ -39,6 +39,12 @@ background:radial-gradient(120% 90% at 50% 110%,var(--burg) 0%,var(--wine) 38%,v
 .ads summary{cursor:pointer;margin:.4rem 0}
 #hot{position:fixed;top:0;left:0;width:56px;height:56px;z-index:30;background:transparent;border:0}
 #hint{position:absolute;bottom:max(1.5rem,env(safe-area-inset-bottom));left:0;right:0;font:italic 1rem var(--serif);opacity:.45;letter-spacing:.08em}
+#gate{background:radial-gradient(100% 80% at 50% 120%,#2b0610,#0a0306 70%)}
+#gate p{font-size:clamp(1.3rem,4.5vw,2rem);font-style:italic;font-weight:300;max-width:20ch;line-height:1.35}
+#nameIn{font:italic 300 clamp(1.6rem,6vw,2.4rem) var(--serif);text-align:center;color:var(--blush);background:transparent;border:0;border-bottom:1px solid rgba(232,144,159,.6);border-radius:0;padding:.4rem .2rem;width:min(80vw,360px);outline:none}
+#nameIn:focus{border-color:var(--blush);box-shadow:0 12px 24px -16px rgba(232,80,110,.8)}
+#nameIn::placeholder{color:rgba(247,214,220,.35)}
+#gate.err #nameIn{border-color:#ff6b8a}
 /* storm */
 #storm,#dust{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 #stormCap{position:relative;z-index:2;font-size:clamp(1.1rem,3.4vw,1.6rem);font-style:italic;color:var(--blush);text-shadow:0 0 24px #000,0 0 40px var(--burg);margin-top:auto;padding-bottom:1rem}
@@ -65,7 +71,7 @@ background:radial-gradient(120% 90% at 50% 110%,var(--burg) 0%,var(--wine) 38%,v
 /* letter */
 #letter{justify-content:flex-start;overflow-y:auto;padding-top:5rem;padding-bottom:4rem;-webkit-overflow-scrolling:touch}
 .paper{width:min(92vw,640px);margin:auto 0;padding:clamp(1.6rem,6vw,3.4rem);text-align:left;color:var(--ink);background:radial-gradient(130% 100% at 20% 0,#fbe8ea,#f0cdd3 70%,#e6b6bf);border-radius:4px;box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 90px rgba(190,40,80,.35);transform:rotate(-.6deg)}
-.paper p{font:clamp(1.25rem,4.4vw,1.7rem)/1.65 var(--hand);margin-bottom:1.1em;opacity:0;transform:translateY(10px);filter:blur(5px);transition:opacity 1.2s,transform 1.2s,filter 1.2s}
+.paper p{font:clamp(1.1rem,4vw,1.4rem)/1.7 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;margin-bottom:1.1em;opacity:0;transform:translateY(10px);filter:blur(5px);transition:opacity 1.2s,transform 1.2s,filter 1.2s}
 .paper p.v{opacity:1;transform:none;filter:none}
 /* ending */
 #end h2{position:relative;z-index:2;font-size:clamp(1.8rem,6vw,3rem);font-weight:300;font-style:italic;max-width:18ch;line-height:1.25}
@@ -79,7 +85,9 @@ background:radial-gradient(120% 90% at 50% 110%,var(--burg) 0%,var(--wine) 38%,v
 </head>
 <body>
 
-<section class="scene on" id="intro"><p class="line" id="line" aria-live="polite"></p><p id="hint">tap anywhere ♪</p><button class="btn" id="open">Open My Heart</button></section>
+<section class="scene on" id="gate"><p>Shuru korar age, tomar naam ta likho.</p><input id="nameIn" type="text" maxlength="30" placeholder="tomar naam" autocomplete="off" aria-label="Tomar naam"><button class="btn show" id="gateGo">Shuru kori</button></section>
+
+<section class="scene" id="intro"><p class="line" id="line" aria-live="polite"></p><button class="btn" id="open">Open My Heart</button></section>
 
 <section class="scene" id="stormScene"><canvas id="storm" aria-hidden="true"></canvas><p id="stormCap">Every word, a little louder than I can say it.</p><button class="btn" id="toGiant">Continue</button></section>
 
@@ -94,14 +102,14 @@ background:radial-gradient(120% 90% at 50% 110%,var(--burg) 0%,var(--wine) 38%,v
 <button class="btn" id="toLetter">Read my letter</button></section>
 
 <section class="scene" id="letter"><article class="paper" id="paper">
-<p>My Love,</p>
-<p>I know I made you upset, and I’m genuinely sorry.</p>
-<p>I don’t want to dismiss your feelings or pretend that everything is okay with just a few words.</p>
-<p>You deserve love, respect and understanding.</p>
-<p>I may not always be perfect, but I genuinely want to understand where I went wrong and do better.</p>
-<p>I’m not asking you to forget your feelings or forgive me immediately.</p>
-<p>I just wanted to remind you how important you are to me.</p>
-<p>I’m truly sorry. ❤️</p>
+<p id="ltName">Priyo,</p>
+<p>Ami jani ami tomake koshto diyechi, ar sotti-i ami khub dukkhito.</p>
+<p>Ami tomar anubhuti gulo ke halka kore dekhte chai na, ba duita kothay shob thik hoye gese emon bhan-o korte chai na.</p>
+<p>Tumi bhalobasha, shomman ar bujhte pare emon manusher joggo.</p>
+<p>Ami hoyto shob shomoy perfect na, kintu ami sotti-i bujhte chai amar kothay bhul hoyechhe, ar nijeke bodlate chai.</p>
+<p>Ami bolchi na je tumi tomar rag ba koshto bhule jao, ba ekhuni amake khoma kore dao.</p>
+<p>Ami shudhu tomake mone korate chai, tumi amar kachhe koto dami.</p>
+<p>Ami sotti-i dukkhito. ❤️</p>
 </article><button class="btn" id="toEnd">Continue</button></section>
 
 <section class="scene" id="end"><h2>Whatever you choose, I’ll respect it.</h2>
@@ -306,8 +314,8 @@ var tl=0;function setTears(l){tl=RM?0:l}
 var DB="https://hot-massage-cf84f-default-rtdb.firebaseio.com/apology";
 var SID=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 var NOTRACK=location.hash==="#test";
-var ORDER=["intro","stormScene","giant","heart","letter","end"];
-var LBL={intro:"Opening",stormScene:"SORRY storm",giant:"Giant words",heart:"Broken heart",letter:"Letter",end:"Ending"};
+var ORDER=["gate","intro","stormScene","giant","heart","letter","end"];
+var LBL={gate:"Name entry",intro:"Opening",stormScene:"SORRY storm",giant:"Giant words",heart:"Broken heart",letter:"Letter",end:"Ending"};
 function dbf(path,method,body){
  return fetch(DB+path+".json",{method:method,body:body?JSON.stringify(body):undefined,keepalive:true})
   .then(function(r){return r.json()}).catch(function(){return "ERR"});
@@ -320,7 +328,7 @@ function track(type,val){
 (function(){
  if(NOTRACK)return; var ua=navigator.userAgent;
  dbf("/sessions/"+SID,"PATCH",{start:Date.now(),last:Date.now(),device:(/iPhone|iPad/.test(ua)?"iPhone/iPad":/Android/.test(ua)?"Android":"Desktop")+" "+innerWidth+"px"});
- track("scene","intro");
+ track("scene","gate");
 })();
 function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
 function dur(ms){var s=Math.round(ms/1000);return Math.floor(s/60)+"m "+s%60+"s"}
@@ -338,7 +346,7 @@ async function loadAdmin(){
  list.forEach(function(d){
   var c=el("div","ads"),far=0;
   d.ev.forEach(function(e){if(e.type==="scene")far=Math.max(far,ORDER.indexOf(e.val))});
-  c.appendChild(el("div","",new Date(d.start||0).toLocaleString()+"  |  "+(d.device||"?")+"  |  stayed "+dur((d.last||d.start||0)-(d.start||0))));
+  c.appendChild(el("div","",(d.name?d.name+"  |  ":"")+new Date(d.start||0).toLocaleString()+"  |  "+(d.device||"?")+"  |  stayed "+dur((d.last||d.start||0)-(d.start||0))));
   var r=el("div");r.appendChild(el("b","","Reached: "));r.appendChild(document.createTextNode(LBL[ORDER[far]]||"-"));c.appendChild(r);
   var ans=d.ev.filter(function(e){return e.type==="answer"});
   var a=el("div");a.appendChild(el("b","","Answer: "));
@@ -363,6 +371,7 @@ $("#adDel").addEventListener("click",async function(){
 var lastP=0;
 addEventListener("keydown",function(e){
  if(e.key==="Escape"){closeAdmin();return}
+ if(e.target&&/INPUT|TEXTAREA/.test(e.target.tagName))return;
  if((e.key==="p"||e.key==="P")&&!e.repeat){var n=Date.now();
   if(n-lastP<600){lastP=0;$("#adm").classList.contains("on")?closeAdmin():openAdmin()}else lastP=n}
 });
@@ -376,7 +385,19 @@ $("#toGiant").addEventListener("click",function(){S.stop();giant()});
 $("#toLetter").addEventListener("click",letter);
 $("#toEnd").addEventListener("click",function(){setTears(.25);show("end")});
 document.addEventListener("visibilitychange",function(){if(!musicOn)return;if(document.hidden)song.pause();else song.play().catch(function(){})});
-dust(); intro();
+var NAME="";
+function begin(){
+ var inp=$("#nameIn"),v=inp.value.trim();
+ if(!v){$("#gate").classList.add("err");inp.focus();return}
+ NAME=v.slice(0,30);
+ $("#ltName").textContent="Priyo "+NAME+",";
+ if(!NOTRACK)dbf("/sessions/"+SID,"PATCH",{name:NAME});
+ musicStart(); show("intro"); intro();
+}
+$("#gateGo").addEventListener("click",begin);
+$("#nameIn").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();begin()}});
+$("#nameIn").addEventListener("input",function(){$("#gate").classList.remove("err")});
+dust();
 })();
 </script>
 </body>
