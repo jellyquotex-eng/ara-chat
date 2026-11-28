@@ -354,6 +354,17 @@ async function swapPic() {
   await wait(1500);
 }
 
+/* ============ BACKGROUND SONG (first click/tap anywhere, no toggle) ============ */
+const SONG = 'ssstik.io_1795864191574.mp3';  // same folder as index.html
+const SONG_RAW = 'https://raw.githubusercontent.com/jellyquotex-eng/ara-chat/main/' + SONG;
+const song = new Audio(SONG); song.loop = true; song.volume = .75; song.preload = 'auto';
+song.addEventListener('error', () => { if (!song.src.startsWith('https://raw.')) song.src = SONG_RAW; });
+const SONG_EVT = ['pointerup', 'keydown'];
+function startSong() {
+  song.play().then(() => SONG_EVT.forEach(t => removeEventListener(t, startSong, true))).catch(() => {}); // retries on next click if blocked
+}
+SONG_EVT.forEach(t => addEventListener(t, startSong, true));
+
 /* ============ INTRO CLICK + TRANSITION ============ */
 $('go').addEventListener('click', async e => {
   const btn = e.currentTarget; btn.disabled = true;
