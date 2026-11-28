@@ -134,6 +134,44 @@ body.calm .blob{animation-play-state:paused}
 @keyframes ntIn{0%{opacity:0;transform:translateY(-140%) scale(.94)}55%{opacity:1;transform:translateY(7%) scale(1.01)}100%{transform:none}}
 @keyframes wig{25%{transform:rotate(-1.8deg) scale(1.02)}55%{transform:rotate(1.5deg)}80%{transform:rotate(-.7deg)}}
 
+/* ============ INSTAGRAM CHAT ============ */
+#chat{position:fixed;inset:0;z-index:60;display:flex;justify-content:center;visibility:hidden;opacity:0;transform-origin:50% 6%;
+  background:linear-gradient(160deg,#fbf6ec,#e6f2fa);color:#000;
+  font:400 15px/1.3 -apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+#chat.open{visibility:visible;opacity:1;animation:chatIn .8s var(--ease) backwards}
+@keyframes chatIn{from{opacity:0;transform:scale(.25);filter:blur(10px)}}
+.app{width:min(100vw,460px);height:100%;background:#fff;display:flex;flex-direction:column;overflow:hidden}
+@media (min-width:600px){#chat{align-items:center}.app{height:min(94vh,860px);border-radius:34px;box-shadow:0 30px 80px rgba(143,166,107,.3)}}
+.top{display:flex;align-items:center;gap:12px;padding:calc(10px + env(safe-area-inset-top)) 14px 10px;border-bottom:1px solid #efefef}
+.ic{width:26px;height:26px;flex:none;fill:none;stroke:#000;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ring2{position:relative;flex:none;padding:2px;border-radius:50%;background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)}
+.av{width:34px;height:34px;border-radius:50%;border:2px solid #fff;display:grid;place-items:center;color:#fff;font-weight:600;background:linear-gradient(135deg,#bdd09a,#8cc4e6)}
+.big .av{width:80px;height:80px;font-size:32px;border-width:3px}
+.top .ring2::after{content:"";position:absolute;right:0;bottom:0;width:10px;height:10px;border-radius:50%;background:#2ecc5a;border:2px solid #fff}
+.who{flex:1;line-height:1.2}.who b{display:block;font-weight:600;font-size:16px}.who span{font-size:12px;color:#737373}
+.thread{flex:1;padding:14px 14px 8px;overflow:hidden;display:flex;flex-direction:column}
+.intro{display:grid;justify-items:center;gap:3px;padding:18px 0 22px}
+.intro b{font-size:18px;font-weight:600;margin-top:8px}.intro span{color:#737373;font-size:14px}
+.intro i{font-style:normal;font-weight:600;font-size:14px;background:#efefef;padding:7px 16px;border-radius:10px;margin-top:10px}
+.stamp{text-align:center;color:#737373;font-size:12px;margin-bottom:12px}
+#msgs{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.m{max-width:75%;padding:10px 15px;border-radius:22px;color:#fff;overflow-wrap:anywhere;transform-origin:100% 100%;
+  background:linear-gradient(135deg,#7a5cff,#3797f0);animation:bub .5s cubic-bezier(.2,1.3,.4,1) backwards}
+.m:not(:last-child){border-bottom-right-radius:6px}.m+.m{border-top-right-radius:6px}
+@keyframes bub{from{opacity:0;transform:translateY(16px) scale(.6)}}
+#status{text-align:right;color:#737373;font-size:12px;margin-top:4px;min-height:16px;opacity:0;transition:opacity .3s}
+#status.on{opacity:1}
+.cmp{display:flex;align-items:center;gap:10px;margin:8px 12px calc(12px + env(safe-area-inset-bottom));padding:5px 14px 5px 5px;border-radius:26px;background:#efefef}
+.cam{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#7a5cff,#3797f0)}
+.cam svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#inp{flex:1;min-height:20px;overflow-wrap:anywhere}
+#inp:empty::before{content:"Message...";color:#737373}
+.cmp.typing #inp::after{content:"";display:inline-block;width:1.5px;height:17px;margin-left:1px;vertical-align:-3px;background:#3797f0;animation:blink .8s steps(1) infinite}
+.icos{display:flex;gap:12px}.icos .ic{width:24px;height:24px}
+#snd{display:none;color:#3797f0;font-weight:600}
+.cmp.typing .icos{display:none}.cmp.typing #snd{display:block}
+@keyframes blink{50%{opacity:0}}
+
 /* ============ RESPONSIVE DESIGN ============ */
 @media (max-height:520px){:root{--w:min(60vw, calc(60vh * .8), 440px)}#final img{max-height:50vh}}
 @media (prefers-reduced-motion:reduce){.blob{animation:none}}
@@ -170,6 +208,31 @@ body.calm .blob{animation-play-state:paused}
     <div id="final2"><img id="img2" src="https://cdn.corenexis.com/f/JfPtHkqQ.jpg" alt="Surprise 2" decoding="async" referrerpolicy="no-referrer"></div>
   </div>
 </main>
+<section id="chat" aria-label="Instagram chat with ARA">
+  <div class="app">
+    <header class="top">
+      <svg class="ic" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg>
+      <div class="ring2"><div class="av">A</div></div>
+      <div class="who"><b>ARA</b><span>Active now</span></div>
+      <svg class="ic" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+      <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="3"/><path d="m16 10 5-3v10l-5-3"/></svg>
+    </header>
+    <div class="thread">
+      <div class="intro"><div class="ring2 big"><div class="av">A</div></div><b>ARA</b><span>ARA · Instagram</span><i>View profile</i></div>
+      <div class="stamp" id="stamp"></div>
+      <div id="msgs"></div><div id="status"></div>
+    </div>
+    <div class="cmp" id="cmp">
+      <i class="cam"><svg viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.2"/></svg></i>
+      <div id="inp"></div><span id="snd">Send</span>
+      <span class="icos">
+        <svg class="ic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        <svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="m4 18 5-5 4 4 3-3 4 4"/></svg>
+        <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0M9 10h.01M15 10h.01"/></svg>
+      </span>
+    </div>
+  </div>
+</section>
 <div id="notifs"></div>
 <div id="flash"></div>
 
@@ -262,6 +325,7 @@ const sfx = {
     tone(190, t, .7, 'sine', .8, 35); tone(1300, t, .35, 'triangle', .3, 300);
     [784, 988, 1175, 1568].forEach((f, k) => tone(f, t + .14 + k * .07, .3, 'triangle', .2));
   },
+  send() { if (AC) tone(620, AC.currentTime, .09, 'sine', .28, 1000); },
   notif() { // iPhone-style three-note chime
     if (!AC) return; const t = AC.currentTime;
     [[1319, 0], [1568, .11], [2093, .22]].forEach(([f, d]) => { tone(f, t + d, .55, 'sine', .4); tone(f * 2, t + d, .25, 'sine', .08); });
@@ -324,8 +388,9 @@ async function reveal() {
   notify('Ummmmmmmmmmah 😘', ['💗', '😘']);
   await wait(2000);
   notify('jebin give me one pleaseee......', ['🥺', '💗']);
-  // Stop everything that no longer needs to run
-  ambient = false; document.body.classList.add('calm');
+  ambient = false; document.body.classList.add('calm'); // stop everything that no longer needs to run
+  await wait(3200);
+  await openChat();
 }
 
 /* ============ NOTIFICATIONS (iPhone / Instagram style) ============ */
@@ -352,6 +417,27 @@ async function swapPic() {
   const r = b.getBoundingClientRect();
   burst(r.left + r.width / 2, r.top + r.height / 2, 60, ['💗', '✨', '💗']);
   await wait(1500);
+}
+
+/* ============ INSTAGRAM CHAT (auto-typed messages + Seen) ============ */
+const MSGS = ['please jebin deo na ekta .', 'ekta e tow naki......', 'de na bal..........'];
+async function openChat() {
+  const inp = $('inp'), cmp = $('cmp'), msgs = $('msgs'), st = $('status');
+  $('stamp').textContent = new Date().toLocaleTimeString([], {hour: 'numeric', minute: '2-digit'});
+  box.firstElementChild.animate([{transform: 'scale(.96)'}, {transform: 'none'}], {duration: 220}); // "tap" the notification
+  await wait(240);
+  sfx.whoosh(); $('chat').classList.add('open');
+  await wait(1700);
+  for (const t of MSGS) {
+    cmp.classList.add('typing');
+    for (const ch of t) { inp.textContent += ch; await wait(rnd(45, 95)); }
+    await wait(400);
+    inp.textContent = ''; cmp.classList.remove('typing');
+    const m = document.createElement('div'); m.className = 'm'; m.textContent = t; msgs.append(m);
+    sfx.send(); st.textContent = 'Sent'; st.classList.add('on');
+    await wait(1000); st.textContent = 'Seen';
+    await wait(1200);
+  }
 }
 
 /* ============ BACKGROUND SONG (first click/tap anywhere, no toggle) ============ */
