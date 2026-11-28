@@ -3,435 +3,326 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>5 Months Countdown</title>
-<meta name="theme-color" content="#f6f4ec">
+<meta name="theme-color" content="#fbf6ec">
+<title>Hiloo Sister 👀</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>💗</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500&family=Hind+Siliguri:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f6f4ec;
-    --ink: #2b3123;
-    --muted: #6c7360;
-    --olive: #6b7a3a;
-    --olive-deep: #4d5a26;
-    --blue: #a9c4dc;
-    --blue-soft: #dbe7f1;
-    --card: rgba(255, 255, 255, .55);
-    --card-border: rgba(255, 255, 255, .85);
-    --shadow: 0 18px 50px -18px rgba(77, 90, 38, .28), 0 2px 8px rgba(77, 90, 38, .06);
-    --serif: "Fraunces", Georgia, "Times New Roman", serif;
-    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --bn: "Hind Siliguri", "Noto Sans Bengali", "Kohinoor Bangla", "Nirmala UI", sans-serif;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { min-height: 100%; }
-  body {
-    font-family: var(--sans);
-    color: var(--ink);
-    background:
-      radial-gradient(900px 600px at 12% 8%, var(--blue-soft), transparent 60%),
-      radial-gradient(800px 600px at 92% 95%, #e4e9cf, transparent 60%),
-      var(--bg);
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: grid;
-    place-items: center;
-    padding: max(24px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(24px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
+/* ============ CSS VARIABLES ============ */
+:root{
+  --cream:#fbf6ec; --olive:#b9c79a; --olive-d:#8fa66b; --baby:#bfe0f5; --baby-d:#8cc4e6;
+  --ink:#3f4a2f; --ease:cubic-bezier(.2,.85,.25,1);
+  --w:min(84vw, calc(58vh * .8), 440px);
+  --font:'Fredoka', ui-rounded, 'SF Pro Rounded', 'Segoe UI', system-ui, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:var(--font); color:var(--ink); -webkit-tap-highlight-color:transparent;
+  background:linear-gradient(160deg,#fbf6ec 0%,#f2f5e4 48%,#e6f2fa 100%);
+}
 
-  /* Background particles */
-  .bg { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
-  .bg span {
-    position: absolute; bottom: -40px; border-radius: 50%;
-    background: var(--olive); opacity: 0;
-    animation: float linear infinite; will-change: transform, opacity;
-  }
-  .bg span.blue { background: var(--blue); }
-  @keyframes float {
-    0%   { transform: translate3d(0, 0, 0); opacity: 0; }
-    15%  { opacity: .22; }
-    85%  { opacity: .16; }
-    100% { transform: translate3d(var(--dx, 20px), -112vh, 0); opacity: 0; }
-  }
+/* ============ BACKGROUND DECOR ============ */
+.bg{position:fixed;inset:0;overflow:hidden;z-index:0}
+.blob{position:absolute;border-radius:50%;filter:blur(50px);opacity:.55;will-change:transform}
+.b1{width:48vmax;height:48vmax;left:-14vmax;top:-12vmax;background:#cfe0b0;animation:drift 16s ease-in-out infinite alternate}
+.b2{width:52vmax;height:52vmax;right:-18vmax;bottom:-16vmax;background:var(--baby);animation:drift 20s ease-in-out -6s infinite alternate}
+.b3{width:28vmax;height:28vmax;left:42%;top:28%;background:#f6e9c9;opacity:.5;animation:drift 24s ease-in-out -12s infinite alternate}
+@keyframes drift{to{transform:translate3d(6vmax,4vmax,0) scale(1.12)}}
+body.calm .blob{animation-play-state:paused}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
 
-  main { position: relative; z-index: 1; width: 100%; max-width: 920px; }
-  .stage { position: relative; display: grid; }
-  .view { grid-area: 1 / 1; transition: opacity 1.2s ease, transform 1.2s ease, filter 1.2s ease; }
+/* ============ INTRO ANIMATION ============ */
+#intro{position:fixed;inset:0;z-index:10;display:grid;place-items:center;padding:20px}
+#intro.out{animation:introOut .85s cubic-bezier(.6,0,.4,1) forwards;pointer-events:none}
+@keyframes introOut{to{opacity:0;transform:scale(1.3);filter:blur(20px)}}
+.card{
+  text-align:center; padding:clamp(28px,6vw,56px) clamp(24px,7vw,64px); border-radius:36px;
+  background:rgba(255,255,255,.42); border:1px solid rgba(255,255,255,.75);
+  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  box-shadow:0 24px 70px rgba(143,166,107,.22), 0 4px 14px rgba(140,196,230,.18), inset 0 1px 0 rgba(255,255,255,.8);
+  max-width:92vw;
+}
+.line{opacity:0;animation:cine 1.4s var(--ease) forwards}
+.line span{display:inline-block;animation:bob 4.2s ease-in-out infinite}
+.l1{font-size:clamp(2.1rem,9.5vw,4.2rem);font-weight:700;line-height:1.1;animation-delay:.3s}
+.l2{font-size:clamp(1.5rem,6.5vw,2.6rem);font-weight:500;margin-top:.5em;animation-delay:1.5s}
+.l3{font-size:clamp(1rem,4vw,1.3rem);margin-top:1.6em;opacity:0;color:#6b7757;animation-delay:2.7s}
+.l2 span{animation-delay:-1.2s}
+@keyframes cine{
+  0%{opacity:0;transform:translateY(26px) scale(.84);filter:blur(18px)}
+  100%{opacity:1;transform:none;filter:blur(0)}
+}
+@keyframes bob{50%{transform:translateY(-7px)}}
+#go{
+  margin-top:.9em;font:600 clamp(1.05rem,4.4vw,1.35rem)/1 var(--font);color:#2f3a22;cursor:pointer;
+  padding:1em 2.1em;border:0;border-radius:999px;
+  background:linear-gradient(135deg,#bdd09a 0%,#a8d4ee 100%);
+  box-shadow:0 10px 28px rgba(143,166,107,.4), inset 0 1px 0 rgba(255,255,255,.7);
+  opacity:0;animation:cine 1.2s var(--ease) 3.3s forwards, glow 2.4s ease-in-out 4.5s infinite;
+  transition:transform .25s var(--ease);
+}
+#go:hover{transform:translateY(-2px) scale(1.05)}
+#go:active{transform:scale(.95)}
+#go:focus-visible{outline:3px solid var(--baby-d);outline-offset:4px}
+#go:disabled{pointer-events:none}
+@keyframes glow{
+  0%,100%{box-shadow:0 10px 28px rgba(143,166,107,.4),0 0 0 0 rgba(140,196,230,.55)}
+  50%{box-shadow:0 12px 34px rgba(143,166,107,.5),0 0 0 16px rgba(140,196,230,0)}
+}
 
-  /* Countdown view */
-  .countdown { text-align: center; animation: enter 1.1s cubic-bezier(.2, .7, .2, 1) both; }
-  @keyframes enter { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+/* ============ MAIN ANIMATION ============ */
+#main{position:fixed;inset:0;z-index:5;display:grid;place-items:center;padding:16px;visibility:hidden}
+#main.in{visibility:visible}
+#main.in #stage{animation:enter 1.1s var(--ease) backwards}
+@keyframes enter{from{opacity:0;transform:scale(.78) translateY(34px);filter:blur(16px)}}
+#stage{display:grid;justify-items:center;grid-template-areas:"s" "t";gap:clamp(14px,3vh,26px)}
+#montage,#final{grid-area:s;align-self:center}
+.frame{
+  width:var(--w);padding:clamp(6px,1.6vw,10px);border-radius:32px;will-change:transform;
+  background:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.85);
+  box-shadow:0 22px 60px rgba(143,166,107,.32),0 0 46px rgba(140,196,230,.4);
+}
+.pic{position:relative;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:var(--cream)}
+.pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
+.pic img.on{opacity:1}
+.pic .fl{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.pic .scan{position:absolute;left:0;right:0;top:0;height:7%;background:linear-gradient(90deg,rgba(191,224,245,.0),rgba(191,224,245,.75),rgba(185,199,154,0));opacity:0;pointer-events:none}
+.bar{height:4px;border-radius:4px;background:rgba(143,166,107,.2);margin:9px 6px 3px;overflow:hidden}
+.bar i{display:block;height:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--olive-d),var(--baby-d))}
 
-  h1 {
-    font-family: var(--serif); font-weight: 300;
-    font-size: clamp(1.9rem, 5.5vw, 3.4rem); line-height: 1.12;
-    letter-spacing: -.01em; color: var(--olive-deep);
-  }
-  .sub { margin: 14px auto 0; max-width: 34ch; color: var(--muted); font-size: clamp(.95rem, 2.4vw, 1.05rem); line-height: 1.6; }
+/* ============ FINAL REVEAL ============ */
+#flash{position:fixed;inset:0;z-index:30;pointer-events:none;opacity:0;background:radial-gradient(circle,#fff 0,#fff9e8 55%,#e3f2fb 100%)}
+#flash.pop{animation:flashA .95s ease-out}
+@keyframes flashA{0%{opacity:0}14%{opacity:.95}100%{opacity:0}}
+#final{display:none;position:relative;padding:8px;border-radius:36px;background:rgba(255,255,255,.65);
+  box-shadow:0 22px 60px rgba(143,166,107,.35),0 0 60px 8px rgba(140,196,230,.5)}
+#final::before{content:"";position:absolute;inset:-16px;border-radius:50px;z-index:-1;filter:blur(18px);opacity:.75;
+  background:conic-gradient(from 0deg,var(--baby),var(--olive),#fff3d6,var(--baby))}
+#final img{display:block;width:auto;height:auto;max-width:min(86vw,460px);max-height:54vh;border-radius:28px}
+#final.go{display:block;animation:reveal 1.7s var(--ease) backwards,gl 2.4s ease-in-out 1.7s 3}
+#final.go::before{animation:ring 2.4s ease-in-out 1.7s 3}
+@keyframes reveal{
+  0%{opacity:0;transform:scale(.05) rotate(-26deg);filter:blur(28px) brightness(1.7)}
+  40%{opacity:1}
+  70%{transform:scale(1.09) rotate(5deg);filter:blur(2px) brightness(1.1)}
+  100%{transform:none;filter:blur(0) brightness(1)}
+}
+@keyframes gl{50%{box-shadow:0 26px 70px rgba(143,166,107,.45),0 0 90px 18px rgba(140,196,230,.65)}}
+@keyframes ring{50%{opacity:1;transform:scale(1.04)}}
+#wak{grid-area:t;font-size:clamp(1.7rem,7.4vw,3.1rem);font-weight:700;text-align:center;line-height:1.15;visibility:hidden;opacity:0;padding:0 8px}
+#wak.show{visibility:visible;opacity:1;animation:wak 1.2s cubic-bezier(.3,1.3,.5,1) backwards,tg 2s ease-in-out 1.2s 3}
+@keyframes wak{
+  0%{opacity:0;transform:scale(.5) rotate(-7deg)}
+  18%{opacity:1;transform:translateX(-9px) scale(.7) rotate(4deg)}
+  28%{transform:translateX(9px) scale(.76) rotate(-4deg)}
+  38%{transform:translateX(-6px) scale(.8) rotate(3deg)}
+  62%{transform:scale(1.26) rotate(-3deg)}
+  82%{transform:scale(.94) rotate(1.5deg)}
+  100%{transform:none}
+}
+@keyframes tg{50%{text-shadow:0 0 24px rgba(140,196,230,.95),0 0 10px rgba(185,199,154,.95)}}
 
-  .grid {
-    margin: clamp(28px, 6vw, 52px) auto 0;
-    display: grid; gap: clamp(10px, 2vw, 18px);
-    grid-template-columns: repeat(5, 1fr);
-  }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--card-border);
-    border-radius: 24px;
-    box-shadow: var(--shadow);
-    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-    padding: clamp(14px, 3.2vw, 30px) 6px clamp(12px, 2.6vw, 24px);
-    animation: enter .9s cubic-bezier(.2, .7, .2, 1) both;
-  }
-  .card:nth-child(1) { animation-delay: .15s; }
-  .card:nth-child(2) { animation-delay: .25s; }
-  .card:nth-child(3) { animation-delay: .35s; }
-  .card:nth-child(4) { animation-delay: .45s; }
-  .card:nth-child(5) { animation-delay: .55s; border-color: rgba(169, 196, 220, .9); }
-  .num {
-    display: block; font-family: var(--serif); font-weight: 500;
-    font-size: clamp(1.6rem, 7.2vw, 4rem); line-height: 1;
-    color: var(--olive-deep); font-variant-numeric: tabular-nums;
-  }
-  .num.tick { animation: tick .45s ease; }
-  @keyframes tick {
-    0% { transform: translateY(-.25em); opacity: .15; }
-    100% { transform: none; opacity: 1; }
-  }
-  .label { display: block; margin-top: clamp(8px, 1.6vw, 14px); font-size: clamp(.58rem, 2.1vw, .82rem); color: var(--muted); letter-spacing: .04em; }
-  .until { margin-top: clamp(22px, 4vw, 34px); font-size: .9rem; color: var(--muted); }
-
-  /* Completion view */
-  .done {
-    text-align: center; opacity: 0; visibility: hidden;
-    transform: translateY(24px) scale(.98); filter: blur(6px);
-    background: var(--card); border: 1px solid var(--card-border);
-    border-radius: 32px; box-shadow: var(--shadow);
-    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-    padding: clamp(36px, 8vw, 84px) clamp(20px, 6vw, 64px);
-  }
-  body.complete .countdown { opacity: 0; transform: translateY(-16px) scale(.98); filter: blur(6px); pointer-events: none; animation: none; }
-  body.complete .done { opacity: 1; visibility: visible; transform: none; filter: none; transition-delay: .9s; }
-  .done h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 7vw, 4rem); color: var(--olive-deep); letter-spacing: -.01em; }
-  .heart { display: inline-block; animation: beat 2.4s ease-in-out infinite; }
-  @keyframes beat { 0%, 60%, 100% { transform: scale(1); } 15% { transform: scale(1.18); } 30% { transform: scale(1.04); } 45% { transform: scale(1.12); } }
-  .rule { width: 56px; height: 2px; margin: clamp(20px, 4vw, 32px) auto; background: linear-gradient(90deg, var(--olive), var(--blue)); border-radius: 2px; }
-  .bn { font-family: var(--bn); font-size: clamp(1.25rem, 4.6vw, 2rem); line-height: 1.7; color: var(--ink); }
-  .en { margin-top: clamp(16px, 3vw, 26px); color: var(--muted); font-size: clamp(.85rem, 2.4vw, .98rem); }
-  .done .reveal { opacity: 0; transform: translateY(14px); }
-  body.complete .done .reveal { animation: enter 1s cubic-bezier(.2, .7, .2, 1) forwards; }
-  body.complete .done h2.reveal { animation-delay: 1.2s; }
-  body.complete .done .rule.reveal { animation-delay: 1.7s; }
-  body.complete .done .bn.reveal { animation-delay: 2.1s; }
-  body.complete .done .en.reveal { animation-delay: 2.7s; }
-
-  .note { margin-top: clamp(18px, 3.5vw, 28px); font-family: var(--bn); font-size: clamp(1.15rem, 4.2vw, 1.6rem); line-height: 1.6; color: var(--olive-deep); }
-
-  .sound-btn {
-    position: fixed; z-index: 2;
-    right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom));
-    display: inline-flex; align-items: center; gap: 8px;
-    font: 500 .85rem var(--sans); color: var(--olive-deep);
-    background: var(--card); border: 1px solid var(--card-border); border-radius: 999px;
-    box-shadow: var(--shadow); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-    padding: 10px 16px; cursor: pointer; transition: transform .2s ease, background .2s ease;
-  }
-  .sound-btn:hover { background: rgba(255, 255, 255, .8); }
-  .sound-btn:active { transform: scale(.96); }
-  .sound-btn:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; }
-  .sound-btn[aria-pressed="true"] { background: var(--olive); color: #fff; border-color: var(--olive); }
-
-  @media (max-width: 420px) { .card { border-radius: 16px; padding-left: 2px; padding-right: 2px; } }
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
-    .bg { display: none; }
-  }
+/* ============ RESPONSIVE DESIGN ============ */
+@media (max-height:520px){:root{--w:min(60vw, calc(60vh * .8), 440px)}#final img{max-height:50vh}}
+@media (prefers-reduced-motion:reduce){.blob{animation:none}}
 </style>
 </head>
 <body>
-  <div class="bg" id="bg" aria-hidden="true"></div>
 
-  <main>
-    <div class="stage">
-      <section class="view countdown" id="countdown" aria-live="off">
-        <h1>Five months, counted down</h1>
-        <p class="sub">Every second brings the day a little closer.</p>
+<!-- ============ HTML STRUCTURE ============ -->
+<div class="bg"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i></div>
+<canvas id="fx"></canvas>
 
-        <div class="grid" role="timer" aria-label="Time remaining">
-          <div class="card"><span class="num" id="months">05</span><span class="label">Months</span></div>
-          <div class="card"><span class="num" id="days">00</span><span class="label">Days</span></div>
-          <div class="card"><span class="num" id="hours">00</span><span class="label">Hours</span></div>
-          <div class="card"><span class="num" id="minutes">00</span><span class="label">Minutes</span></div>
-          <div class="card"><span class="num" id="seconds">00</span><span class="label">Seconds</span></div>
-        </div>
+<section id="intro">
+  <div class="card">
+    <h1 class="line l1"><span>Hiloo Sister 👀</span></h1>
+    <h2 class="line l2"><span>This is Fy 😭</span></h2>
+    <p class="l3 line">Niche click koro 👀</p>
+    <button id="go" type="button">Click Koro 💗</button>
+  </div>
+</section>
 
-        <p class="until" id="until"></p>
-        <p class="note">ওই দিন তোমাকে দেখব, awwwwwwwww bbz ummmmmmmah <span class="heart">❤️</span></p>
-      </section>
-
-      <section class="view done" id="done" aria-live="polite">
-        <h2 class="reveal">5 Months Complete <span class="heart">❤️</span></h2>
-        <div class="rule reveal"></div>
-        <p class="bn reveal">তোমার ৫ মাস পূর্ণ হয়ে গেছে।<br>আমি তোমাকে আজকে দেখতে পারব। <span class="heart">❤️</span></p>
-        <p class="en reveal">The 5-month countdown is complete.</p>
-      </section>
+<main id="main">
+  <div id="stage">
+    <div id="montage" class="frame">
+      <div class="pic" id="pic">
+        <img src="https://cdn.corenexis.com/f/WLV5y15b.png" alt="" decoding="async" referrerpolicy="no-referrer">
+        <img src="https://cdn.corenexis.com/f/3LdioqYq.png" alt="" decoding="async" referrerpolicy="no-referrer">
+        <img src="https://cdn.corenexis.com/f/XeGHFYB3.png" alt="" decoding="async" referrerpolicy="no-referrer">
+        <img src="https://cdn.corenexis.com/f/cQZXosIk.png" alt="" decoding="async" referrerpolicy="no-referrer">
+        <div class="fl" id="fl"></div><div class="scan" id="scan"></div>
+      </div>
+      <div class="bar"><i id="bar"></i></div>
     </div>
-  </main>
-
-  <button class="sound-btn" id="soundBtn" type="button" aria-pressed="false">
-    <span aria-hidden="true" id="soundIcon">🔇</span><span id="soundText">Sound off</span>
-  </button>
+    <div id="final"><img id="mainImg" src="https://cdn.corenexis.com/f/eed0GBX2.webp" alt="Surprise!" decoding="async" referrerpolicy="no-referrer"></div>
+    <h2 id="wak">Wakkkk Thuuuu 😭💀</h2>
+  </div>
+</main>
+<div id="flash"></div>
 
 <script>
-(function () {
-  'use strict';
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const CYCLES = 100, DELAY = 10, IMGS = 4, TOTAL = CYCLES * IMGS;
 
-  var STORAGE_KEY = 'fiveMonthCountdown.v1';
-  var MONTHS = 5;
+/* ============ IMAGE PRELOADING ============ */
+// The same <img> elements live in the DOM the whole time: no re-downloads, no new nodes.
+const imgs = [...document.querySelectorAll('#pic img')], mainImg = $('mainImg');
+const dec = i => (i.decode ? i.decode() : Promise.resolve()).catch(() => {});
+const ready = Promise.race([Promise.all([...imgs, mainImg].map(dec)), wait(12000)]);
 
-  /* DEVELOPER TESTING ONLY.
-     Set to true to expose window.resetCountdown() in the browser console.
-     Keep false for production; there is intentionally no reset button in the UI. */
-  var ENABLE_DEV_RESET = false;
-
-  /* ---------- Date helpers ---------- */
-
-  // Adds calendar months, keeping the same day and time.
-  // If the day doesn't exist in the target month (e.g. 31 Jan + 1), clamps to that month's last day.
-  function addMonths(date, n) {
-    var d = new Date(date.getTime());
-    var day = d.getDate();
-    d.setDate(1);
-    d.setMonth(d.getMonth() + n);
-    var last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
-    d.setDate(Math.min(day, last));
-    return d;
+/* ============ PARTICLES (single canvas) ============ */
+const cv = $('fx'), c2 = cv.getContext('2d');
+const COL = ['#b9c79a', '#9fd0ec', '#fff7e0', '#d4e2b6', '#cfe8f8', '#ffffff'];
+let W, H, P = [], ambient = true, fxRaf = 0;
+function size() {
+  const d = Math.min(devicePixelRatio || 1, 2);
+  W = innerWidth; H = innerHeight; cv.width = W * d; cv.height = H * d; c2.setTransform(d, 0, 0, d, 0, 0);
+}
+addEventListener('resize', size); size();
+const rnd = (a, b) => a + Math.random() * (b - a);
+for (let i = 0; i < 26; i++) P.push({a: 1, x: rnd(0, W), y: rnd(0, H), r: rnd(1.5, 4), vy: rnd(.15, .45), ph: rnd(0, 6), s: Math.random() < .4, al: rnd(.4, .9), col: COL[i % 6]});
+function star(x, y, r) {
+  c2.beginPath();
+  for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4, d = i % 2 ? r * .35 : r; c2.lineTo(x + Math.cos(a) * d, y + Math.sin(a) * d); }
+  c2.closePath(); c2.fill();
+}
+function burst(x, y, n) {
+  for (let i = 0; i < n; i++) {
+    const a = rnd(0, 6.283), v = rnd(2, 8);
+    P.push({a: 0, x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 1.5, r: rnd(3, 7), life: rnd(60, 110), age: 0, rot: rnd(0, 6), vr: rnd(-.2, .2), s: Math.random() < .45, col: COL[(Math.random() * 6) | 0], al: 1});
   }
-
-  // Breaks the gap between now and target into calendar months + days/hours/min/sec.
-  function remaining(now, target) {
-    if (now >= target) return { months: 0, days: 0, hours: 0, minutes: 0, seconds: 0, done: true };
-    var months = 0;
-    while (addMonths(now, months + 1) <= target) months++;
-    var rest = target.getTime() - addMonths(now, months).getTime();
-    var s = Math.floor(rest / 1000);
-    return {
-      months: months,
-      days: Math.floor(s / 86400),
-      hours: Math.floor((s % 86400) / 3600),
-      minutes: Math.floor((s % 3600) / 60),
-      seconds: s % 60,
-      done: false
-    };
-  }
-
-  /* ---------- Persistence ---------- */
-
-  var memoryFallback = null; // only used if localStorage is blocked
-
-  function isValidTs(v) { return typeof v === 'number' && isFinite(v) && v > 0; }
-
-  function loadSaved() {
-    try {
-      var raw = window.localStorage.getItem(STORAGE_KEY);
-      if (!raw) return null;
-      var data = JSON.parse(raw);
-      if (data && isValidTs(data.startTimestamp) && isValidTs(data.targetTimestamp) &&
-          data.targetTimestamp > data.startTimestamp) return data;
-    } catch (e) { /* unavailable or corrupted: treated as missing */ }
-    return null;
-  }
-
-  function getTarget() {
-    var saved = loadSaved();
-    if (saved) return saved.targetTimestamp;       // never overwrite an existing target
-    if (memoryFallback) return memoryFallback.targetTimestamp;
-
-    var start = new Date();
-    var data = {
-      startTimestamp: start.getTime(),
-      targetTimestamp: addMonths(start, MONTHS).getTime()
-    };
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    } catch (e) {
-      memoryFallback = data; // keeps this session consistent if storage is blocked
+  kick();
+}
+function loop() {
+  c2.clearRect(0, 0, W, H);
+  P = P.filter(p => {
+    if (p.a) { // ambient floaters
+      p.y -= p.vy; p.ph += .02; p.x += Math.sin(p.ph) * .3;
+      if (p.y < -10) { p.y = H + 10; p.x = rnd(0, W); }
+      if (!ambient) p.al -= .02;
+      if (p.al <= 0) return false;
+      c2.globalAlpha = p.al * (.6 + .4 * Math.sin(p.ph * 2)); c2.fillStyle = p.col;
+      p.s ? star(p.x, p.y, p.r * 2) : (c2.beginPath(), c2.arc(p.x, p.y, p.r, 0, 6.283), c2.fill());
+      return true;
     }
-    return data.targetTimestamp;
-  }
-
-  if (ENABLE_DEV_RESET) {
-    window.resetCountdown = function () {
-      try { window.localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-      location.reload();
-    };
-  }
-
-  /* ---------- UI ---------- */
-
-  var els = {
-    months: document.getElementById('months'),
-    days: document.getElementById('days'),
-    hours: document.getElementById('hours'),
-    minutes: document.getElementById('minutes'),
-    seconds: document.getElementById('seconds')
-  };
-  var last = {};
-
-  function pad(n) { return n < 10 ? '0' + n : String(n); }
-
-  function setValue(key, value) {
-    var text = pad(Math.max(0, value));
-    if (last[key] === text) return;
-    var el = els[key];
-    el.textContent = text;
-    if (last[key] !== undefined) {
-      el.classList.remove('tick');
-      void el.offsetWidth; // restart animation
-      el.classList.add('tick');
-    }
-    last[key] = text;
-  }
-
-  function render(r) {
-    setValue('months', r.months);
-    setValue('days', r.days);
-    setValue('hours', r.hours);
-    setValue('minutes', r.minutes);
-    setValue('seconds', r.seconds);
-  }
-
-  /* ---------- Sound (Web Audio, no audio files needed) ----------
-     Browsers only allow audio after a tap, so sound starts off and the
-     person turns it on with the button. */
-
-  var audio = { ctx: null, on: false };
-
-  function ensureCtx() {
-    if (!audio.ctx) {
-      var AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return null;
-      audio.ctx = new AC();
-    }
-    if (audio.ctx.state === 'suspended') audio.ctx.resume();
-    return audio.ctx;
-  }
-
-  function tone(freq, start, dur, vol, type) {
-    var c = audio.ctx;
-    var o = c.createOscillator();
-    var g = c.createGain();
-    o.type = type || 'sine';
-    o.frequency.setValueAtTime(freq, start);
-    g.gain.setValueAtTime(0.0001, start);
-    g.gain.exponentialRampToValueAtTime(vol, start + 0.01);
-    g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
-    o.connect(g);
-    g.connect(c.destination);
-    o.start(start);
-    o.stop(start + dur + 0.05);
-  }
-
-  // Soft tick every second, a gentle bell each full minute, brighter ticks in the final 10 seconds.
-  function playTick(r) {
-    if (!audio.on || !audio.ctx || document.hidden) return;
-    var t = audio.ctx.currentTime;
-    if (r.seconds === 0) {
-      tone(660, t, 1.1, 0.06);
-      tone(990, t, 1.1, 0.025);
-    } else if (r.months === 0 && r.days === 0 && r.hours === 0 && r.minutes === 0 && r.seconds <= 10) {
-      tone(1400, t, 0.12, 0.07, 'triangle');
-    } else {
-      tone(900, t, 0.08, 0.04, 'triangle');
-    }
-  }
-
-  // Warm rising chime when the countdown completes.
-  function playChime() {
-    if (!audio.on || !audio.ctx) return;
-    var t = audio.ctx.currentTime + 0.05;
-    [523.25, 659.25, 783.99, 1046.5].forEach(function (f, i) {
-      tone(f, t + i * 0.38, 2.4, 0.08);
-      tone(f * 2, t + i * 0.38, 1.6, 0.02);
-    });
-  }
-
-  var soundBtn = document.getElementById('soundBtn');
-  function updateSoundBtn() {
-    soundBtn.setAttribute('aria-pressed', audio.on ? 'true' : 'false');
-    document.getElementById('soundIcon').textContent = audio.on ? '🔊' : '🔇';
-    document.getElementById('soundText').textContent = audio.on ? 'Sound on' : 'Sound off';
-  }
-  soundBtn.addEventListener('click', function () {
-    if (!audio.on) {
-      if (!ensureCtx()) return;
-      audio.on = true;
-      var t = audio.ctx.currentTime;
-      tone(784, t, 0.35, 0.06);
-      tone(1046.5, t + 0.12, 0.5, 0.05);
-    } else {
-      audio.on = false;
-    }
-    updateSoundBtn();
+    p.age++; p.vx *= .97; p.vy = p.vy * .97 + .08; p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+    if (p.age > p.life) return false;
+    c2.globalAlpha = 1 - p.age / p.life; c2.fillStyle = p.col;
+    if (p.s) star(p.x, p.y, p.r * 1.6);
+    else { c2.save(); c2.translate(p.x, p.y); c2.rotate(p.rot); c2.fillRect(-p.r, -p.r / 2, p.r * 2, p.r); c2.restore(); }
+    return true;
   });
+  c2.globalAlpha = 1;
+  fxRaf = P.length ? requestAnimationFrame(loop) : 0; // loop stops itself when nothing is left
+}
+function kick() { if (!fxRaf) fxRaf = requestAnimationFrame(loop); }
+kick();
 
-  var timer = null;
+/* ============ AUDIO SYSTEM (Web Audio, unlocked by the click) ============ */
+let AC, out;
+function initAudio() {
+  try {
+    AC = new (window.AudioContext || window.webkitAudioContext)();
+    const lp = AC.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 4200;
+    const comp = AC.createDynamicsCompressor(), g = AC.createGain(); g.gain.value = .95;
+    lp.connect(comp); comp.connect(g); g.connect(AC.destination); out = lp;
+    AC.resume();
+  } catch (e) { AC = null; }
+}
+function tone(f, t, d, type, v, f2) {
+  const o = AC.createOscillator(), g = AC.createGain();
+  o.type = type; o.frequency.setValueAtTime(f, t);
+  if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + d);
+  g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(v, t + .003); g.gain.exponentialRampToValueAtTime(.0001, t + d);
+  o.connect(g); g.connect(out); o.start(t); o.stop(t + d + .02);
+}
+const NOTES = [523, 659, 784, 1047];
+const sfx = {
+  blip(i) { if (AC) { const f = NOTES[i] * rnd(.99, 1.02); tone(f, AC.currentTime, .035, 'square', .2, f * 1.25); } },
+  whoosh() { if (AC) tone(220, AC.currentTime, .6, 'sine', .35, 1400); },
+  boom() {
+    if (!AC) return; const t = AC.currentTime;
+    tone(190, t, .7, 'sine', .8, 35); tone(1300, t, .35, 'triangle', .3, 300);
+    [784, 988, 1175, 1568].forEach((f, k) => tone(f, t + .14 + k * .07, .3, 'triangle', .2));
+  },
+  boing() { if (AC) { const t = AC.currentTime; tone(260, t, .3, 'sine', .45, 720); tone(420, t + .12, .35, 'triangle', .3, 900); } }
+};
 
-  function finish() {
-    if (timer) { clearInterval(timer); timer = null; }
-    render({ months: 0, days: 0, hours: 0, minutes: 0, seconds: 0 });
-    document.body.classList.add('complete');
-    playChime();
-    document.getElementById('countdown').setAttribute('aria-hidden', 'true');
-  }
+/* ============ IMAGE SWITCHING ============ */
+const montage = $('montage'), fl = $('fl'), scan = $('scan'), bar = $('bar');
+const S = {pulse: 0, flash: 0, prog: 0};
+let cur = 0, timer = 0, raf = 0;
 
-  function init() {
-    var target = new Date(getTarget());
+// Per-frame visual layer: zoom, rotation, shake, motion blur, flash, glitch bar.
+function frame() {
+  S.pulse *= .84; S.flash *= .8;
+  const p = S.pulse;
+  montage.style.transform = `translate3d(${rnd(-5, 5) * p}px,${rnd(-4, 4) * p}px,0) rotate(${rnd(-3, 3) * p}deg) scale(${1 + p * .07})`;
+  montage.style.filter = p > .6 ? `blur(${(p * 1.3).toFixed(1)}px)` : 'none';
+  fl.style.opacity = S.flash;
+  scan.style.opacity = p > .5 && Math.random() < .5 ? .7 : 0;
+  scan.style.transform = `translate3d(0,${rnd(0, 1300) | 0}%,0)`;
+  bar.style.transform = `scaleX(${S.prog})`;
+  raf = requestAnimationFrame(frame);
+}
+function show(n) {
+  const i = n % IMGS;
+  imgs[cur].classList.remove('on'); imgs[i].classList.add('on'); cur = i;
+  S.pulse = i === 0 ? 1 : Math.max(S.pulse, .55);
+  if (i === 0) S.flash = .24;
+  S.prog = (n + 1) / TOTAL;
+  sfx.blip(i);
+}
+function startMontage() {
+  const t0 = performance.now(); let n = 0;
+  raf = requestAnimationFrame(frame);
+  (function tick() {
+    show(n++);
+    if (n >= TOTAL) { setTimeout(reveal, DELAY); return; }
+    // drift-corrected timer: keeps ~10ms spacing without freezing the page
+    timer = setTimeout(tick, Math.max(0, t0 + n * DELAY - performance.now()));
+  })();
+}
 
-    document.getElementById('until').textContent = 'Until ' + target.toLocaleString(undefined, {
-      day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: '2-digit'
-    });
+/* ============ FINAL REVEAL ============ */
+async function reveal() {
+  clearTimeout(timer); cancelAnimationFrame(raf);
+  sfx.boom();
+  $('flash').classList.add('pop');
+  await wait(150);
+  montage.style.display = 'none';
+  const fin = $('final'); fin.classList.add('go');
+  const r = fin.getBoundingClientRect();
+  burst(r.left + r.width / 2, r.top + r.height / 2, 90);
+  await wait(1500);
+  burst(r.left + r.width / 2, r.top + r.height / 2, 40);
+  await wait(250);
+  $('wak').classList.add('show'); sfx.boing();
+  burst(innerWidth / 2, $('wak').getBoundingClientRect().top, 50);
+  // Stop everything that no longer needs to run
+  ambient = false; document.body.classList.add('calm');
+}
 
-    function tick() {
-      var r = remaining(new Date(), target);
-      if (r.done) { finish(); return; }
-      render(r);
-      playTick(r);
-    }
-
-    tick();
-    if (!document.body.classList.contains('complete')) {
-      timer = setInterval(tick, 1000);
-      // Re-sync immediately when the tab becomes visible again (timers can be throttled in background).
-      document.addEventListener('visibilitychange', function () {
-        if (!document.hidden && timer) tick();
-      });
-    }
-  }
-
-  /* ---------- Background particles ---------- */
-
-  function buildParticles() {
-    var bg = document.getElementById('bg');
-    var count = window.innerWidth < 640 ? 10 : 18;
-    for (var i = 0; i < count; i++) {
-      var s = document.createElement('span');
-      var size = 6 + Math.random() * 22;
-      s.style.width = s.style.height = size + 'px';
-      s.style.left = Math.random() * 100 + '%';
-      s.style.animationDuration = 22 + Math.random() * 26 + 's';
-      s.style.animationDelay = -Math.random() * 40 + 's';
-      s.style.setProperty('--dx', (Math.random() * 80 - 40) + 'px');
-      if (i % 3 === 0) s.className = 'blue';
-      bg.appendChild(s);
-    }
-  }
-
-  buildParticles();
-  init();
+/* ============ INTRO CLICK + TRANSITION ============ */
+$('go').addEventListener('click', async e => {
+  const btn = e.currentTarget; btn.disabled = true;
+  initAudio(); sfx.whoosh();             // audio unlocked inside the click event
+  const b = btn.getBoundingClientRect();
+  burst(b.left + b.width / 2, b.top + b.height / 2, 70);
+  $('intro').classList.add('out');
+  await wait(800);
+  $('intro').style.display = 'none';
+  $('main').classList.add('in');
+  await ready;                            // images are preloaded before the montage starts
+  await wait(700);
+  startMontage();
+}, {once: true});
 })();
 </script>
 </body>
